@@ -36,6 +36,30 @@
       "destination": "https://fund-intel-ten.vercel.app/index.html"
     },
     {
+      "source": "/portfolio-signals/sponsors",
+      "destination": "https://fund-intel-ten.vercel.app/sponsors.html"
+    },
+    {
+      "source": "/portfolio-signals/grants",
+      "destination": "https://fund-intel-ten.vercel.app/grants.html"
+    },
+    {
+      "source": "/portfolio-signals/members",
+      "destination": "https://fund-intel-ten.vercel.app/members.html"
+    },
+    {
+      "source": "/portfolio-signals/donor-impact",
+      "destination": "https://fund-intel-ten.vercel.app/donor-impact.html"
+    },
+    {
+      "source": "/portfolio-signals/finance-impact",
+      "destination": "https://fund-intel-ten.vercel.app/finance-impact.html"
+    },
+    {
+      "source": "/portfolio-signals/import-review",
+      "destination": "https://fund-intel-ten.vercel.app/import-review.html"
+    },
+    {
       "source": "/portfolio-signals/:path*",
       "destination": "https://fund-intel-ten.vercel.app/:path*"
     },
