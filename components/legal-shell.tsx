@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const nav = [
   ["Legal hub", "/legal"],
@@ -21,7 +22,7 @@ export function LegalShell({
     <>
       <header className="legal-topbar">
         <div className="page-shell legal-topbar-inner">
-          <a className="brand focus-ring" href="/" aria-label="AGI home">
+          <Link className="brand focus-ring" href="/" aria-label="AGI home">
             <Image
               className="brand-symbol"
               src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/agi-wordmark.png`}
@@ -29,12 +30,12 @@ export function LegalShell({
               width={1200}
               height={290}
             />
-          </a>
+          </Link>
           <nav className="legal-nav" aria-label="Legal sections">
             {nav.map(([label, href]) => (
-              <a className="focus-ring" href={href} key={href}>
+              <Link className="focus-ring" href={href} key={href}>
                 {label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -56,11 +57,11 @@ export function LegalShell({
         <div className="page-shell legal-footer-inner">
           <span>Software by Zero State</span>
           <nav className="footer-legal" aria-label="Brand and legal">
-            <a href="/brand#tokens">Tokens</a>
-            <a href="/brand#logo">Logo use</a>
-            <a href="/legal">Legal</a>
-            <a href="/legal/privacy">Privacy</a>
-            <a href="/legal/terms">Terms</a>
+            <Link href="/brand#tokens">Tokens</Link>
+            <Link href="/brand#logo">Logo use</Link>
+            <Link href="/legal">Legal</Link>
+            <Link href="/legal/privacy">Privacy</Link>
+            <Link href="/legal/terms">Terms</Link>
           </nav>
         </div>
       </footer>
