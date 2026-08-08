@@ -50,7 +50,7 @@ AGI is a static Next.js export. **Production** deploys on [Vercel](docs/VERCEL.m
 | `/portfolio-signals/` | Portfolio Signals public + **workspace** login |
 | `/impact-relay/` | Impact Relay public aggregates |
 
-**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; live every.org webhook and full director sign-off remain. See [docs/PLATFORM.md](docs/PLATFORM.md).
+**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Client Onboarding Pack** (private org docs in Portfolio Signals workspace) is **code on main** ([#104](https://github.com/scrimshawlife-ctrl/Portofolio-Signals/pull/104)); platform migrate + Edge deploy still operator. **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; live every.org webhook and full director sign-off remain. Suite hub: [docs/PLATFORM.md](docs/PLATFORM.md) · Fund-Intel [SUITE-ONBOARDING](https://github.com/scrimshawlife-ctrl/Portofolio-Signals/blob/main/docs/SUITE-ONBOARDING.md).
 
 During the production build AGI requests two approved public aggregate documents:
 

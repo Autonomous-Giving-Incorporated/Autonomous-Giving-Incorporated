@@ -49,7 +49,7 @@ GitHub Pages remains optional fallback only.
 | Second admin (deferred) | Qi Diaz — `platform_administrators` insert with rationale ≥ 12 chars |
 | Operator SQL | Fund-Intel `scripts/platform/` (bootstrap + isolation) |
 
-Operator onboarding hub (Fund-Intel): `docs/SUITE-ONBOARDING.md` (C→B→D→pilot; done without login vs needs every.org). People path: `docs/OPERATOR-ACCESS-ONBOARDING.md`.
+Operator onboarding hub (Fund-Intel / Portofolio-Signals): `docs/SUITE-ONBOARDING.md` (C→B→doc pack→D→pilot; done without login vs needs every.org/admin). People path: `docs/OPERATOR-ACCESS-ONBOARDING.md`. Document pack: `docs/CLIENT-ONBOARDING-PACK.md` (workspace nav; code on main #104; platform migrate PENDING).
 
 ## Shared identifiers
 

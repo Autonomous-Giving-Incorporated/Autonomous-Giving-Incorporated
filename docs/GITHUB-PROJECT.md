@@ -60,9 +60,10 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 
 ### Ops — operator access / commercial onboarding
 
-- **Hub:** Fund-Intel `docs/SUITE-ONBOARDING.md`  
+- **Hub:** Fund-Intel / Portofolio-Signals `docs/SUITE-ONBOARDING.md`  
 - People path (C): Fund-Intel `docs/OPERATOR-ACCESS-ONBOARDING.md`  
 - Client lifecycle (B): Fund-Intel `docs/COMMERCIAL-CLIENT-LIFECYCLE.md`  
+- **Document pack:** Fund-Intel `docs/CLIENT-ONBOARDING-PACK.md` (code #104; platform apply PENDING)  
 - Second tenant (D): Fund-Intel `docs/SECOND-TENANT-ONBOARDING.md`  
 - Allocation pilot: Fund-Intel `docs/HACKER-DOJO-ALLOCATION-PILOT.md` · `docs/CURRENT-STATE.md`
 
