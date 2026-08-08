@@ -46,7 +46,7 @@ GitHub Pages remains optional fallback only.
 | Item | Value |
 | --- | --- |
 | Primary `master_admin` | `scrimshawlife@gmail.com` |
-| Second admin (deferred) | Qi Diaz — `platform_administrators` insert with rationale ≥ 12 chars |
+| Second `master_admin` | `qi@enkeyai.com` (Qi Diaz) — granted 2026-08-08; MFA enroll still required |
 | Operator SQL | Fund-Intel `scripts/platform/` (bootstrap + isolation) |
 
 Operator onboarding hub (Fund-Intel / Portofolio-Signals): `docs/SUITE-ONBOARDING.md` (C→B→doc pack→D→pilot; done without login vs needs every.org/admin). People path: `docs/OPERATOR-ACCESS-ONBOARDING.md`. Document pack: `docs/CLIENT-ONBOARDING-PACK.md` (workspace nav; code on main #104; platform migrate PENDING).
