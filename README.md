@@ -1,7 +1,8 @@
 # Autonomously Giving Incorporated
 
-[![CI](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/actions/workflows/ci.yml/badge.svg)](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/actions/workflows/ci.yml)
-[![Deploy GitHub Pages](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml)
+[![CI](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/ci.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/ci.yml)
+[![Deploy Cloudflare](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-cloudflare.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-cloudflare.yml)
+[![Deploy GitHub Pages](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml)
 
 Autonomously Giving Incorporated (AGI) is the corporate brand and public, evidence-first entry point for its giving platform. It explains how a funding decision can become an inspectable impact story without exposing donor records or claiming that this site moves money. Zero State is the software builder and appears only in the footer credit.
 
@@ -42,7 +43,7 @@ Transaction-light **middleware** between donation platforms (canonical **every.o
 
 ## Current status
 
-AGI is a static Next.js export. **Production** deploys on [Vercel](docs/VERCEL.md) at [autogive.app](https://autogive.app/); GitHub Pages remains a fallback mirror. Path suite:
+AGI is a static Next.js export. The designed stack is **Cloudflare + existing Supabase**: this public site stays static on [Cloudflare Workers](docs/CLOUDFLARE.md) at [autogive.app](https://autogive.app/); durable data and auth stay on platform Supabase. [Vercel](docs/VERCEL.md) remains the live apex until DNS cutover; GitHub Pages remains a fallback mirror. Path suite:
 
 | Path | Product |
 | --- | --- |
@@ -86,11 +87,14 @@ Open `http://localhost:3000`. The site remains usable when the public sources ar
 | `npm run dev`                       | Start the local Next.js development server   |
 | `npm run lint`                      | Run ESLint                                   |
 | `npm run typecheck`                 | Type-check without emitting files            |
-| `npm run build`                     | Static export to `out/` (Vercel / production root path) |
+| `npm run build`                     | Static export to `out/` (production root path) |
+| `npm run cf:build`                  | Same export, named for the Cloudflare deploy path |
+| `npm run cf:preview`                | Build and serve `out/` locally with Wrangler |
+| `npm run cf:deploy`                 | Build and deploy `out/` to Cloudflare Workers |
 | `GITHUB_PAGES_BASE_PATH=1 npm run build` | Legacy project-site path under github.io (optional) |
 | `npm run format`                    | Format supported files with Prettier         |
 
-Deploy: [docs/VERCEL.md](docs/VERCEL.md) · Domain: [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md)
+Deploy: [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md) · Domain: [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md) · Vercel fallback: [docs/VERCEL.md](docs/VERCEL.md)
 
 Before opening a pull request, run lint, typecheck, and `npm run build`.
 
@@ -105,6 +109,8 @@ integration/fixtures.ts    Public-safe deterministic fixtures
 integration/public-sources.ts
                            Build-time public-source adapter and fail-closed fallback
 public/brand/              AGI corporate identity assets
+workers/                   Cloudflare suite-path reverse proxy (not an AGI API)
+wrangler.jsonc             Cloudflare Workers static assets config (`out/`)
 docs/                      Product, architecture, delivery, and release records
 site.ts                    Canonical production URL helpers
 tokens.css                 Shared design-token source of truth

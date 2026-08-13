@@ -12,7 +12,7 @@ AGI public workbench is deliberately the thinnest and most constrained surface t
 
 ## Allocation middleware (authenticated client ops)
 
-The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md)) is a separate client-ops surface that authenticates and writes tenant data. It is **not** the current public GitHub Pages workbench.
+The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md)) is a separate client-ops surface that authenticates and writes tenant data. It is **not** the current public AGI workbench.
 
 **Status:** MVP implemented in [Fund-Intel `services/allocation-middleware/`](https://github.com/scrimshawlife-ctrl/Fund-Intel/tree/main/services/allocation-middleware) (Hacker Dojo pilot seed, Supabase director login, every.org webhook). Named host + live webhook are operator steps.
 
@@ -21,7 +21,7 @@ The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUC
 | Auth | None | Supabase director / campaign_lead JWT (operator token fallback) |
 | Money path | Narrative only | every.org gift summaries → pots → allocation |
 | Writes | None | Pots, allocations, exceptions, proof links |
-| Host | GitHub Pages | Fund-Intel Node package (Fly-ready) |
+| Host | Cloudflare Workers static assets (Vercel until DNS cutover) | Cloudflare + existing Supabase (auth/data); not Render/Fly/Railway |
 | Specs | Pin v1.x | Capability-first modular monolith |
 
 Cross-repo implementation should keep **public aggregate JSON** contracts stable while middleware modules map to Portfolio Signals (observe/credit), Autonomous Giving (allocate/approve), and Impact Relay (proof/trail) **capabilities**—not three mandatory deployables.

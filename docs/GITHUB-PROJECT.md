@@ -41,7 +41,7 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 ### Allocation middleware (active)
 
 - MVP package in Fund-Intel `services/allocation-middleware/`  
-- Local Node default; Compose optional; public HTTPS via cloudflared (ephemeral) or Render/Railway/Fly (durable)  
+- Local Node default; durable data/auth on existing Supabase; public HTTPS on Cloudflare (designed). Do not add Render, Fly, or Railway as remaining hosts.
 - Director JWT path closed (#72); seed-loop accept In Progress (#74)  
 - Remaining: [#73](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/73) every.org webhook · full [#74](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/74) browser sign-off
 
@@ -56,7 +56,7 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 
 ### Public suite surfaces
 
-- AGI Pages, Portfolio Signals portal, Impact Relay public aggregate  
+- AGI public workbench on Cloudflare (static); Vercel until autogive.app DNS cutover  
 
 ### Ops — operator access / commercial onboarding
 

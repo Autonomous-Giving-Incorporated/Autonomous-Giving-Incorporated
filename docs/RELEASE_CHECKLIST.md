@@ -16,7 +16,7 @@ Use this checklist for every material production release. Copy the completed evi
 - [ ] Run `npm run typecheck`.
 - [ ] Run `npm run build` (root path for autogive.app).
 - [ ] Run `git diff --check`.
-- [ ] Confirm the export uses root-relative assets (`/_next/...`) and `out/CNAME` is `autogive.app`.
+- [ ] Confirm the export uses root-relative assets (`/_next/...`).
 
 ## Product and accessibility review
 
@@ -32,6 +32,7 @@ Use this checklist for every material production release. Copy the completed evi
 - [ ] The pull request explains what changed, why, user impact, and validation.
 - [ ] Required GitHub checks pass against the final head commit.
 - [ ] The reviewed commit is merged to `main`.
-- [ ] The GitHub Pages workflow completes successfully.
+- [ ] The Cloudflare deploy workflow completes successfully when `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are configured (see [CLOUDFLARE.md](CLOUDFLARE.md)).
+- [ ] The GitHub Pages fallback workflow completes successfully (until Pages is retired).
 - [ ] The production URL, mark, favicon, Open Graph image, robots, and sitemap resolve.
 - [ ] A release record includes owner, date, merge commit, PR, CI run, Pages run, and production verification.

@@ -4,7 +4,7 @@ This plan starts from the deployed GitHub Pages experience. Every new capability
 
 ## Current baseline
 
-AGI is a static Next.js export deployed from `main` to GitHub Pages. It includes a replayable deterministic scenario and reads two approved public aggregate documents during the build: a Portfolio Signals advisory state and an Impact Relay verified outcome. Invalid, unavailable, or unapproved source data falls back to the local canonical scenario.
+AGI is a static Next.js export. Intended production is Cloudflare Workers static assets at autogive.app; Vercel remains live until DNS cutover and GitHub Pages remains a fallback mirror. It includes a replayable deterministic scenario and reads two approved public aggregate documents during the build: a Portfolio Signals advisory state and an Impact Relay verified outcome. Invalid, unavailable, or unapproved source data falls back to the local canonical scenario.
 
 The site does not collect donations, persist records, authenticate people, expose donor-level evidence, or perform write operations against either source system.
 

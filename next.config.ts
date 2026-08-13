@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-// Production is the custom domain (https://autogive.app) at site root.
+// Production is the custom domain (https://autogive.app) at site root
+// (Cloudflare Workers static assets; Vercel until DNS cutover).
 // Opt into the legacy project-site path only when explicitly requested:
 //   GITHUB_PAGES_BASE_PATH=1 npm run build
 const useProjectPath =

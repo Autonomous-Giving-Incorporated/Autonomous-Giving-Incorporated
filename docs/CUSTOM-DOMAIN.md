@@ -2,28 +2,62 @@
 
 Canonical production origin for the AGI public workbench is **https://autogive.app**.
 
-**Primary host: Vercel** (see [VERCEL.md](VERCEL.md)).  
-**Fallback host: GitHub Pages** at the github.io project URL.
+**Designed host: Cloudflare Workers static assets** (see [CLOUDFLARE.md](CLOUDFLARE.md)). Durable data/auth stay on existing Supabase, not on this static site.  
+**Fallback until DNS cutover: Vercel** (see [VERCEL.md](VERCEL.md)).  
+**Mirror: GitHub Pages** at the github.io project URL. Do not add Render, Fly, or Railway.
 
-Namecheap holds registration; DNS currently points at Namecheap parking / hosting.
+Namecheap holds registration. Do not dual-point the apex at two web platforms.
 
 ## Target end state
 
 | Host | Role |
 | --- | --- |
-| `https://autogive.app/` | Production on **Vercel** |
-| `https://www.autogive.app/` | Redirect to apex (Vercel) |
-| `https://scrimshawlife-ctrl.github.io/Autonomous-Giving-Incorporated/` | Fallback mirror |
+| `https://autogive.app/` | Production on **Cloudflare** Worker `agi-public` |
+| `https://www.autogive.app/` | Redirect to apex (Cloudflare) |
+| Vercel project `autonomous-giving-incorporated` | Rollback until cutover is verified; then retire |
+| github.io project URL | Fallback mirror |
 
-Suite path URLs (`/portfolio-signals/`, `/impact-relay/`) remain **product links** in copy. Those products still ship as separate sites unless a reverse-proxy or monorepo export is added later.
+Suite path URLs (`/portfolio-signals/`, `/impact-relay/`) remain **product links** on the apex. Those products still ship as separate sites; AGI proxies the paths (Vercel `vercel.json` today; Cloudflare `workers/suite-gateway.ts` after cutover). Do not merge those repos into this one.
 
-Point the apex at **one** platform only (Vercel **or** GitHub Pages), not both.
+Point the apex at **one** platform only.
 
 ---
 
-## Recommended: Vercel DNS
+## Cutover: Cloudflare DNS
 
-Domains are already attached on project **autonomous-giving-incorporated**. Confirm with:
+Cloudflare custom domains require `autogive.app` as a zone on the same account that owns Worker `agi-public`. Record values, account IDs, and zone IDs are operator-owned and are not committed here.
+
+1. Deploy and verify `https://agi-public.<subdomain>.workers.dev` (AGI `/`, suite prefixes, TLS). See [CLOUDFLARE.md](CLOUDFLARE.md).
+2. Export the existing DNS zone (every A, AAAA, CNAME, MX, TXT). Preserve mail: MX plus SPF, DKIM, DMARC, and provider verification TXT records.
+3. Add the zone in Cloudflare and complete the registrar nameserver change **only when ready** to leave Vercel as the web origin.
+4. Attach `autogive.app` as a Worker custom domain (dashboard → `agi-public` → Domains). Cloudflare will create the DNS record that points at the Worker.
+5. Redirect `www.autogive.app` to the apex.
+6. Verify TLS, apex, www redirect, `/_next/` assets, canonical/Open Graph tags, `robots.txt`, and `sitemap.xml`.
+7. Run `./scripts/smoke-public-suite.sh` against `https://autogive.app`.
+8. Confirm mail MX/TXT records are unchanged. Only then stop using Vercel as the public origin.
+
+Do not put `autogive.app` in `wrangler.jsonc` until the zone exists; a missing zone would fail CI deploys.
+
+### If the zone is already on Cloudflare
+
+Dashboard → Workers & Pages → `agi-public` → **Domains** → add `autogive.app`. Cloudflare creates the record. For `www`, add a Redirect Rule to `https://autogive.app`.
+
+### If DNS stays at Namecheap during a CNAME cutover
+
+Only use this if the operator chooses records instead of full Cloudflare nameservers. Use the **exact** targets Cloudflare shows for the Worker custom domain (they change). Typical pattern:
+
+| Type | Host | Value |
+| --- | --- | --- |
+| CNAME or flattened A/AAAA | `@` | values from the Cloudflare custom-domain UI |
+| CNAME | `www` | Cloudflare-shown target, or a redirect to apex |
+
+Do not keep Vercel `76.76.21.21` A records after cutover.
+
+---
+
+## Current live: Vercel DNS
+
+Domains may already be attached on Vercel project **autonomous-giving-incorporated**. Confirm with:
 
 ```bash
 vercel domains verify autogive.app --scope scrimshawlife-8819s-projects
@@ -35,22 +69,22 @@ vercel domains verify autogive.app --scope scrimshawlife-8819s-projects
 | --- | --- | --- |
 | A | `@` | `76.76.21.21` |
 
-If verify suggests alternate A targets (e.g. `216.198.79.1` / `64.29.17.1`), prefer the values from the live `vercel domains verify` output.
+If verify suggests alternate A targets, prefer the live `vercel domains verify` output.
 
 | Type | Host | Value |
 | --- | --- | --- |
 | CNAME | `www` | `cname.vercel-dns.com` |
 
-Full runbook: [VERCEL.md](VERCEL.md).
+Full Vercel runbook: [VERCEL.md](VERCEL.md).
 
 ---
 
 ## Optional: GitHub Pages DNS
 
-Only if production is Pages instead of Vercel.
+Only if production is Pages instead of Cloudflare or Vercel.
 
 Repo → **Settings → Pages → Custom domain**: `autogive.app`  
-Enforce HTTPS after DNS verifies. Artifact includes `public/CNAME` → `out/CNAME`.
+Enforce HTTPS after DNS verifies. Artifact may include `public/CNAME` → `out/CNAME` if that helper is re-added.
 
 ### Apex A records
 
@@ -65,13 +99,13 @@ Enforce HTTPS after DNS verifies. Artifact includes `public/CNAME` → `out/CNAM
 
 | Type | Host | Value |
 | --- | --- | --- |
-| CNAME | `www` | `scrimshawlife-ctrl.github.io.` |
+| CNAME | `www` | `<pages-org>.github.io.` |
 
 ---
 
 ## Namecheap notes
 
-Nameservers may be hosting DNS (`dns1.namecheaphosting.com` / `dns2.namecheaphosting.com`). Edit records there, or switch to BasicDNS / PremiumDNS first.
+Nameservers may be hosting DNS (`dns1.namecheaphosting.com` / `dns2.namecheaphosting.com`). Edit records there, or switch to BasicDNS / PremiumDNS first, or to Cloudflare nameservers for the intended cutover.
 
 Keep **MX** / **TXT** (SPF) if you use email. Remove LiteSpeed / parking A records when switching production.
 
@@ -87,10 +121,11 @@ GITHUB_PAGES_BASE_PATH=1 npm run build
 
 ## Verification checklist
 
-1. `dig +short autogive.app A` returns Vercel (`76.76.21.21`) or the four Pages IPs — matching the chosen host.
-2. Domain shows **Verified** in Vercel (or Pages) and HTTPS works.
-3. `curl -sI https://autogive.app/` → `200` from Vercel/GitHub (not LiteSpeed parking).
+1. `dig +short autogive.app A` (and AAAA / CNAME) matches the **chosen** host — Cloudflare, Vercel (`76.76.21.21`), or the four Pages IPs — not two of them.
+2. Domain shows **Active** on the Cloudflare Worker (after cutover) or **Verified** in Vercel/Pages, and HTTPS works.
+3. `curl -sI https://autogive.app/` → `200` from Cloudflare or Vercel (not LiteSpeed parking).
 4. HTML references `/_next/` assets at the site root.
-5. Canonical / Open Graph use `https://autogive.app`.
+5. `/portfolio-signals/` and `/impact-relay/` still return the other products (proxy), including trailing slashes.
+6. Canonical / Open Graph use `https://autogive.app`.
 
 Propagation often takes minutes; can take up to 24–48 hours.

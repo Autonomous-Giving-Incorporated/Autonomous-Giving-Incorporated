@@ -2,7 +2,7 @@
 
 ## System overview
 
-AGI is a static Next.js App Router application. GitHub Actions builds the site from `main`, retrieves approved public aggregate signals during that build, exports static files to `out/`, and deploys them to GitHub Pages.
+AGI is a static Next.js App Router application. The designed suite stack is **Cloudflare + existing Supabase** only: this public site stays static on Cloudflare; durable data and auth stay on the existing platform Supabase project. GitHub Actions builds the site from `main`, retrieves approved public aggregate signals during that build, and exports static files to `out/`. Intended production uploads `out/` to Cloudflare Workers static assets. Vercel remains the live `autogive.app` apex until DNS cutover. GitHub Pages is a fallback mirror. Do not treat Render, Fly, or Railway as remaining hosts.
 
 ```mermaid
 flowchart LR
@@ -12,7 +12,7 @@ flowchart LR
   V -->|"approved inputs"| P["Static AGI pages"]
   V -->|"failure or rejected policy"| F
   F --> P
-  P --> GH["GitHub Pages"]
+  P --> CF["Cloudflare Workers static assets"]
 ```
 
 The deployed browser receives only static HTML, CSS, JavaScript, brand assets, and the selected public-safe projection. It does not call Portfolio Signals or Impact Relay at runtime.
@@ -21,12 +21,14 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 
 - **Framework:** Next.js 16 App Router with React 19 and TypeScript.
 - **Output:** static export (`output: "export"`), Turbopack production build by default.
-- **Hosting:** **Vercel** production at **https://autogive.app**; GitHub Pages remains a github.io fallback.
-- **Build:** Node.js 22; static export to `out/` at site root (`basePath` empty). See [VERCEL.md](VERCEL.md).
-- **State:** local React state for the replayable demonstration; no persistence.
+- **Designed stack:** Cloudflare (this static site and public ingress) + existing Supabase (suite auth, Postgres, RLS). This repo does not call Supabase at runtime.
+- **Hosting:** **Cloudflare Workers static assets** (`agi-public`) is the intended production host at **https://autogive.app**. Vercel remains live until DNS cutover; GitHub Pages remains a github.io fallback. See [CLOUDFLARE.md](CLOUDFLARE.md).
+- **Build:** Node.js 22; static export to `out/` at site root (`basePath` empty).
+- **Suite paths:** `/portfolio-signals/` and `/impact-relay/` are reverse-proxied by a thin Worker (`workers/suite-gateway.ts`), matching [`vercel.json`](../vercel.json). Those products are not merged into this repo.
+- **State:** local React state for the replayable demonstration; no persistence on this site.
 - **External data:** two fixed HTTPS sources fetched at build time with a bundled fallback.
 
-`site.ts` owns the canonical production origin (`https://autogive.app`). `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and Pages setup: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
+`site.ts` owns the canonical production origin (`https://autogive.app`). `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and cutover: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
 
 ## Component boundaries
 
@@ -40,7 +42,7 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 | `integration/public-sources.ts` | Fetches, validates, selects, and normalizes public projections        |
 | `integration/contracts.ts`      | Defines versioned narrative contracts for future governed integration |
 | `integration/fixtures.ts`       | Supplies public-safe deterministic contract fixtures                  |
-| `tokens.css`                    | Defines visual tokens shared by the application                       |
+| `workers/suite-gateway.ts`   | Reverse-proxies suite paths on Cloudflare (same role as `vercel.json`) |
 
 The page component is the server entry point. Interactive state stays in focused client components rather than moving the whole page to the client.
 
@@ -70,4 +72,4 @@ The UI labels the result as either `Live public projection` or `Deterministic fa
 
 ## Deliberate exclusions
 
-The current architecture has no backend, authentication, database, payment processing, CMS, donor account, runtime write operation, or notification delivery. Adding any of these changes the threat model and requires a separately reviewed architecture plan.
+The current architecture has no backend, authentication, database, payment processing, CMS, donor account, runtime write operation, or notification delivery **on this public site**. Durable suite data and auth stay on **existing Supabase**. The Cloudflare Worker is suite-path reverse proxy only (the same role as Vercel rewrites), not an AGI API. Do not add OpenNext SSR, a Node server, D1/KV, a second database, or Render / Fly / Railway. Adding any of those to this site changes the threat model and requires a separately reviewed architecture plan.
