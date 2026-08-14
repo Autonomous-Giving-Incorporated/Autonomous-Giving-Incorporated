@@ -11,6 +11,16 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
 };
 
+const SAFE_UPSTREAM_HEADERS = [
+  "accept",
+  "accept-language",
+  "cache-control",
+  "if-modified-since",
+  "if-none-match",
+  "range",
+  "user-agent",
+] as const;
+
 function withSecurityHeaders(response: Response): Response {
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
@@ -30,13 +40,11 @@ async function proxySuite(
 ): Promise<Response> {
   const incoming = new URL(request.url);
   const target = new URL(pathname + incoming.search, origin);
-  const headers = new Headers(request.headers);
-  headers.delete("host");
-  headers.delete("cf-connecting-ip");
-  headers.delete("cf-ipcountry");
-  headers.delete("cf-ray");
-  headers.delete("cf-visitor");
-  headers.delete("x-forwarded-host");
+  const headers = new Headers();
+  for (const header of SAFE_UPSTREAM_HEADERS) {
+    const value = request.headers.get(header);
+    if (value) headers.set(header, value);
+  }
 
   const upstream = await fetch(
     new Request(target, {
@@ -93,6 +101,14 @@ const suiteGateway = {
     }
 
     if (route.kind === "proxy") {
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return withSecurityHeaders(
+          new Response("Method Not Allowed", {
+            status: 405,
+            headers: { Allow: "GET, HEAD" },
+          }),
+        );
+      }
       return proxySuite(request, route.origin, route.pathname);
     }
 
