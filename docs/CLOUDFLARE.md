@@ -43,7 +43,7 @@ npx wrangler deploy
 
 ## GitHub Actions secrets
 
-Workflow: [`.github/workflows/deploy-cloudflare.yml`](../.github/workflows/deploy-cloudflare.yml) runs on push to `main` and on `workflow_dispatch`.
+Workflow: [`.github/workflows/deploy-cloudflare.yml`](../.github/workflows/deploy-cloudflare.yml) runs after the `CI` workflow succeeds for a push to `main`. It checks out the successful CI run's exact head SHA; it is not manually dispatchable.
 
 Configure these **repository secrets** (GitHub → Settings → Secrets and variables → Actions). Do not commit values.
 
@@ -103,13 +103,13 @@ DNS for `autogive.app` can target **one** web origin at a time. Do not dual-poin
 ## Cutover checklist
 
 1. `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set on the GitHub repo.
-2. Push to `main` deploys `agi-public` (or `npm run cf:deploy` locally).
+2. A successful `CI` run for a push to `main` deploys `agi-public` (or use `npm run cf:deploy` locally with normal Cloudflare authentication).
 3. workers.dev (or preview URL) smoke: `/`, `/robots.txt`, `/sitemap.xml`, `/legal/`, `/portfolio-signals/`, `/impact-relay/`.
-4. `BASE_URL=https://agi-public.<subdomain>.workers.dev ./scripts/smoke-public-suite.sh`
+4. `EDGE_PROXY_CHECKS=1 BASE_URL=https://agi-public.<subdomain>.workers.dev ./scripts/smoke-public-suite.sh` (includes proxy security-header and POST-rejection checks).
 5. Export existing DNS (including MX / SPF / DKIM / DMARC) before changing nameservers or A/CNAME records.
 6. Add the Cloudflare zone, attach `autogive.app`, keep mail records intact.
 7. Point the apex at Cloudflare; verify TLS, www → apex, and `curl -sI https://autogive.app/` is Cloudflare (not LiteSpeed parking, not Vercel).
-8. Re-run `./scripts/smoke-public-suite.sh` against `https://autogive.app`.
+8. Re-run `EDGE_PROXY_CHECKS=1 ./scripts/smoke-public-suite.sh` against `https://autogive.app`.
 9. Observe, then retire the Vercel Git production hook and (later) `vercel.json`.
 
 ## Security / trust boundary (unchanged)

@@ -2,7 +2,7 @@ import {
   matchSuiteRoute,
   rewriteUpstreamLocation,
   suitePrefixForOrigin,
-} from "./suite-routes";
+} from "./suite-routes.ts";
 
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
@@ -85,7 +85,7 @@ type AssetFetcher = {
   fetch: (input: Request) => Promise<Response>;
 };
 
-const suiteGateway = {
+export const suiteGateway = {
   async fetch(
     request: Request,
     env: { ASSETS: AssetFetcher },

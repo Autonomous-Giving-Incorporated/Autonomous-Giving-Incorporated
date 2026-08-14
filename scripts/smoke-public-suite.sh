@@ -3,6 +3,7 @@
 set -euo pipefail
 
 BASE_URL="${BASE_URL:-https://autogive.app}"
+EDGE_PROXY_CHECKS="${EDGE_PROXY_CHECKS:-0}"
 FAIL=0
 
 check() {
@@ -27,6 +28,33 @@ check "/portfolio-signals/"
 check "/impact-relay/"
 check "/portfolio-signals/data/public-campaign.json"
 check "/impact-relay/data/public-impact.json"
+
+check_header() {
+  local path="$1"
+  local header="$2"
+  local expect="$3"
+  local url="${BASE_URL}${path}"
+  local value
+  value=$(curl -sS -I -m 25 "$url" | tr -d '\r' | awk -F ': ' -v header="$header" 'tolower($1) == tolower(header) { value = $2 } END { print value }')
+  if [[ "$value" != "$expect" ]]; then
+    echo "FAIL  header ${header}=${value:-<missing>} (want ${expect})  $url"
+    FAIL=1
+    return
+  fi
+  echo "OK    header ${header}  $url"
+}
+
+check_proxy_method_guard() {
+  local url="${BASE_URL}/portfolio-signals/"
+  local code
+  code=$(curl -sS -o /tmp/agi-smoke-post -w "%{http_code}" -X POST -m 25 "$url" || echo "000")
+  if [[ "$code" != "405" ]]; then
+    echo "FAIL  $code (want 405)  POST $url"
+    FAIL=1
+    return
+  fi
+  echo "OK    405 POST $url"
+}
 
 # Authority contracts (privacy-safe public projections)
 if ! grep -q 'advisory_only' /tmp/agi-smoke-body 2>/dev/null; then
@@ -57,6 +85,13 @@ if ! grep -q 'Autonomously Giving' /tmp/agi-smoke-home; then
   FAIL=1
 else
   echo "OK    AGI home content"
+fi
+
+if [[ "$EDGE_PROXY_CHECKS" == "1" ]]; then
+  check_header "/" "X-Content-Type-Options" "nosniff"
+  check_header "/portfolio-signals/" "X-Frame-Options" "DENY"
+  check_header "/impact-relay/" "Referrer-Policy" "strict-origin-when-cross-origin"
+  check_proxy_method_guard
 fi
 
 if [[ "$FAIL" -ne 0 ]]; then

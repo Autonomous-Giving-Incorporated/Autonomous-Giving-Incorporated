@@ -33,7 +33,7 @@ Cloudflare custom domains require `autogive.app` as a zone on the same account t
 4. Attach `autogive.app` as a Worker custom domain (dashboard → `agi-public` → Domains). Cloudflare will create the DNS record that points at the Worker.
 5. Redirect `www.autogive.app` to the apex.
 6. Verify TLS, apex, www redirect, `/_next/` assets, canonical/Open Graph tags, `robots.txt`, and `sitemap.xml`.
-7. Run `./scripts/smoke-public-suite.sh` against `https://autogive.app`.
+7. Run `EDGE_PROXY_CHECKS=1 ./scripts/smoke-public-suite.sh` against `https://autogive.app`.
 8. Confirm mail MX/TXT records are unchanged. Only then stop using Vercel as the public origin.
 
 Do not put `autogive.app` in `wrangler.jsonc` until the zone exists; a missing zone would fail CI deploys.
