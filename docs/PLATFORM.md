@@ -2,6 +2,8 @@
 
 Single source of truth for **where** the suite lives so work does not fragment across hosts, projects, or databases.
 
+**Designed stack:** Cloudflare (public static site and ingress) + existing Supabase (durable data and auth). This public AGI site stays static. Vercel is fallback until `autogive.app` DNS cutover. Do not add Render, Fly, Railway, or a second database.
+
 ## Product (locked)
 
 - **AGI** sells multi-tenant Portfolio Signals + Impact Relay + agentic framework.
@@ -12,18 +14,18 @@ See [superpowers/specs/2026-08-06-agi-suite-vercel-public-design.md](./superpowe
 
 ## Hosting (public surfaces)
 
-| Surface | Path on apex | Vercel project | Repo |
+| Surface | Path on apex | Host | Repo |
 | --- | --- | --- | --- |
-| AGI workbench | `/` | `autonomous-giving-incorporated` | Autonomous-Giving-Incorporated |
-| Portfolio Signals public | `/portfolio-signals/` | `fund-intel` → https://fund-intel-ten.vercel.app | Fund-Intel |
+| AGI workbench | `/` | Cloudflare Worker `agi-public` (intended); Vercel `autonomous-giving-incorporated` until DNS cutover | Autonomous-Giving-Incorporated |
+| Portfolio Signals public | `/portfolio-signals/` | Proxied to `fund-intel` → https://fund-intel-ten.vercel.app | Fund-Intel |
 | Portfolio Signals workspace | `/portfolio-signals/workspace` | same `fund-intel` project | Fund-Intel |
-| Impact Relay public | `/impact-relay/` | `impact-relay` → https://impact-relay.vercel.app | Impact-Relay |
+| Impact Relay public | `/impact-relay/` | Proxied to `impact-relay` → https://impact-relay.vercel.app | Impact-Relay |
 
 **Apex domain:** `https://autogive.app` (www also attached).  
-**Team:** `scrimshawlife-8819s-projects`.  
+**AGI production path:** [CLOUDFLARE.md](CLOUDFLARE.md) (intended) · [VERCEL.md](VERCEL.md) (live until cutover).  
 **Workspace production URL:** https://autogive.app/portfolio-signals/workspace
 
-GitHub Pages remains optional fallback only.
+GitHub Pages remains optional fallback only. Do not merge Portfolio Signals or Impact Relay into this repository.
 
 ## Supabase (data plane)
 

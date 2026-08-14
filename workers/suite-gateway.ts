@@ -1,0 +1,119 @@
+import {
+  matchSuiteRoute,
+  rewriteUpstreamLocation,
+  suitePrefixForOrigin,
+} from "./suite-routes";
+
+const SECURITY_HEADERS: Record<string, string> = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+};
+
+const SAFE_UPSTREAM_HEADERS = [
+  "accept",
+  "accept-language",
+  "cache-control",
+  "if-modified-since",
+  "if-none-match",
+  "range",
+  "user-agent",
+] as const;
+
+function withSecurityHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    headers.set(key, value);
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+async function proxySuite(
+  request: Request,
+  origin: string,
+  pathname: string,
+): Promise<Response> {
+  const incoming = new URL(request.url);
+  const target = new URL(pathname + incoming.search, origin);
+  const headers = new Headers();
+  for (const header of SAFE_UPSTREAM_HEADERS) {
+    const value = request.headers.get(header);
+    if (value) headers.set(header, value);
+  }
+
+  const upstream = await fetch(
+    new Request(target, {
+      method: request.method,
+      headers,
+      body:
+        request.method === "GET" || request.method === "HEAD"
+          ? undefined
+          : request.body,
+      redirect: "manual",
+    }),
+  );
+
+  const responseHeaders = new Headers(upstream.headers);
+  const location = responseHeaders.get("Location");
+  if (location) {
+    responseHeaders.set(
+      "Location",
+      rewriteUpstreamLocation(
+        location,
+        incoming.origin,
+        origin,
+        suitePrefixForOrigin(origin),
+      ),
+    );
+  }
+
+  return withSecurityHeaders(
+    new Response(upstream.body, {
+      status: upstream.status,
+      statusText: upstream.statusText,
+      headers: responseHeaders,
+    }),
+  );
+}
+
+type AssetFetcher = {
+  fetch: (input: Request) => Promise<Response>;
+};
+
+const suiteGateway = {
+  async fetch(
+    request: Request,
+    env: { ASSETS: AssetFetcher },
+  ): Promise<Response> {
+    const url = new URL(request.url);
+    const route = matchSuiteRoute(url.pathname);
+
+    if (route.kind === "redirect") {
+      const location = new URL(route.pathname + url.search, url.origin);
+      return withSecurityHeaders(
+        Response.redirect(location.toString(), route.status),
+      );
+    }
+
+    if (route.kind === "proxy") {
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return withSecurityHeaders(
+          new Response("Method Not Allowed", {
+            status: 405,
+            headers: { Allow: "GET, HEAD" },
+          }),
+        );
+      }
+      return proxySuite(request, route.origin, route.pathname);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
+
+export default suiteGateway;

@@ -1,8 +1,10 @@
-# Vercel deployment
+# Vercel deployment (fallback until cutover)
 
-Primary production host for the AGI public workbench is **Vercel**, with canonical origin **https://autogive.app**.
+**Designed production host is Cloudflare Workers static assets**, with durable suite data/auth on existing Supabase. See [CLOUDFLARE.md](CLOUDFLARE.md) and [PLATFORM.md](PLATFORM.md).
 
-The app is a **static Next.js export** (`output: "export"` → `out/`). No serverless functions, no runtime secrets, no auth.
+Vercel remains the **fallback** public host and the **live** apex for **https://autogive.app** until DNS cutover. Keep [`vercel.json`](../vercel.json) until that cutover is complete and verified. Do not delete the Vercel project or this file as part of adding Cloudflare. Render, Fly, and Railway are not remaining hosts.
+
+The app is a **static Next.js export** (`output: "export"` → `out/`). No serverless functions, no runtime secrets, no auth on this site.
 
 ## Project settings
 
@@ -17,7 +19,7 @@ The app is a **static Next.js export** (`output: "export"` → `out/`). No serve
 
 > Do not set the Vercel framework preset to **Next.js** while using `output: "export"`. That preset expects a server build and fails looking for `routes-manifest.json` under `out/`.
 
-Config in repo: [`vercel.json`](../vercel.json).
+Config in repo: [`vercel.json`](../vercel.json) (suite path rewrites, security headers). The Cloudflare Worker mirrors those rewrites; keep both until cutover.
 
 ## Link & deploy (CLI)
 
@@ -32,19 +34,21 @@ vercel --yes --scope scrimshawlife-8819s-projects
 vercel --prod --yes --scope scrimshawlife-8819s-projects
 ```
 
-Git integration (recommended): import `scrimshawlife-ctrl/Autonomous-Giving-Incorporated` in the Vercel dashboard so `main` → production and PRs → previews.
+Git integration: import the AGI repo in the Vercel dashboard so `main` → production and PRs → previews, until Cloudflare owns the apex.
 
 ## Custom domain: autogive.app
 
-### In Vercel
+Until cutover, DNS still targets Vercel. After Cloudflare is verified, move the apex as described in [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md) and [CLOUDFLARE.md](CLOUDFLARE.md).
+
+### In Vercel (current live host)
 
 1. Project → **Settings → Domains**
 2. Add `autogive.app` and `www.autogive.app`
 3. Prefer **Redirect www → apex** (or the reverse — pick one canonical)
 
-### DNS at Namecheap
+### DNS at Namecheap (current)
 
-Nameservers are currently Namecheap **hosting** DNS. Edit records in that panel (or switch the domain to BasicDNS first).
+Nameservers may be Namecheap **hosting** DNS. Edit records in that panel (or switch the domain to BasicDNS first).
 
 **Option A — apex A record (common)**
 
@@ -64,7 +68,7 @@ Remove LiteSpeed / parking A records that still point at Namecheap hosting.
 
 ### Do not dual-point the apex
 
-DNS for `autogive.app` can target **either** Vercel **or** GitHub Pages, not both. Choose Vercel as production; keep GitHub Pages as the github.io fallback only.
+DNS for `autogive.app` can target **one** of Cloudflare, Vercel, or GitHub Pages, not two at once. After cutover, Cloudflare is production; keep this Vercel project as a rollback until the Cloudflare checklist passes.
 
 ## Local verification before ship
 
@@ -74,17 +78,16 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
-# out/ must contain index.html and CNAME is optional for Vercel
 ls out/index.html
 ```
 
-## Relationship to GitHub Pages
+## Relationship to Cloudflare and GitHub Pages
 
 | Surface | Role |
 | --- | --- |
-| Vercel + `autogive.app` | Production |
-| `scrimshawlife-ctrl.github.io/Autonomous-Giving-Incorporated/` | Fallback mirror (workflow still deploys) |
-| `public/CNAME` | GitHub Pages custom-domain helper; harmless static file on Vercel |
+| Cloudflare Worker `agi-public` + `autogive.app` | Intended production after DNS cutover |
+| Vercel + current `autogive.app` DNS | Live production until cutover |
+| github.io project site | Fallback mirror (workflow still deploys) |
 
 Legacy project-site path (github.io only):
 
@@ -92,7 +95,7 @@ Legacy project-site path (github.io only):
 GITHUB_PAGES_BASE_PATH=1 npm run build
 ```
 
-Vercel builds must keep **empty** `basePath` (default).
+Vercel and Cloudflare production builds must keep **empty** `basePath` (default).
 
 ## Security / trust boundary (unchanged)
 

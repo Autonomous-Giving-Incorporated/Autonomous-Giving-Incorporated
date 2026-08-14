@@ -52,8 +52,9 @@ Platform pin: Specs **v1.x** capability-first modular monolith ([SPEC-002A](http
 | --- | --- |
 | Code home | [Fund-Intel `services/allocation-middleware/`](https://github.com/scrimshawlife-ctrl/Fund-Intel/tree/main/services/allocation-middleware) |
 | Pilot tenant | `org_hacker_dojo` + seed fixtures |
-| Director login | Supabase JWT + membership (`/login.html`) |
-| Hosted Fly host | Operator-owned |
+| Director login | Existing platform Supabase JWT + membership (`/login.html`) |
+| Durable data/auth | Existing platform Supabase (`utdioxwiskzatwoejgiu`) |
+| Public host | Cloudflare (designed); Vercel until autogive.app DNS cutover. Not Render/Fly/Railway |
 | Live every.org gifts | Operator-owned (setup wizard ready) |
 
 Fund-Intel docs: [ALLOCATION-MIDDLEWARE](https://github.com/scrimshawlife-ctrl/Fund-Intel/blob/main/docs/ALLOCATION-MIDDLEWARE.md) · [pilot](https://github.com/scrimshawlife-ctrl/Fund-Intel/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md) · [director login](https://github.com/scrimshawlife-ctrl/Fund-Intel/blob/main/docs/ALLOCATION-DIRECTOR-LOGIN.md)

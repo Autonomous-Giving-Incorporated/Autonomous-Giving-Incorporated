@@ -34,7 +34,7 @@ git diff --check
 
 For interface changes, also review narrow mobile and desktop layouts, keyboard operation, focus visibility, reduced motion, and source/fallback states.
 
-Documentation-only changes under `docs/**` (and other non-site paths) do not trigger the GitHub Pages deploy workflow. Use **Actions → Deploy GitHub Pages → Run workflow** if a docs-only merge must refresh the published site.
+Documentation-only changes under `docs/**` (and other non-site paths) do not trigger the GitHub Pages deploy workflow. Cloudflare deploys on every push to `main` (see [CLOUDFLARE.md](CLOUDFLARE.md)). Use **Actions → Deploy GitHub Pages → Run workflow** if a docs-only merge must refresh the Pages fallback.
 
 ## Code conventions
 
