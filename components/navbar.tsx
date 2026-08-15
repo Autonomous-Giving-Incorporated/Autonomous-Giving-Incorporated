@@ -9,7 +9,7 @@ const links = [
   ["Proof", "#demo"],
   ["Signals", "#signals"],
   ["About", "#about"],
-  ["Sign in", "https://autogive.app/portfolio-signals/workspace.html"],
+  ["Sign in", "/login"],
 ] as const;
 
 const suiteLinks = [

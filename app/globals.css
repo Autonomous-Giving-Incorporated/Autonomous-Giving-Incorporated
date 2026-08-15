@@ -65,6 +65,221 @@ button {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
 }
+
+.control-plane-page {
+  min-height: 100vh;
+  padding-block: clamp(2rem, 6vw, 5rem);
+  background:
+    radial-gradient(circle at 85% 10%, var(--color-verified-soft), transparent 32rem),
+    var(--color-paper);
+}
+.control-plane-shell {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 72rem;
+}
+.control-plane-shell > .section-heading {
+  max-width: 38rem;
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+}
+.control-plane-status,
+.control-plane-login-card {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  max-width: 54rem;
+  padding: var(--space-5);
+  border: 1px solid var(--color-rule-strong);
+  border-left: 4px solid var(--color-accent);
+  background: var(--color-paper-raised);
+}
+.control-plane-status p,
+.control-plane-login-card p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+.control-plane-status-dot {
+  flex: 0 0 auto;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.3rem;
+  border-radius: 999px;
+  background: var(--color-verified);
+  box-shadow: 0 0 0 0.3rem var(--color-verified-soft);
+}
+.control-plane-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.control-plane-card {
+  min-height: 12rem;
+  padding: var(--space-5);
+  border-top: 2px solid var(--color-ink);
+  background: var(--color-paper-raised);
+}
+.control-plane-card .kicker {
+  margin-bottom: var(--space-3);
+}
+.control-plane-card h2,
+.control-plane-login-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+}
+.control-plane-card p:last-child {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+.control-plane-routes {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-rule);
+}
+.control-plane-projects {
+  display: grid;
+  gap: var(--space-5);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-rule);
+}
+.control-plane-projects > div:first-child {
+  max-width: 48rem;
+}
+.control-plane-projects .section-heading {
+  margin: 0;
+}
+.control-plane-project-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.control-plane-project {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--color-rule-strong);
+  background: var(--color-paper-raised);
+}
+.control-plane-project-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.control-plane-project-header .kicker {
+  margin-bottom: var(--space-2);
+}
+.control-plane-project h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+}
+.control-plane-project-header > strong {
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+.control-plane-project > p {
+  min-height: 3.2rem;
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+.control-plane-project-status {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+.control-plane-project-status div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-rule);
+}
+.control-plane-project-status dt,
+.control-plane-project-status dd {
+  margin: 0;
+}
+.control-plane-project-status dt {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+.control-plane-project-status dd {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.control-plane-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+.control-plane-project-actions .button {
+  font-size: var(--text-sm);
+}
+.control-plane-routes .section-heading {
+  margin: 0;
+}
+.control-plane-route-list {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 54rem;
+}
+.control-plane-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-rule-strong);
+  background: var(--color-paper-raised);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.control-plane-route:hover {
+  border-color: var(--color-accent);
+  transform: translateX(0.2rem);
+}
+.control-plane-route strong,
+.control-plane-route small {
+  display: block;
+}
+.control-plane-route small {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+}
+.control-plane-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.control-plane-login {
+  max-width: 58rem;
+}
+.control-plane-login-card {
+  display: block;
+  max-width: 44rem;
+}
+.control-plane-login-card .control-plane-actions {
+  margin-top: var(--space-5);
+}
+
+@media (max-width: 760px) {
+  .control-plane-grid {
+    grid-template-columns: 1fr;
+  }
+  .control-plane-project-list {
+    grid-template-columns: 1fr;
+  }
+}
 a:active:not([aria-disabled="true"]),
 button:active:not(:disabled) {
   transform: none;
