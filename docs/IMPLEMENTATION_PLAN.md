@@ -13,14 +13,14 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 
 ## Workstream 1 — Public-source reliability (Phase B)
 
-1. Define source freshness thresholds and clock assumptions.
-2. Add runtime schema validation for both public documents (Fund-Intel schema + Impact-Relay public-impact shape).
-3. Represent `live`, `fallback`, `stale`, `malformed`, and `policy_rejected` as explicit internal states.
-4. Add deterministic tests for every selection and rejection path.
-5. Render accessible freshness and provenance copy without exposing payloads.
-6. Document privacy-safe build diagnostics.
+Landed. See [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) Phase B and [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md).
 
-See the detailed task table in [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md).
+1. Source freshness thresholds and clock assumptions (24 h soft / 7 d hard; build-time clock).
+2. Runtime schema validation for both public documents (Fund-Intel schema + Impact-Relay public-impact shape).
+3. Explicit `live`, `fallback`, `stale`, `malformed`, and `policy_rejected` states.
+4. Deterministic tests for every selection and rejection path.
+5. Accessible freshness and provenance copy without exposing payloads.
+6. Privacy-safe build diagnostics (source, age, state, reason only).
 
 ## Workstream 2 — Contract governance (Phase C)
 

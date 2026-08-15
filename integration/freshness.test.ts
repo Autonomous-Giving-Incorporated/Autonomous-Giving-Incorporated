@@ -4,21 +4,22 @@ import {
   assessFreshness,
   FRESHNESS_HARD_MS,
   FRESHNESS_SOFT_MS,
-  isStaleLabel,
+  isHardStale,
+  isSoftStale,
   parseUpdatedAt,
 } from "./freshness.ts";
 
-const NOW = Date.parse("2026-08-03T12:00:00.000Z");
+const NOW = Date.parse("2026-08-15T12:00:00.000Z");
 
 describe("parseUpdatedAt", () => {
   it("parses date-only as UTC midnight", () => {
-    assert.equal(parseUpdatedAt("2026-08-02"), Date.parse("2026-08-02T00:00:00.000Z"));
+    assert.equal(parseUpdatedAt("2026-08-14"), Date.parse("2026-08-14T00:00:00.000Z"));
   });
 
   it("parses full ISO timestamps", () => {
     assert.equal(
-      parseUpdatedAt("2026-08-02T16:00:00.000Z"),
-      Date.parse("2026-08-02T16:00:00.000Z"),
+      parseUpdatedAt("2026-08-14T16:00:00.000Z"),
+      Date.parse("2026-08-14T16:00:00.000Z"),
     );
   });
 
@@ -36,30 +37,34 @@ describe("assessFreshness", () => {
     assert.ok(result.ageMs !== null && result.ageMs < FRESHNESS_SOFT_MS);
   });
 
-  it("labels stale data past the soft window", () => {
+  it("labels stale data past the soft window and within the hard window", () => {
     const updatedAt = new Date(NOW - FRESHNESS_SOFT_MS - 60_000).toISOString();
     const result = assessFreshness(updatedAt, NOW);
     assert.equal(result.label, "stale");
+    assert.equal(isSoftStale(result.label), true);
+    assert.equal(isHardStale(result.label), false);
   });
 
   it("labels very_stale data past the hard window", () => {
     const updatedAt = new Date(NOW - FRESHNESS_HARD_MS - 60_000).toISOString();
     const result = assessFreshness(updatedAt, NOW);
     assert.equal(result.label, "very_stale");
+    assert.equal(isHardStale(result.label), true);
   });
 
   it("labels unknown when the timestamp cannot be parsed", () => {
     const result = assessFreshness("bogus", NOW);
     assert.equal(result.label, "unknown");
     assert.equal(result.ageMs, null);
+    assert.equal(isHardStale(result.label), true);
   });
 });
 
-describe("isStaleLabel", () => {
-  it("treats stale, very_stale, and unknown as stale", () => {
-    assert.equal(isStaleLabel("fresh"), false);
-    assert.equal(isStaleLabel("stale"), true);
-    assert.equal(isStaleLabel("very_stale"), true);
-    assert.equal(isStaleLabel("unknown"), true);
+describe("freshness helpers", () => {
+  it("treats only the soft window as soft-stale", () => {
+    assert.equal(isSoftStale("fresh"), false);
+    assert.equal(isSoftStale("stale"), true);
+    assert.equal(isSoftStale("very_stale"), false);
+    assert.equal(isSoftStale("unknown"), false);
   });
 });

@@ -24,7 +24,7 @@ Use this checklist for every material production release. Copy the completed evi
 - [ ] Complete and reset the deterministic scenario by keyboard.
 - [ ] Confirm focus visibility, heading order, landmarks, contrast, and status labels.
 - [ ] Enable reduced motion and verify that the experience remains usable.
-- [ ] Review both live-public-projection and deterministic-fallback states.
+- [ ] Review live, stale, fallback, malformed, and policy-rejected source states.
 - [ ] Verify AGI, Portfolio Signals, and Impact Relay navigation destinations.
 
 ## Pull request and deployment

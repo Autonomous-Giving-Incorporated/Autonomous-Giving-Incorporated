@@ -21,22 +21,24 @@ The site does not collect donations, persist records, authenticate people, expos
 
 **Status:** completed on 2026-08-02 through [PR #7](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/pull/7). CI and the GitHub Pages deployment passed for the merged commit.
 
-## Phase B — Public-source reliability (next)
+## Phase B — Public-source reliability (landed)
 
 **Goal:** make the existing read-only source seam operationally explicit and testable.
 
 ### Engineering tasks
 
-| ID | Task | Notes |
-|----|------|-------|
-| B1 | Define freshness thresholds and clock assumptions for both public documents | Document threshold (recommended starting point: 24 h soft / 7 d hard) and how the UI labels delayed data |
-| B2 | Add runtime schema validation for both source documents | Use the published Fund-Intel schema and the current Impact-Relay public-impact shape; fail closed |
-| B3 | Expand internal states to `live` \| `fallback` \| `stale` \| `malformed` \| `policy_rejected` | Keep the deterministic fixture as the only fallback content |
-| B4 | Deterministic tests for every selection and rejection path | Network failure, non-2xx, parse error, wrong authority, missing VERIFIED outcome, stale data |
-| B5 | Accessible provenance and freshness copy | Labels must work with screen readers and reduced motion; never surface raw payloads |
-| B6 | Privacy-safe build diagnostics | CI / build logs report source, age, state, and reason only |
+| ID | Task | Status |
+|----|------|--------|
+| B1 | Freshness thresholds and clock assumptions for both public documents | Landed: 24 h soft / 7 d hard; build-time `Date.now()`; date-only `updatedAt` is UTC midnight. Soft = project and label delayed. Hard = fail closed to the fixture. Documented in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md). |
+| B2 | Runtime schema validation for both source documents | Landed: published Fund-Intel / Portfolio Signals public-campaign shape and Impact Relay public-impact shape in `integration/validate-public.ts`. Fail closed. Unknown authority rejected. Invented READY/freeze execution states rejected. |
+| B3 | Explicit states `live` \| `fallback` \| `stale` \| `malformed` \| `policy_rejected` | Landed. Deterministic fixture is the only fallback content. |
+| B4 | Deterministic tests for every selection and rejection path | Landed in `integration/public-sources.test.ts` (network, non-2xx, parse, wrong authority, missing VERIFIED, soft stale, hard stale, happy live). |
+| B5 | Accessible provenance and freshness copy | Landed in `components/public-signals.tsx` and `integration/signal-copy.ts`. Screen-reader status, honest delay labels, no raw payloads. Status is not motion-only; reduced-motion already disables nonessential animation. |
+| B6 | Privacy-safe build diagnostics | Landed: `formatDiagnosticLine` reports source, age, freshness, and reason only. Homepage logs that line at build time. |
 
 **Exit criteria:** deterministic state coverage, reviewed freshness semantics, monitored fallback behavior, and accessible status copy.
+
+**Status:** implemented on this branch. Phase C (field owners, vocabulary sign-off, leadership approvals) and Phase D (runtime read-only host) are not started.
 
 ## Phase C — Contract governance
 
