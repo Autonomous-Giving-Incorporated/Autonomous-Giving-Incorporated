@@ -91,3 +91,36 @@ Pause or narrow scope if public data cannot be published safely, identifiers do 
 | Auth, payments, and notifications          | Product/security owners | Future   |
 
 See also [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md) for the complete cross-repository surface and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for the engineering sequence.
+
+## 2026-08-15 audit continuation — boundary reconciliation
+
+The full evidence record is in [AGI_SPEC_AUDIT_2026-08-15.md](AGI_SPEC_AUDIT_2026-08-15.md).
+
+### Audit verdict
+
+The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk is specification and boundary drift: the conformance manifest is broader than the static public implementation, the demo is not the canonical `SPEC-011` scenario, a synthetic donor name appears in public demo copy, and cross-repository operational status is inconsistent.
+
+### Phase E — Conformance and boundary reconciliation
+
+**Goal:** make AGI’s declared responsibility no broader than its evidence-backed public workbench while preserving suite integration boundaries.
+
+| ID | Task | Priority | Exit evidence |
+|----|------|----------|---------------|
+| E1 | Reconcile `platform-spec/conformance.yml` with the actual static public capability. Remove unsupported canonical contracts/events, or implement and evidence them in their owning repository. | P0 | Manifest IDs have matching schemas, tests, and ownership links; no runtime capability is implied by a static projection. |
+| E2 | Choose the canonical demo. Prefer the Specs Community AI Lab / 25-laptop scenario for `SPEC-011`; otherwise remove `SPEC-011` and label Hacker Dojo as an integration fixture. | P0 | Demo test proves the selected scenario and required lifecycle order. |
+| E3 | Remove `donor.name` and “Delivered to Jane” from the public deterministic demo. | P0 | Source and rendered-copy scan finds no donor identity field in public demo data. |
+| E4 | Replace normative floating Specs `main` links with the pinned `v1.0.0` release, and mark current-status links as non-normative. | P1 | Link audit distinguishes pinned authority from discovery/status links. |
+| E5 | Resolve the Phase 2 status contradiction using one dated operator evidence record. Keep Fund-Intel execution steps in Fund-Intel and retain only AGI’s dependency boundary here. | P1 | README, platform docs, and foundation status agree. |
+| E6 | Add a conformance-check command that validates the manifest against the pinned release and requires evidence paths for declared artifacts. | P1 | CI fails on unknown IDs, missing evidence, floating normative pins, or unsupported claims. |
+| E7 | Upgrade the transitive `nanoid` dependency through a reviewed lockfile change. | P2 | `npm audit --omit=dev` has no high-severity finding, or an approved exception is documented. |
+
+### Phase E guardrails
+
+- Do not add a backend, database, authentication, payments, or runtime writes to the AGI public site to satisfy a conformance declaration.
+- Do not merge Fund-Intel or Impact Relay application code into this repository.
+- Keep public fixtures synthetic, aggregate-safe, and free of donor identity.
+- Keep the platform pin at `Autonomous-Giving-Specs v1.0.0` until a deliberate compatibility review approves an update.
+
+### Phase E definition of done
+
+Phase E is complete when the manifest, demo, privacy copy, documentation status, and tests tell the same story; unrelated-project scans remain clean; lint, typecheck, tests, production build, and the conformance check pass; and every cross-repository responsibility links to its owning repository without duplicating its execution plan.

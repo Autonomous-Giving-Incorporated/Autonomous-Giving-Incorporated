@@ -27,6 +27,7 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Roadmap](ROADMAP.md)                         | Ordered product outcomes and release horizons |
 | [Continuation plan](CONTINUATION_PLAN.md)     | Detailed next phases, gates, and ownership    |
 | [Implementation plan](IMPLEMENTATION_PLAN.md) | Engineering sequence and definition of done   |
+| [AGI vs Specs audit](AGI_SPEC_AUDIT_2026-08-15.md) | 2026-08-15 conformance, boundary, and contamination audit |
 
 ## Operations and history
 
