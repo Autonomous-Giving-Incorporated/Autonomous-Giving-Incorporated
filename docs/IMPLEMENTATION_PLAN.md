@@ -13,7 +13,7 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 
 ## Workstream 1 — Public-source reliability (Phase B)
 
-Landed. See [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) Phase B and [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md).
+Landed in [PR #5](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/5). See [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) Phase B and [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md).
 
 1. Source freshness thresholds and clock assumptions (24 h soft / 7 d hard; build-time clock).
 2. Runtime schema validation for both public documents (Fund-Intel schema + Impact-Relay public-impact shape).

@@ -38,7 +38,7 @@ The site does not collect donations, persist records, authenticate people, expos
 
 **Exit criteria:** deterministic state coverage, reviewed freshness semantics, monitored fallback behavior, and accessible status copy.
 
-**Status:** implemented on this branch. Phase C (field owners, vocabulary sign-off, leadership approvals) and Phase D (runtime read-only host) are not started.
+**Status:** landed in [PR #5](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/5). Phase C (field owners, vocabulary sign-off, leadership approvals) and Phase D (runtime read-only host) are not started.
 
 ## Phase C — Contract governance
 
