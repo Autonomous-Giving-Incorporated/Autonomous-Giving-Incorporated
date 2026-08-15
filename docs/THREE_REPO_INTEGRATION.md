@@ -5,7 +5,7 @@ This document is the canonical cross-repository integration list for the Autonom
 | Repository | Role | Public surface consumed by AGI |
 |------------|------|--------------------------------|
 | **Autonomous-Giving-Incorporated** (AGI) | Public explanatory workbench and narrative layer | — |
-| **Fund-Intel** | Decision workspace + public advisory campaign state | `data/public-campaign.json` |
+| **Portfolio-Signals** | Decision workspace + public advisory campaign state | `data/public-campaign.json` |
 | **Impact-Relay** | Ledger, evidence, impact receipts, public aggregate outcomes | `data/public-impact.json` |
 
 AGI public workbench is deliberately the thinnest and most constrained surface today. It never writes, never authenticates, and never sees donor-level data.
@@ -14,7 +14,7 @@ AGI public workbench is deliberately the thinnest and most constrained surface t
 
 The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md)) is a separate client-ops surface that authenticates and writes tenant data. It is **not** the current public AGI workbench.
 
-**Status:** MVP implemented in [Fund-Intel `services/allocation-middleware/`](https://github.com/scrimshawlife-ctrl/Fund-Intel/tree/main/services/allocation-middleware) (Hacker Dojo pilot seed, Supabase director login, every.org webhook). Named host + live webhook are operator steps.
+**Status:** MVP implemented in [Portfolio Signals `services/allocation-middleware/`](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/tree/main/services/allocation-middleware) (Hacker Dojo pilot seed, Supabase director login, every.org webhook). Named host + live webhook are operator steps.
 
 | Concern | Public AGI workbench (now) | Allocation middleware (MVP) |
 | --- | --- | --- |
@@ -22,7 +22,7 @@ The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUC
 | Money path | Narrative only | every.org gift summaries → pots → allocation |
 | Writes | None | Pots, allocations, exceptions, proof links |
 | Host | Cloudflare Workers static assets (Vercel until DNS cutover) | Cloudflare + existing Supabase (auth/data); not Render/Fly/Railway |
-| Specs | Pin v1.x | Capability-first modular monolith |
+| Specs | Pin v2.0.0 (docs pin; not READY) | Capability-first modular monolith |
 
 Cross-repo implementation should keep **public aggregate JSON** contracts stable while middleware modules map to Portfolio Signals (observe/credit), Autonomous Giving (allocate/approve), and Impact Relay (proof/trail) **capabilities**—not three mandatory deployables.
 
@@ -30,8 +30,8 @@ Cross-repo implementation should keep **public aggregate JSON** contracts stable
 
 | Source | Exact URL | Required authority | Required content | Failure behavior |
 |--------|-----------|--------------------|------------------|------------------|
-| Fund-Intel | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Fund-Intel/main/data/public-campaign.json` | `advisory_only` | `updatedAt` + `execution.state` | Fail closed → deterministic fixture |
-| Impact-Relay | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Impact-Relay/main/data/public-impact.json` | `public_aggregate_only` | At least one outcome with `evidenceState: "VERIFIED"` | Fail closed → deterministic fixture |
+| Portfolio Signals | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Fund-Intel/main/data/public-campaign.json` (historical published raw URL still fetched by `integration/public-sources.ts`) | `advisory_only` | `updatedAt` + `execution.state` | Fail closed → deterministic fixture |
+| Impact-Relay | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Impact-Relay/main/data/public-impact.json` (historical published raw URL still fetched by `integration/public-sources.ts`) | `public_aggregate_only` | At least one outcome with `evidenceState: "VERIFIED"` | Fail closed → deterministic fixture |
 
 Implementation: `integration/public-sources.ts`.
 
@@ -49,7 +49,7 @@ These contracts are the intended governed seam. The current public-source adapte
 
 ### A. Public data contracts (must stay stable)
 
-- [ ] Fund-Intel continues publishing `authority: "advisory_only"`
+- [ ] Portfolio Signals continues publishing `authority: "advisory_only"`
 - [ ] Impact-Relay continues publishing `authority: "public_aggregate_only"`
 - [ ] Impact-Relay always has at least one `evidenceState: "VERIFIED"` outcome when live projection is desired
 - [ ] Both documents remain free of PII, donor identity, contact data, and private evidence URLs
@@ -62,7 +62,7 @@ Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
 - [x] Shared definition of `allocationId` (generation rules + format) — AGI [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md); matching fixtures only
 - [x] Shared status / verification vocabulary mapped across the three systems — same glossary; unmapped values are not coerced
 - [x] Named field owners for every contract field — continuation-plan roles in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md); current operator `scrimshawlife-ctrl` / Danny
-- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Fund-Intel / Portfolio Signals copies still needed
+- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Portfolio Signals copies still needed
 - [x] Contract version bump process documented — date-string bump on compatibility break; SPEC-012 SemVer unchanged for the platform pin
 - [ ] C3 evidence-access / retention / redaction / publication rules approved — draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**)
 
@@ -85,7 +85,7 @@ Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
 
 - Authentication / user accounts
 - Payment processing or donation collection
-- Runtime writes to Fund-Intel or Impact-Relay
+- Runtime writes to Portfolio Signals or Impact-Relay
 - Donor-level or private evidence access
 - Notification delivery
 - Direct Supabase or Postgres connections from AGI
@@ -102,7 +102,7 @@ Only after B + C are complete and a separate architecture review is approved:
 
 | Concern | Primary owner |
 |---------|---------------|
-| Public campaign advisory document | Fund-Intel |
+| Public campaign advisory document | Portfolio Signals |
 | Public verified impact outcomes | Impact-Relay |
 | Narrative presentation + fail-closed projection | AGI |
 | Shared contract vocabulary + allocationId rules | Joint (all three); AGI glossary draft in [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) |

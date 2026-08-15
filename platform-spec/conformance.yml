@@ -1,6 +1,6 @@
 platform_spec:
-  repository: scrimshawlife-ctrl/Autonomous-Giving-Specs
-  version: 1.0.0
+  repository: Autonomous-Giving-Incorporated/Autonomous-Giving-Specs
+  version: 2.0.0
 
 service:
   id: autonomous-giving
@@ -19,6 +19,11 @@ implements:
     - SPEC-011
     - SPEC-012
     - SPEC-013
+    - SPEC-023
+    - SPEC-024
+    - SPEC-026
+    - SPEC-027
+    - SPEC-028
   contracts:
     produces:
       - CONTRACT-003
@@ -44,7 +49,21 @@ implements:
 evidence:
   integration_tests: docs/THREE_REPO_INTEGRATION.md
   notes: >
-    Governance-aligned public brand surface and suite entry point.
-    Pinned to Autonomous Giving Specs v1.0.0 (tag v1.0.0).
-    Does not collect donations or store donor PII; lifecycle authority
-    remains subject to human approval before allocation.
+    Documentation pin to Autonomous Giving Specs v2.0.0 (tag v2.0.0).
+    This manifest is not a READY or runtime-conformance claim.
+    Money lock: this public site never processes donations; Stripe is
+    tenant/SaaS billing only and unused here; gift tracking is third-party
+    connectors (P0 every.org) in Portfolio Signals.
+    Host lock: Cloudflare + existing Supabase. Render/Fly/Railway/Cloud Run
+    are historical or optional only.
+    SPEC-023/024/026/027/028 are tracked for this public surface's money,
+    connector, loop, and control-plane boundaries — not implemented here.
+    CONTRACT-013 ImpactNotice is tracked only; Impact Relay is the producer
+    and this site does not produce or consume it at runtime.
+  tracked:
+    - SPEC-023
+    - SPEC-024
+    - SPEC-026
+    - SPEC-027
+    - SPEC-028
+    - CONTRACT-013

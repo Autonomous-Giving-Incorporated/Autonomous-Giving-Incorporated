@@ -112,7 +112,7 @@ The following remain the implemented fail-closed rules. The consolidated evidenc
 
 ## Change management
 
-Narrative contracts use a **date-string** `schemaVersion` (`INTEGRATION_CONTRACT_VERSION`). This is distinct from platform-spec SemVer in [SPEC-012](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/blob/v1.0.0/specs/SPEC-012-versioning.md) (this repo pins `1.0.0`) and from public-document `version` strings (`1.0.0` on campaign/impact JSON).
+Narrative contracts use a **date-string** `schemaVersion` (`INTEGRATION_CONTRACT_VERSION`). This is distinct from platform-spec SemVer in [SPEC-012](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-012-versioning.md) (this repo pins `2.0.0`) and from public-document `version` strings (`1.0.0` on campaign/impact JSON).
 
 A contract change must include:
 

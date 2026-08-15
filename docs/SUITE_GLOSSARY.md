@@ -4,7 +4,7 @@ Shared vocabulary for Fund-Intel / Portfolio Signals, Impact Relay, and AGI publ
 
 Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [CONTRACT_GOVERNANCE.md](CONTRACT_GOVERNANCE.md) · [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md)
 
-Platform lifecycle terms remain those in [Autonomous Giving Specs glossary](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/blob/v1.0.0/glossary/README.md) (TERM-001–020). This file only aligns the public join key and status words the three public surfaces already use.
+Platform lifecycle terms remain those in [Autonomous Giving Specs glossary](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/glossary/README.md) (TERM-001–020). This file only aligns the public join key and status words the three public surfaces already use.
 
 ---
 

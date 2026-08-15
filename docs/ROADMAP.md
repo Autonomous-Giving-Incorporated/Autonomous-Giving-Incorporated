@@ -37,17 +37,17 @@ Accounts, donor history, organization workflows, payments, and notification deli
 
 ## Product track — Allocation middleware
 
-Not a replacement for the public workbench gates above; parallel product track for client operations. **MVP code ships in Fund-Intel**; this repo tracks product narrative and suite links.
+Not a replacement for the public workbench gates above; parallel product track for client operations. **MVP code ships in Portfolio Signals**; this repo tracks product narrative and suite links.
 
 | Step | State |
 | --- | --- |
-| 1. every.org connector + campaign pot / program slice balances | **Shipped** (Fund-Intel package; webhook + CSV) |
+| 1. every.org connector + campaign pot / program slice balances | **Shipped** (Portfolio Signals package; webhook + CSV) |
 | 2. Allocate + exception inbox | **Shipped** |
 | 3. Trail + board packet + proof SLA | **Shipped** (MVP UI) |
 | 4. Hacker Dojo pilot host (seed → director login → live webhook) | **Active** (operator + acceptance) |
 | 5. Additional donation-platform adapters | Later |
 | 6. Funder multi-grantee portfolio | Later |
 
-See [PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md) and Fund-Intel [HACKER-DOJO-ALLOCATION-PILOT.md](https://github.com/scrimshawlife-ctrl/Fund-Intel/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md).
+See [PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md) and Portfolio Signals [HACKER-DOJO-ALLOCATION-PILOT.md](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md).
 
 See [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) for gates and ownership and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for engineering order.
