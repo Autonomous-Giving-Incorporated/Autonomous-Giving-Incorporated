@@ -126,7 +126,7 @@ The validation run passed, but `npm audit --omit=dev` reports one high-severity 
 ## Recommended continuation order
 
 1. **P0: make conformance honest.** Decide the exact AGI capability claim and update `platform-spec/conformance.yml` plus evidence links.
-2. **P0: choose the canonical demo.** Prefer Community AI Lab / 25 laptops for `SPEC-011`; keep Hacker Dojo only as a clearly labeled public integration fixture if still needed.
+2. **P0: choose the canonical demo.** Prefer Community AI Lab / 25 laptops for `SPEC-011`; keep Hacker Dojo only as a clearly labeled public integration fixture if still needed. The control-plane direction and Hacker Dojo multi-project fixture are now specified in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md).
 3. **P0: remove donor identity from public demo data and copy.** Add a regression test that rejects donor fields from public demo fixtures.
 4. **P1: reconcile status and links.** Replace floating normative Specs links, correct dated Phase 2 status, and separate AGI boundary docs from Fund-Intel runbooks.
 5. **P1: add a conformance-check command.** Validate `platform-spec/conformance.yml` against the pinned release and require evidence paths for every declared artifact.

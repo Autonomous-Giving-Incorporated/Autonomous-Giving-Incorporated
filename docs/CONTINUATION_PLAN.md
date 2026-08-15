@@ -96,6 +96,8 @@ See also [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md) for the complete
 
 The full evidence record is in [AGI_SPEC_AUDIT_2026-08-15.md](AGI_SPEC_AUDIT_2026-08-15.md).
 
+Engineering direction for the next control-plane slice is now recorded in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md), with the private harness requirements in [Specs architecture/secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md). AGI remains responsible for implementing and evidencing its own control-plane behavior; the proposed Specs contracts are not yet an AGI conformance claim.
+
 ### Audit verdict
 
 The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk is specification and boundary drift: the conformance manifest is broader than the static public implementation, the demo is not the canonical `SPEC-011` scenario, a synthetic donor name appears in public demo copy, and cross-repository operational status is inconsistent.
