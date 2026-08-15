@@ -66,9 +66,42 @@ CI and build logs report **source, age, state, and reason only**. They must not 
 - `ImpactEvent`: the same allocation identifier, event identity and type, occurrence time, verification status, and optional public-safe evidence reference;
 - `PublicImpactNarrative`: a decision plus its ordered impact events.
 
-The contract version is an explicit date string. Deterministic examples live in `integration/fixtures.ts`. These contracts describe the intended governed narrative seam; the current public-source adapter does not yet deserialize remote data directly into them. Field ownership and vocabulary alignment remain Phase C.
+The contract version is an explicit date string (`2026-08-02`). Deterministic examples live in `integration/fixtures.ts` and `integration/fixtures/community-hardware-narrative.json`. These contracts describe the intended governed narrative seam; the current public-source adapter does not deserialize remote data directly into them. Phase D runtime reads are not started.
+
+Shared vocabulary: [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md). Field owners, versioning, and Phase C status: [CONTRACT_GOVERNANCE.md](CONTRACT_GOVERNANCE.md).
+
+### C1 — Field owners
+
+Role seats are those already named in [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md). The sole observed GitHub operator currently filling these seats is **Danny** (`scrimshawlife-ctrl`). Recording that login is not leadership approval, READY, or a freeze SHA.
+
+#### FundingDecision
+
+| Field | Role owner | Notes |
+|-------|------------|--------|
+| `schemaVersion` | AGI engineering | Date-string contract steward |
+| `allocationId` | Portfolio Signals owner | Issued at decision publish time; join key |
+| `fundName` | Portfolio Signals owner | Human-readable fund label |
+| `rationale` | Portfolio Signals owner | Public-safe approved decision text |
+| `status` | Portfolio Signals owner | Narrative contract currently models `"approved"` |
+| `publishedAt` | Portfolio Signals owner | ISO-8601 publication time |
+
+#### ImpactEvent
+
+| Field | Role owner | Notes |
+|-------|------------|--------|
+| `schemaVersion` | AGI engineering | Same version as the decision |
+| `allocationId` | Portfolio Signals owner | Join key; Impact Relay owner echoes the same value |
+| `eventId` | Impact Relay owner | Stable public event identity |
+| `type` | Impact Relay owner | Mapped suite event taxonomy |
+| `occurredAt` | Impact Relay owner | ISO-8601 occurrence time |
+| `verificationStatus` | Impact Relay owner | Normalized from `evidenceState` |
+| `evidenceReference` | Impact Relay owner | Public-safe pointer only |
+
+Machine-readable copies live in `FUNDING_DECISION_FIELD_OWNERS` and `IMPACT_EVENT_FIELD_OWNERS`.
 
 ## Public-data rules
+
+The following remain the implemented fail-closed rules. The consolidated evidence-access, retention, redaction, and public-publication draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) and is **PROPOSED**. It is not approved.
 
 - Join only by `allocationId`, never donor identity.
 - Accept only documented public authority values.
@@ -79,13 +112,17 @@ The contract version is an explicit date string. Deterministic examples live in 
 
 ## Change management
 
+Narrative contracts use a **date-string** `schemaVersion` (`INTEGRATION_CONTRACT_VERSION`). This is distinct from platform-spec SemVer in [SPEC-012](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/blob/v1.0.0/specs/SPEC-012-versioning.md) (this repo pins `1.0.0`) and from public-document `version` strings (`1.0.0` on campaign/impact JSON).
+
 A contract change must include:
 
-1. a version change when compatibility is affected;
+1. a version change when compatibility is affected (field remove/rename, enum narrowing, authority change, or join-key rule change);
 2. updated deterministic fixtures;
 3. source ownership for every new field;
-4. public-data, retention, and redaction review;
+4. public-data, retention, and redaction review against the [PROPOSED policy](PUBLIC_DATA_POLICY.md);
 5. validation and fallback tests;
 6. corresponding updates in Portfolio Signals and Impact Relay when the shared vocabulary changes.
+
+Additive optional fields may keep the same date-string version if consumers treat unknown fields as ignorable. AGI fail-closed behavior must remain intact across version bumps. This Phase C draft does not bump `2026-08-02` because it does not change live product semantics.
 
 Runtime APIs, authentication, credentials, and write operations remain outside this contract. See [ARCHITECTURE.md](ARCHITECTURE.md), [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md), and [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md).

@@ -20,10 +20,12 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 
 ## Next — Contract governance
 
-- Named ownership for shared fields.
-- Reviewed identifiers and status vocabulary across all three repositories.
-- Approved evidence-access, retention, redaction, and publication rules.
-- Versioned, representative public-safe fixtures.
+Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D remains gated.
+
+- Named role ownership for shared fields (current operator recorded; not a sign-off).
+- Shared glossary and matching fixtures for `allocationId` and status vocabulary.
+- Evidence-access, retention, redaction, and publication rules drafted and still awaiting leadership + eng sign-off.
+- Representative public-safe fixtures published and validated in AGI.
 
 ## Later — Runtime read-only narrative
 
