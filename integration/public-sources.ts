@@ -1,18 +1,19 @@
-import { communityHardwareFixture } from "./fixtures";
+import { communityHardwareFixture } from "./fixtures.ts";
 import {
   assessFreshness,
-  isStaleLabel,
+  isHardStale,
+  isSoftStale,
   type FreshnessAssessment,
-} from "./freshness";
+} from "./freshness.ts";
 import {
   validatePublicCampaign,
   validatePublicImpact,
   type ValidationFailure,
-} from "./validate-public";
+} from "./validate-public.ts";
 
-const fundIntelUrl =
+export const FUND_INTEL_PUBLIC_URL =
   "https://raw.githubusercontent.com/scrimshawlife-ctrl/Fund-Intel/main/data/public-campaign.json";
-const impactRelayUrl =
+export const IMPACT_RELAY_PUBLIC_URL =
   "https://raw.githubusercontent.com/scrimshawlife-ctrl/Impact-Relay/main/data/public-impact.json";
 
 /** Explicit source states for the public projection seam. */
@@ -25,12 +26,11 @@ export type SignalSourceState =
 
 export type PublicSignals = {
   source: SignalSourceState;
-  /** Human-readable reason when not fully live. Safe for UI and build logs. */
+  /** Machine-safe reason code. Safe for UI and build logs. Never a payload. */
   reason?: string;
   fundIntel: {
     updatedAt: string;
     executionState: string;
-    /** First published allocation id when Fund-Intel registry is present. */
     allocationId: string | null;
     freshness: FreshnessAssessment;
   };
@@ -44,6 +44,17 @@ export type PublicSignals = {
     verified: boolean;
     freshness: FreshnessAssessment;
   };
+};
+
+export type SourceFetchResult =
+  | { kind: "ok"; body: unknown }
+  | { kind: "http"; status: number }
+  | { kind: "network" }
+  | { kind: "parse" };
+
+export type GetPublicSignalsOptions = {
+  nowMs?: number;
+  fetchImpl?: typeof fetch;
 };
 
 const fallbackBase = {
@@ -71,7 +82,7 @@ function buildFallback(
     "fallback" | "malformed" | "policy_rejected"
   >,
   reason: string,
-  nowMs: number = Date.now(),
+  nowMs: number,
 ): PublicSignals {
   return {
     source,
@@ -94,72 +105,110 @@ function failureToFallback(
   return buildFallback(failure.kind, failure.reason, nowMs);
 }
 
-export async function getPublicSignals(
-  nowMs: number = Date.now(),
-): Promise<PublicSignals> {
+/**
+ * Pure selection: map fetched documents onto an explicit source state.
+ * The deterministic fixture is the only fallback content.
+ */
+export function selectPublicSignals(
+  campaign: SourceFetchResult,
+  impact: SourceFetchResult,
+  nowMs: number,
+): PublicSignals {
+  if (campaign.kind === "network" || impact.kind === "network") {
+    return buildFallback("fallback", "network_failure", nowMs);
+  }
+
+  if (campaign.kind === "http" || impact.kind === "http") {
+    const campaignStatus = campaign.kind === "http" ? campaign.status : 200;
+    const impactStatus = impact.kind === "http" ? impact.status : 200;
+    return buildFallback(
+      "fallback",
+      `http_non_2xx campaign=${campaignStatus} impact=${impactStatus}`,
+      nowMs,
+    );
+  }
+
+  if (campaign.kind === "parse" || impact.kind === "parse") {
+    return buildFallback("malformed", "json_parse_failure", nowMs);
+  }
+
+  const validatedCampaign = validatePublicCampaign(campaign.body);
+  if ("kind" in validatedCampaign) {
+    return failureToFallback(validatedCampaign, nowMs);
+  }
+
+  const validatedImpact = validatePublicImpact(impact.body);
+  if ("kind" in validatedImpact) {
+    return failureToFallback(validatedImpact, nowMs);
+  }
+
+  const fundFreshness = assessFreshness(validatedCampaign.updatedAt, nowMs);
+  const impactFreshness = assessFreshness(validatedImpact.updatedAt, nowMs);
+
+  if (isHardStale(fundFreshness.label) || isHardStale(impactFreshness.label)) {
+    return buildFallback("fallback", "hard_stale", nowMs);
+  }
+
+  const delayed =
+    isSoftStale(fundFreshness.label) || isSoftStale(impactFreshness.label);
+
+  return {
+    source: delayed ? "stale" : "live",
+    reason: delayed ? "soft_stale" : undefined,
+    fundIntel: {
+      updatedAt: validatedCampaign.updatedAt,
+      executionState: validatedCampaign.execution.state,
+      allocationId: validatedCampaign.allocations[0]?.allocationId ?? null,
+      freshness: fundFreshness,
+    },
+    impactRelay: {
+      updatedAt: validatedImpact.updatedAt,
+      organizationName: validatedImpact.outcome.organizationName,
+      programName: validatedImpact.outcome.programName,
+      allocationName: validatedImpact.outcome.allocationName,
+      allocationId: validatedImpact.outcome.allocationId,
+      participants: validatedImpact.outcome.participantsPublic,
+      verified: true,
+      freshness: impactFreshness,
+    },
+  };
+}
+
+async function fetchDocument(
+  url: string,
+  fetchImpl: typeof fetch,
+): Promise<SourceFetchResult> {
+  let response: Response;
   try {
-    const [campaignResponse, impactResponse] = await Promise.all([
-      fetch(fundIntelUrl, { cache: "force-cache" }),
-      fetch(impactRelayUrl, { cache: "force-cache" }),
+    response = await fetchImpl(url, { cache: "force-cache" });
+  } catch {
+    return { kind: "network" };
+  }
+
+  if (!response.ok) {
+    return { kind: "http", status: response.status };
+  }
+
+  try {
+    return { kind: "ok", body: await response.json() };
+  } catch {
+    return { kind: "parse" };
+  }
+}
+
+export async function getPublicSignals(
+  options: GetPublicSignalsOptions = {},
+): Promise<PublicSignals> {
+  const nowMs = options.nowMs ?? Date.now();
+  const fetchImpl = options.fetchImpl ?? fetch;
+
+  try {
+    const [campaign, impact] = await Promise.all([
+      fetchDocument(FUND_INTEL_PUBLIC_URL, fetchImpl),
+      fetchDocument(IMPACT_RELAY_PUBLIC_URL, fetchImpl),
     ]);
-
-    if (!campaignResponse.ok || !impactResponse.ok) {
-      return buildFallback(
-        "fallback",
-        `source HTTP failure (campaign ${campaignResponse.status}, impact ${impactResponse.status})`,
-        nowMs,
-      );
-    }
-
-    let campaignRaw: unknown;
-    let impactRaw: unknown;
-    try {
-      campaignRaw = await campaignResponse.json();
-      impactRaw = await impactResponse.json();
-    } catch {
-      return buildFallback("malformed", "JSON parse failure", nowMs);
-    }
-
-    const campaign = validatePublicCampaign(campaignRaw);
-    if ("kind" in campaign) {
-      return failureToFallback(campaign, nowMs);
-    }
-
-    const impact = validatePublicImpact(impactRaw);
-    if ("kind" in impact) {
-      return failureToFallback(impact, nowMs);
-    }
-
-    const fundFreshness = assessFreshness(campaign.updatedAt, nowMs);
-    const impactFreshness = assessFreshness(impact.updatedAt, nowMs);
-    const anyStale =
-      isStaleLabel(fundFreshness.label) || isStaleLabel(impactFreshness.label);
-
-    return {
-      source: anyStale ? "stale" : "live",
-      reason: anyStale
-        ? `one or more sources exceeded freshness threshold (fund=${fundFreshness.label}, impact=${impactFreshness.label})`
-        : undefined,
-      fundIntel: {
-        updatedAt: campaign.updatedAt,
-        executionState: campaign.execution.state,
-        allocationId: campaign.allocations[0]?.allocationId ?? null,
-        freshness: fundFreshness,
-      },
-      impactRelay: {
-        updatedAt: impact.updatedAt,
-        organizationName: impact.outcome.organizationName,
-        programName: impact.outcome.programName,
-        allocationName: impact.outcome.allocationName,
-        allocationId: impact.outcome.allocationId,
-        participants: impact.outcome.participantsPublic,
-        verified: true,
-        freshness: impactFreshness,
-      },
-    };
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "unknown fetch error";
-    return buildFallback("fallback", message, nowMs);
+    return selectPublicSignals(campaign, impact, nowMs);
+  } catch {
+    return buildFallback("fallback", "network_failure", nowMs);
   }
 }

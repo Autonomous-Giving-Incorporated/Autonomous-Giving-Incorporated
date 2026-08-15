@@ -8,14 +8,55 @@ The complete cross-repository checklist lives in [THREE_REPO_INTEGRATION.md](THR
 
 `integration/public-sources.ts` retrieves these fixed sources during the static build:
 
-| Source                                 | Required authority      | Data used by AGI                                      |
-| -------------------------------------- | ----------------------- | ----------------------------------------------------- |
-| Portfolio Signals `data/public-campaign.json` | `advisory_only`         | update timestamp and execution state                  |
+| Source | Required authority | Data used by AGI |
+| ------ | ------------------ | ---------------- |
+| Portfolio Signals `data/public-campaign.json` | `advisory_only` | update timestamp, execution state, optional `allocationId` |
 | Impact Relay `data/public-impact.json` | `public_aggregate_only` | update timestamp and one `VERIFIED` aggregate outcome |
 
-The adapter normalizes accepted data into `PublicSignals`. Any failed request, parsing error, unexpected authority, or missing verified outcome returns the bundled deterministic fallback.
+The adapter validates each document against the published Fund-Intel / Portfolio Signals public-campaign shape and the published Impact Relay public-impact shape, then normalizes accepted data into `PublicSignals`. Unknown authority is never accepted. Unknown additive fields are ignored. The deterministic fixture is the only fallback content.
 
-The current TypeScript checks are intentionally narrow but are not a full runtime schema validator. Adding explicit schema validation and freshness policy is the next reliability phase (Phase B).
+### Freshness (Phase B)
+
+Clock assumption: the build-time reference instant is `Date.now()` (injectable as `nowMs` in tests). Date-only `updatedAt` values (`YYYY-MM-DD`) are treated as UTC midnight so age does not depend on the builder timezone.
+
+| Threshold | Duration | Behavior |
+| --------- | -------- | -------- |
+| Soft | 24 hours | Remote data may still be projected. Adapter state is `stale`. The UI labels the delay and does not treat the record as current evidence. |
+| Hard | 7 days | Fail closed. Remote data is not projected. Adapter state is `fallback` with reason `hard_stale`. |
+
+Unparseable timestamps fail closed (they cannot be assessed honestly). The UI never presents delayed, malformed, or rejected records as fresh verified evidence.
+
+### Explicit source states
+
+| State | When | Content shown |
+| ----- | ---- | ------------- |
+| `live` | Both documents pass schema, authority, verification, and the soft freshness window | Remote projection |
+| `stale` | Both documents are otherwise accepted, and at least one is older than 24 hours but not older than 7 days | Remote projection, labeled delayed |
+| `fallback` | Network failure, non-2xx, or hard-stale | Deterministic fixture |
+| `malformed` | JSON parse failure or published-schema mismatch | Deterministic fixture |
+| `policy_rejected` | Unknown authority, privacy constants not fail-closed, or no `VERIFIED` outcome | Deterministic fixture |
+
+### Schema validation
+
+`integration/validate-public.ts` fail-closes unless:
+
+- Portfolio Signals declares `authority: "advisory_only"` and the published campaign, registry, execution, gates, and privacy blocks are present and typed;
+- execution state is one of the published values (`blocked`, `review`, `authorized`, `active`, `sealed`) — invented states such as READY or freeze are rejected;
+- privacy constants remain fail-closed (`piiAllowed` and related flags are `false`);
+- Impact Relay declares `authority: "public_aggregate_only"` and includes privacy, summary, and outcomes;
+- at least one outcome has `evidenceState: "VERIFIED"` and the published required outcome fields.
+
+Join, when present, is only by `allocationId`. Donor identity is never a join key. `verified` / `VERIFIED` is a source-system state, not donor attribution.
+
+### Privacy-safe build diagnostics
+
+The static page logs one line during `next build` via `formatDiagnosticLine`:
+
+```text
+agi.public_signals source=live fund_freshness=fresh fund_age_ms=… impact_freshness=fresh impact_age_ms=…
+```
+
+CI and build logs report **source, age, state, and reason only**. They must not include payloads, donor data, organization or program names, evidence hashes, or secret URLs.
 
 ## Versioned narrative contracts
 
@@ -25,7 +66,7 @@ The current TypeScript checks are intentionally narrow but are not a full runtim
 - `ImpactEvent`: the same allocation identifier, event identity and type, occurrence time, verification status, and optional public-safe evidence reference;
 - `PublicImpactNarrative`: a decision plus its ordered impact events.
 
-The contract version is an explicit date string. Deterministic examples live in `integration/fixtures.ts`. These contracts describe the intended governed narrative seam; the current public-source adapter does not yet deserialize remote data directly into them.
+The contract version is an explicit date string. Deterministic examples live in `integration/fixtures.ts`. These contracts describe the intended governed narrative seam; the current public-source adapter does not yet deserialize remote data directly into them. Field ownership and vocabulary alignment remain Phase C.
 
 ## Public-data rules
 

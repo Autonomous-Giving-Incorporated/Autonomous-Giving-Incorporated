@@ -1,45 +1,47 @@
-import type { PublicSignals } from "./public-sources";
+import type { PublicSignals } from "./public-sources.ts";
 
 /**
  * Privacy-safe diagnostic summary for build logs and CI.
- * Never includes raw payloads, donor data, or evidence URLs.
+ *
+ * Reports source state, age, freshness label, and reason only.
+ * Never includes raw payloads, donor data, organization names,
+ * program names, evidence hashes, or URLs.
  */
 export type PublicSignalDiagnostic = {
   source: PublicSignals["source"];
   reason?: string;
   fundIntel: {
-    updatedAt: string;
-    executionState: string;
     freshness: PublicSignals["fundIntel"]["freshness"]["label"];
     ageMs: number | null;
   };
   impactRelay: {
-    updatedAt: string;
-    verified: boolean;
     freshness: PublicSignals["impactRelay"]["freshness"]["label"];
     ageMs: number | null;
-    organizationName: string;
-    programName: string;
   };
 };
+
+const FORBIDDEN_DIAGNOSTIC_KEYS = [
+  "organizationName",
+  "programName",
+  "allocationName",
+  "executionState",
+  "participants",
+  "receiptHash",
+  "body",
+  "payload",
+] as const;
 
 export function toDiagnostic(signals: PublicSignals): PublicSignalDiagnostic {
   return {
     source: signals.source,
     reason: signals.reason,
     fundIntel: {
-      updatedAt: signals.fundIntel.updatedAt,
-      executionState: signals.fundIntel.executionState,
       freshness: signals.fundIntel.freshness.label,
       ageMs: signals.fundIntel.freshness.ageMs,
     },
     impactRelay: {
-      updatedAt: signals.impactRelay.updatedAt,
-      verified: signals.impactRelay.verified,
       freshness: signals.impactRelay.freshness.label,
       ageMs: signals.impactRelay.freshness.ageMs,
-      organizationName: signals.impactRelay.organizationName,
-      programName: signals.impactRelay.programName,
     },
   };
 }
@@ -49,11 +51,18 @@ export function formatDiagnosticLine(signals: PublicSignals): string {
   const d = toDiagnostic(signals);
   const parts = [
     `agi.public_signals source=${d.source}`,
-    d.reason ? `reason="${d.reason}"` : null,
-    `fund=${d.fundIntel.freshness}`,
-    `impact=${d.impactRelay.freshness}`,
-    `fund_updated=${d.fundIntel.updatedAt}`,
-    `impact_updated=${d.impactRelay.updatedAt}`,
+    d.reason ? `reason=${d.reason}` : null,
+    `fund_freshness=${d.fundIntel.freshness}`,
+    `fund_age_ms=${d.fundIntel.ageMs ?? "unknown"}`,
+    `impact_freshness=${d.impactRelay.freshness}`,
+    `impact_age_ms=${d.impactRelay.ageMs ?? "unknown"}`,
   ].filter(Boolean);
   return parts.join(" ");
+}
+
+export function diagnosticContainsForbiddenKeys(
+  diagnostic: PublicSignalDiagnostic,
+): boolean {
+  const serialized = JSON.stringify(diagnostic);
+  return FORBIDDEN_DIAGNOSTIC_KEYS.some((key) => serialized.includes(`"${key}"`));
 }

@@ -10,15 +10,15 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 - Canonical metadata, social preview, robots, sitemap, CI, and static hosting (Cloudflare intended; Vercel / GitHub Pages until cutover).
 - Documented public-data, attribution, and product-scope boundaries.
 
-## Next — Public-source reliability
+## Shipped — Public-source reliability
 
 - Runtime schema validation for both public documents.
-- Approved source-freshness thresholds.
+- Source-freshness thresholds (24 h soft / 7 d hard) with honest delay labels.
 - Explicit live, fallback, stale, malformed, and policy-rejected states.
 - Deterministic source-selection tests.
 - Privacy-safe build diagnostics and accessible provenance copy.
 
-## Then — Contract governance
+## Next — Contract governance
 
 - Named ownership for shared fields.
 - Reviewed identifiers and status vocabulary across all three repositories.

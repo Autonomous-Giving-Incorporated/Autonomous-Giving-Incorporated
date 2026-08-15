@@ -58,7 +58,7 @@ During the production build AGI requests two approved public aggregate documents
 - Portfolio Signals `data/public-campaign.json`
 - Impact Relay `data/public-impact.json`
 
-The build accepts only the expected public authority declarations and a verified aggregate outcome. Network failures, malformed data, missing evidence, or disallowed authority values fail closed to the deterministic local scenario.
+The build validates both documents against the published public-campaign and public-impact shapes, accepts only the expected public authority declarations, and requires a verified aggregate outcome. Network failures, malformed data, missing evidence, disallowed authority, or data older than seven days fail closed to the deterministic local scenario. Sources older than 24 hours are labeled delayed and are not treated as current evidence.
 
 The **AGI marketing site** does **not** collect donations, authenticate operators, persist private records, or expose donor-level evidence. Operator authentication lives on **Portfolio Signals workspace** (`/portfolio-signals/workspace`).
 
@@ -108,6 +108,10 @@ integration/contracts.ts   Versioned narrative contracts
 integration/fixtures.ts    Public-safe deterministic fixtures
 integration/public-sources.ts
                            Build-time public-source adapter and fail-closed fallback
+integration/validate-public.ts
+                           Published-schema validation for both public documents
+integration/freshness.ts   24 h soft / 7 d hard freshness policy
+integration/diagnostics.ts Privacy-safe build-log summary
 public/brand/              AGI corporate identity assets
 workers/                   Cloudflare suite-path reverse proxy (not an AGI API)
 wrangler.jsonc             Cloudflare Workers static assets config (`out/`)

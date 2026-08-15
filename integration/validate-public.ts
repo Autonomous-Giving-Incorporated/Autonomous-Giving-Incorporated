@@ -1,10 +1,17 @@
 /**
- * Structural validation for the two public documents AGI consumes at build time.
+ * Build-time schema validation for the two public documents AGI consumes.
  *
- * This is intentional scaffolding: field presence, authority constants, and the
- * minimum shape required to project public signals. Full JSON Schema (ajv)
- * validation against the upstream schemas is the natural next step once the
- * source documents and this adapter have stabilized together.
+ * Campaign shape follows the published Fund-Intel / Portfolio Signals
+ * `public-campaign.schema.json`. Impact shape follows the published
+ * Impact Relay `public-impact.schema.json`, plus AGI's projection rule
+ * that a live path requires one `evidenceState: "VERIFIED"` outcome.
+ *
+ * Fail closed:
+ * - unknown authority is never accepted;
+ * - privacy constants must remain fail-closed (`false`);
+ * - unknown fields are ignored (additive public-safe fields);
+ * - invented execution states such as READY/freeze are rejected;
+ * - no evidence is inferred from a document that fails validation.
  */
 
 export type ValidationFailure = {
@@ -22,7 +29,6 @@ export type ValidatedCampaign = {
   updatedAt: string;
   authority: "advisory_only";
   execution: { state: string; reason: string };
-  /** Optional public allocation registry when Fund-Intel publishes it. */
   allocations: ValidatedCampaignAllocation[];
 };
 
@@ -30,7 +36,6 @@ export type ValidatedImpactOutcome = {
   organizationName: string;
   programName: string;
   allocationName: string;
-  /** Optional suite join key when Impact-Relay exports it. */
   allocationId: string | null;
   participantsPublic: number;
   evidenceState: "VERIFIED";
@@ -43,6 +48,18 @@ export type ValidatedImpact = {
   outcome: ValidatedImpactOutcome;
 };
 
+const CAMPAIGN_EXECUTION_STATES = [
+  "blocked",
+  "review",
+  "authorized",
+  "active",
+  "sealed",
+] as const;
+
+const GATE_STATES = ["pending", "approved", "blocked", "not_applicable"] as const;
+
+const ALLOCATION_STATUSES = ["proposed", "approved", "active", "closed"] as const;
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -51,65 +68,202 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function isFiniteNumber(value: unknown): value is number {
-  return typeof value === "number" && Number.isFinite(value);
+function isSemver(value: unknown): value is string {
+  return typeof value === "string" && /^\d+\.\d+\.\d+$/.test(value);
+}
+
+function isDateOnly(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false;
+  }
+  return Number.isFinite(Date.parse(`${value}T00:00:00.000Z`));
+}
+
+function isNonNegInt(value: unknown): value is number {
+  return typeof value === "number" && Number.isInteger(value) && value >= 0;
+}
+
+function isAllocationId(value: unknown): value is string {
+  return typeof value === "string" && /^alloc_[a-z0-9_]+$/.test(value);
+}
+
+function isGateId(value: unknown): value is string {
+  return typeof value === "string" && /^[a-z0-9_]+$/.test(value);
+}
+
+function malformed(reason: string): ValidationFailure {
+  return { kind: "malformed", reason };
+}
+
+function rejected(reason: string): ValidationFailure {
+  return { kind: "policy_rejected", reason };
+}
+
+function validateCampaignBlock(
+  value: unknown,
+): ValidationFailure | null {
+  if (!isRecord(value)) {
+    return malformed("campaign.schema.campaign");
+  }
+  if (!isNonNegInt(value.minimumTarget) || !isNonNegInt(value.stretchTarget)) {
+    return malformed("campaign.schema.campaign.targets");
+  }
+  if (value.currency !== "USD") {
+    return malformed("campaign.schema.campaign.currency");
+  }
+  if (
+    !isNonEmptyString(value.minimumCaseState) ||
+    !isNonEmptyString(value.stretchCaseState)
+  ) {
+    return malformed("campaign.schema.campaign.caseState");
+  }
+  return null;
+}
+
+function validateRegistryBlock(value: unknown): ValidationFailure | null {
+  if (!isRecord(value)) {
+    return malformed("campaign.schema.registry");
+  }
+  const counts = [
+    "normalizedMemberIds",
+    "bayAreaRecords",
+    "organizerLabels",
+    "privateRelayOccurrences",
+    "highEngagementRecords",
+    "outreachReadyRecords",
+  ] as const;
+  for (const key of counts) {
+    if (!isNonNegInt(value[key])) {
+      return malformed(`campaign.schema.registry.${key}`);
+    }
+  }
+  if (!isNonEmptyString(value.qualification)) {
+    return malformed("campaign.schema.registry.qualification");
+  }
+  return null;
+}
+
+function validateGates(value: unknown): ValidationFailure | null {
+  if (!Array.isArray(value) || value.length < 1) {
+    return malformed("campaign.schema.gates");
+  }
+  for (const item of value) {
+    if (!isRecord(item)) {
+      return malformed("campaign.schema.gates.entry");
+    }
+    if (!isGateId(item.id) || !isNonEmptyString(item.label)) {
+      return malformed("campaign.schema.gates.entry");
+    }
+    if (
+      typeof item.state !== "string" ||
+      !GATE_STATES.includes(item.state as (typeof GATE_STATES)[number])
+    ) {
+      return malformed("campaign.schema.gates.state");
+    }
+  }
+  return null;
+}
+
+function validateCampaignPrivacy(value: unknown): ValidationFailure | null {
+  if (!isRecord(value)) {
+    return malformed("campaign.schema.privacy");
+  }
+  if (value.classification !== "public_aggregate_only") {
+    return rejected("campaign.privacy_policy_rejected");
+  }
+  if (
+    value.piiAllowed !== false ||
+    value.rawRegistryAllowed !== false ||
+    value.donorHistoryAllowed !== false ||
+    value.privateNotesAllowed !== false
+  ) {
+    return rejected("campaign.privacy_policy_rejected");
+  }
+  return null;
+}
+
+function validateAllocations(
+  value: unknown,
+): ValidatedCampaignAllocation[] | ValidationFailure {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) {
+    return malformed("campaign.schema.allocations");
+  }
+  const allocations: ValidatedCampaignAllocation[] = [];
+  for (const item of value) {
+    if (!isRecord(item)) {
+      return malformed("campaign.schema.allocations.entry");
+    }
+    if (!isAllocationId(item.allocationId)) {
+      return malformed("campaign.schema.allocations.allocationId");
+    }
+    if (!isNonEmptyString(item.fundName)) {
+      return malformed("campaign.schema.allocations.fundName");
+    }
+    if (
+      typeof item.status !== "string" ||
+      !ALLOCATION_STATUSES.includes(
+        item.status as (typeof ALLOCATION_STATUSES)[number],
+      )
+    ) {
+      return malformed("campaign.schema.allocations.status");
+    }
+    allocations.push({
+      allocationId: item.allocationId,
+      fundName: item.fundName,
+      status: item.status,
+    });
+  }
+  return allocations;
 }
 
 export function validatePublicCampaign(
   value: unknown,
 ): ValidatedCampaign | ValidationFailure {
   if (!isRecord(value)) {
-    return { kind: "malformed", reason: "campaign document is not an object" };
+    return malformed("campaign.schema.root");
   }
 
   if (value.authority !== "advisory_only") {
-    return {
-      kind: "policy_rejected",
-      reason: `campaign authority must be advisory_only (got ${String(value.authority)})`,
-    };
+    return rejected("campaign.authority_rejected");
   }
 
-  if (!isNonEmptyString(value.updatedAt)) {
-    return { kind: "malformed", reason: "campaign.updatedAt missing or empty" };
+  if (!isSemver(value.version)) {
+    return malformed("campaign.schema.version");
   }
+  if (!isDateOnly(value.updatedAt)) {
+    return malformed("campaign.schema.updatedAt");
+  }
+
+  const campaignBlock = validateCampaignBlock(value.campaign);
+  if (campaignBlock) return campaignBlock;
+
+  const registryBlock = validateRegistryBlock(value.registry);
+  if (registryBlock) return registryBlock;
 
   if (!isRecord(value.execution)) {
-    return { kind: "malformed", reason: "campaign.execution missing or invalid" };
+    return malformed("campaign.schema.execution");
   }
-
-  if (!isNonEmptyString(value.execution.state)) {
-    return { kind: "malformed", reason: "campaign.execution.state missing or empty" };
+  if (
+    typeof value.execution.state !== "string" ||
+    !CAMPAIGN_EXECUTION_STATES.includes(
+      value.execution.state as (typeof CAMPAIGN_EXECUTION_STATES)[number],
+    )
+  ) {
+    return malformed("campaign.schema.execution.state");
   }
-
   if (!isNonEmptyString(value.execution.reason)) {
-    return { kind: "malformed", reason: "campaign.execution.reason missing or empty" };
+    return malformed("campaign.schema.execution.reason");
   }
 
-  const allocations: ValidatedCampaignAllocation[] = [];
-  if (value.allocations !== undefined) {
-    if (!Array.isArray(value.allocations)) {
-      return { kind: "malformed", reason: "campaign.allocations must be an array when present" };
-    }
-    for (const item of value.allocations) {
-      if (!isRecord(item)) {
-        return { kind: "malformed", reason: "campaign.allocations entry is not an object" };
-      }
-      if (!isNonEmptyString(item.allocationId)) {
-        return { kind: "malformed", reason: "campaign.allocations.allocationId missing" };
-      }
-      if (!isNonEmptyString(item.fundName)) {
-        return { kind: "malformed", reason: "campaign.allocations.fundName missing" };
-      }
-      if (!isNonEmptyString(item.status)) {
-        return { kind: "malformed", reason: "campaign.allocations.status missing" };
-      }
-      allocations.push({
-        allocationId: item.allocationId,
-        fundName: item.fundName,
-        status: item.status,
-      });
-    }
-  }
+  const gates = validateGates(value.gates);
+  if (gates) return gates;
+
+  const privacy = validateCampaignPrivacy(value.privacy);
+  if (privacy) return privacy;
+
+  const allocations = validateAllocations(value.allocations);
+  if ("kind" in allocations) return allocations;
 
   return {
     updatedAt: value.updatedAt,
@@ -122,71 +276,131 @@ export function validatePublicCampaign(
   };
 }
 
+function validateImpactPrivacy(value: unknown): ValidationFailure | null {
+  if (!isRecord(value)) {
+    return malformed("impact.schema.privacy");
+  }
+  if (value.classification !== "public_aggregate_only") {
+    return rejected("impact.privacy_policy_rejected");
+  }
+  if (
+    value.piiAllowed !== false ||
+    value.donorNamesAllowed !== false ||
+    value.individualDonorAttributionAllowed !== false ||
+    value.operatorIdentityAllowed !== false
+  ) {
+    return rejected("impact.privacy_policy_rejected");
+  }
+  return null;
+}
+
+function validateVerifiedOutcome(
+  value: Record<string, unknown>,
+): ValidatedImpactOutcome | ValidationFailure {
+  if (!isNonEmptyString(value.publicId)) {
+    return malformed("impact.schema.outcome.publicId");
+  }
+  if (!isNonEmptyString(value.impactEventId)) {
+    return malformed("impact.schema.outcome.impactEventId");
+  }
+  if (!isNonEmptyString(value.organizationName)) {
+    return malformed("impact.schema.outcome.organizationName");
+  }
+  if (!isNonEmptyString(value.programName)) {
+    return malformed("impact.schema.outcome.programName");
+  }
+  if (!isNonEmptyString(value.allocationName)) {
+    return malformed("impact.schema.outcome.allocationName");
+  }
+  if (!isNonEmptyString(value.eventType)) {
+    return malformed("impact.schema.outcome.eventType");
+  }
+  if (!isNonEmptyString(value.eventDate)) {
+    return malformed("impact.schema.outcome.eventDate");
+  }
+  if (!isNonNegInt(value.participantsPublic)) {
+    return malformed("impact.schema.outcome.participantsPublic");
+  }
+  if (!isNonEmptyString(value.attributionMethod)) {
+    return malformed("impact.schema.outcome.attributionMethod");
+  }
+  if (!isNonEmptyString(value.receiptHash)) {
+    return malformed("impact.schema.outcome.receiptHash");
+  }
+  if (!isNonEmptyString(value.createdAt)) {
+    return malformed("impact.schema.outcome.createdAt");
+  }
+
+  if (value.allocationId !== undefined && !isAllocationId(value.allocationId)) {
+    return malformed("impact.schema.outcome.allocationId");
+  }
+  const allocationId = isAllocationId(value.allocationId)
+    ? value.allocationId
+    : null;
+
+  return {
+    organizationName: value.organizationName,
+    programName: value.programName,
+    allocationName: value.allocationName,
+    allocationId,
+    participantsPublic: value.participantsPublic,
+    evidenceState: "VERIFIED",
+    eventDate: value.eventDate,
+  };
+}
+
 export function validatePublicImpact(
   value: unknown,
 ): ValidatedImpact | ValidationFailure {
   if (!isRecord(value)) {
-    return { kind: "malformed", reason: "impact document is not an object" };
+    return malformed("impact.schema.root");
   }
 
   if (value.authority !== "public_aggregate_only") {
-    return {
-      kind: "policy_rejected",
-      reason: `impact authority must be public_aggregate_only (got ${String(value.authority)})`,
-    };
+    return rejected("impact.authority_rejected");
   }
 
-  if (!isNonEmptyString(value.updatedAt)) {
-    return { kind: "malformed", reason: "impact.updatedAt missing or empty" };
+  if (!isSemver(value.version)) {
+    return malformed("impact.schema.version");
+  }
+  if (!isDateOnly(value.updatedAt)) {
+    return malformed("impact.schema.updatedAt");
+  }
+  if (!isNonEmptyString(value.source)) {
+    return malformed("impact.schema.source");
+  }
+
+  const privacy = validateImpactPrivacy(value.privacy);
+  if (privacy) return privacy;
+
+  if (!isRecord(value.summary)) {
+    return malformed("impact.schema.summary");
+  }
+  if (
+    !isNonNegInt(value.summary.outcomeCount) ||
+    !isNonNegInt(value.summary.totalParticipantsPublic)
+  ) {
+    return malformed("impact.schema.summary");
   }
 
   if (!Array.isArray(value.outcomes)) {
-    return { kind: "malformed", reason: "impact.outcomes must be an array" };
+    return malformed("impact.schema.outcomes");
   }
 
   const verified = value.outcomes.find((item) => {
-    if (!isRecord(item)) return false;
-    return item.evidenceState === "VERIFIED";
+    return isRecord(item) && item.evidenceState === "VERIFIED";
   });
 
   if (!verified || !isRecord(verified)) {
-    return {
-      kind: "policy_rejected",
-      reason: "no outcome with evidenceState VERIFIED",
-    };
+    return rejected("impact.missing_verified_outcome");
   }
 
-  if (!isNonEmptyString(verified.organizationName)) {
-    return { kind: "malformed", reason: "verified outcome.organizationName missing" };
-  }
-  if (!isNonEmptyString(verified.programName)) {
-    return { kind: "malformed", reason: "verified outcome.programName missing" };
-  }
-  if (!isNonEmptyString(verified.allocationName)) {
-    return { kind: "malformed", reason: "verified outcome.allocationName missing" };
-  }
-  if (!isFiniteNumber(verified.participantsPublic)) {
-    return { kind: "malformed", reason: "verified outcome.participantsPublic invalid" };
-  }
-  if (!isNonEmptyString(verified.eventDate)) {
-    return { kind: "malformed", reason: "verified outcome.eventDate missing" };
-  }
-
-  const allocationId = isNonEmptyString(verified.allocationId)
-    ? verified.allocationId
-    : null;
+  const outcome = validateVerifiedOutcome(verified);
+  if ("kind" in outcome) return outcome;
 
   return {
     updatedAt: value.updatedAt,
     authority: "public_aggregate_only",
-    outcome: {
-      organizationName: verified.organizationName,
-      programName: verified.programName,
-      allocationName: verified.allocationName,
-      allocationId,
-      participantsPublic: verified.participantsPublic,
-      evidenceState: "VERIFIED",
-      eventDate: verified.eventDate,
-    },
+    outcome,
   };
 }

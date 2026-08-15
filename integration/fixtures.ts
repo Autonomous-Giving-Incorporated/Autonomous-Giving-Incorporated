@@ -1,4 +1,4 @@
-import { INTEGRATION_CONTRACT_VERSION, type PublicImpactNarrative } from "./contracts";
+import { INTEGRATION_CONTRACT_VERSION, type PublicImpactNarrative } from "./contracts.ts";
 /** Deterministic, non-production fixture for contract review and UI development. */
 export const communityHardwareFixture: PublicImpactNarrative = {
   decision: {

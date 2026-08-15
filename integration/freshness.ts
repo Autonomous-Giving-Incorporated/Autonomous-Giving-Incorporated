@@ -1,12 +1,17 @@
 /**
  * Freshness policy for AGI public projections.
  *
- * Soft threshold (24h): data is still usable but labeled stale.
- * Hard threshold (7d): data is still shown if otherwise valid, but clearly marked;
- * we do not invent evidence or silently upgrade authority.
+ * Clock: the build-time reference instant is `Date.now()` (injectable as
+ * `nowMs` in tests). Source `updatedAt` values are UTC. Date-only strings
+ * (`YYYY-MM-DD`) are treated as UTC midnight so age does not depend on the
+ * builder's local timezone.
  *
- * Clock assumption: build-time `Date.now()` is the reference instant.
- * Source timestamps are treated as UTC date or date-time strings.
+ * Soft threshold (24 h): the remote document may still be projected, but the
+ * adapter state is `stale` and the UI must label the delay. Delayed records
+ * are not treated as current evidence.
+ *
+ * Hard threshold (7 d): fail closed. The remote document is not projected;
+ * the deterministic fixture is the only fallback content.
  */
 
 export const FRESHNESS_SOFT_MS = 24 * 60 * 60 * 1000;
@@ -58,6 +63,15 @@ export function assessFreshness(
   return { label: "fresh", ageMs, updatedAt };
 }
 
-export function isStaleLabel(label: FreshnessLabel): boolean {
-  return label === "stale" || label === "very_stale" || label === "unknown";
+/** Soft window exceeded, but still within the hard window. */
+export function isSoftStale(label: FreshnessLabel): boolean {
+  return label === "stale";
+}
+
+/**
+ * Hard window exceeded or timestamp cannot be assessed.
+ * These records are not projected.
+ */
+export function isHardStale(label: FreshnessLabel): boolean {
+  return label === "very_stale" || label === "unknown";
 }

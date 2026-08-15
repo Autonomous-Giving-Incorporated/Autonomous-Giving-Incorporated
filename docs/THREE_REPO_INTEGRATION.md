@@ -65,12 +65,12 @@ These contracts are the intended governed seam. The current public-source adapte
 
 ### C. Reliability & observability (Phase B)
 
-- [ ] Freshness thresholds defined and documented
-- [ ] Explicit states: live / fallback / stale / malformed / policy_rejected
-- [ ] Runtime schema validation in AGI build
-- [ ] Deterministic tests covering every rejection path
-- [ ] Privacy-safe build diagnostics (no payload leakage)
-- [ ] Accessible provenance labels in the AGI UI
+- [x] Freshness thresholds defined and documented (24 h soft / 7 d hard)
+- [x] Explicit states: live / fallback / stale / malformed / policy_rejected
+- [x] Runtime schema validation in AGI build
+- [x] Deterministic tests covering every rejection path
+- [x] Privacy-safe build diagnostics (no payload leakage)
+- [x] Accessible provenance labels in the AGI UI
 
 ### D. Navigation and identity consistency
 
@@ -117,5 +117,5 @@ Any change that affects the public JSON shapes, authority values, or contract fi
 
 ---
 
-Last updated: 2026-08-03  
+Last updated: 2026-08-15
 Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md)

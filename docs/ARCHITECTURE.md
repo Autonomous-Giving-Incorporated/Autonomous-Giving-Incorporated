@@ -40,6 +40,10 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 | `components/navbar.tsx`         | Provides AGI and reciprocal suite navigation                          |
 | `demo/scenario.ts`              | Defines the canonical local demonstration state                       |
 | `integration/public-sources.ts` | Fetches, validates, selects, and normalizes public projections        |
+| `integration/validate-public.ts` | Fail-closed schema validation for both published public documents   |
+| `integration/freshness.ts`      | 24 h soft / 7 d hard freshness policy and clock assumptions           |
+| `integration/diagnostics.ts`    | Privacy-safe build-log summary (source, age, state, reason)           |
+| `integration/signal-copy.ts`    | Accessible provenance and freshness copy                              |
 | `integration/contracts.ts`      | Defines versioned narrative contracts for future governed integration |
 | `integration/fixtures.ts`       | Supplies public-safe deterministic contract fixtures                  |
 | `workers/suite-gateway.ts`   | Reverse-proxies suite paths on Cloudflare (same role as `vercel.json`) |
@@ -54,7 +58,7 @@ Portfolio Signals and Impact Relay documents are external, untrusted input even 
 2. require Portfolio Signals authority `advisory_only`;
 3. require Impact Relay authority `public_aggregate_only`;
 4. select only an outcome whose evidence state is `VERIFIED`;
-5. return the deterministic fixture on any fetch, parse, policy, or evidence failure.
+5. return the deterministic fixture on any fetch, parse, policy, evidence, or hard-freshness failure.
 
 The site never requests donor identity, contact details, payment records, raw receipts, private documents, or secret evidence URLs. `verified` means the source published an approved aggregate verification state; it does not establish one-to-one attribution to a donor.
 
@@ -62,13 +66,14 @@ The site never requests donor identity, contact details, payment records, raw re
 
 The application is designed to remain honest and available when external data is not:
 
-- unavailable source → deterministic fallback;
-- non-2xx response → deterministic fallback;
-- malformed JSON → deterministic fallback;
-- unexpected authority → deterministic fallback;
-- no verified outcome → deterministic fallback.
+- unavailable source or thrown fetch → `fallback` (deterministic fixture);
+- non-2xx response → `fallback`;
+- malformed JSON or published-schema mismatch → `malformed`;
+- unexpected authority, privacy constants not fail-closed, or no `VERIFIED` outcome → `policy_rejected`;
+- older than 24 hours and within 7 days → `stale` (remote data, labeled delayed);
+- older than 7 days, or unassessable timestamp → `fallback` (`hard_stale`).
 
-The UI labels the result as either `Live public projection` or `Deterministic fallback`. Freshness and more granular rejection states remain planned work; see [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md).
+The UI labels each explicit state and never surfaces raw payloads. Delayed records are not treated as current evidence. See [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md).
 
 ## Deliberate exclusions
 
