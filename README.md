@@ -37,7 +37,7 @@ Conformance declaration: [`platform-spec/conformance.yml`](platform-spec/conform
 
 Transaction-light **middleware** between donation platforms (canonical **every.org**) and human allocation: pots → allocate → proof → exception inbox → board packet. Not a finance ledger.
 
-**Status (2026-08-07):** MVP in [Portfolio Signals `services/allocation-middleware/`](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/tree/main/services/allocation-middleware); unit tests + local pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED. **Live every.org webhook** still open (operator). AGI stays the public explanatory workbench.
+**Status (2026-08-15):** MVP in [Portfolio Signals `services/allocation-middleware/`](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/tree/main/services/allocation-middleware); unit tests + local pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED; Worker **CODE_SHIPPED**. Live named host + every.org pointing still **PENDING** ([Portfolio-Signals #20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20)). AGI stays the public explanatory workbench.
 
 - [docs/PRODUCT-ALLOCATION-MIDDLEWARE.md](docs/PRODUCT-ALLOCATION-MIDDLEWARE.md)  
 - [Full design (Specs v2.0.0)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/docs/superpowers/specs/2026-08-03-allocation-middleware-design.md)  
@@ -53,7 +53,7 @@ AGI is a static Next.js export. The designed stack is **Cloudflare + existing Su
 | `/portfolio-signals/` | Portfolio Signals public + **workspace** login |
 | `/impact-relay/` | Impact Relay public aggregates |
 
-**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Client Onboarding Pack** (private org docs in Portfolio Signals workspace) is **code on main**; platform migrate + Edge deploy still operator. **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; live every.org webhook and full director sign-off remain. Suite hub: [docs/PLATFORM.md](docs/PLATFORM.md) · Portfolio Signals [SUITE-ONBOARDING](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE-ONBOARDING.md).
+**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Client Onboarding Pack** (private org docs in Portfolio Signals workspace) is **platform schema + Edge OBSERVED** (2026-08-08); MFA workspace dry-run still **PENDING** ([Portfolio-Signals #18](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/18)). **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; Worker **CODE_SHIPPED**; live named host + every.org pointing + director acceptance still **PENDING** ([Portfolio-Signals #20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20)). Suite hub: [docs/PLATFORM.md](docs/PLATFORM.md) · Portfolio Signals [SUITE-ONBOARDING](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE-ONBOARDING.md).
 
 During the production build AGI requests two approved public aggregate documents:
 

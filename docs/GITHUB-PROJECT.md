@@ -27,23 +27,22 @@ One **Projects (v2)** board owns delivery across all suite repositories.
 
 Use the board **Status** field (Todo → In Progress → Done). Filter by **Track** or **Suite Repo** for swimlanes.
 
-## Allocation pilot (Fund-Intel)
+## Allocation pilot (Portfolio-Signals)
 
 | Issue | Priority | Status |
 | --- | --- | --- |
-| [#71](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/71) optional public host | P1 | **Done** — ephemeral HTTPS (cloudflared) OBSERVED; durable named host optional |
+| [#71](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/71) optional public host | P1 | **Done** — ephemeral HTTPS (cloudflared) OBSERVED; durable named host still PENDING |
 | [#72](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/72) Supabase director membership | P0 | **Done** — director JWT path OBSERVED |
-| [#73](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/73) live every.org webhook | P0 | **Todo** — operator setup (live webhook) |
-| [#74](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/74) director acceptance | P0 | **In Progress** — seed-loop allocate→proof→packet OBSERVED; live gift + browser sign-off remain |
+| [#20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20) durable host + every.org pointing + director acceptance | P0 | **Todo** — Worker CODE_SHIPPED; live named host PENDING |
 
 ## Tracks (current)
 
 ### Allocation middleware (active)
 
-- MVP package in Fund-Intel `services/allocation-middleware/`  
+- MVP package in [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) `services/allocation-middleware/`  
 - Local Node default; durable data/auth on existing Supabase; public HTTPS on Cloudflare (designed). Do not add Render, Fly, or Railway as remaining hosts.
-- Director JWT path closed (#72); seed-loop accept In Progress (#74)  
-- Remaining: [#73](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/73) every.org webhook · full [#74](https://github.com/scrimshawlife-ctrl/Fund-Intel/issues/74) browser sign-off
+- Director JWT path OBSERVED (#72); seed-loop allocate→proof→packet OBSERVED  
+- Remaining: [#20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20) durable host + every.org pointing + director acceptance
 
 ### Hacker Dojo campaign (HD-OI)
 
@@ -60,12 +59,12 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 
 ### Ops — operator access / commercial onboarding
 
-- **Hub:** Fund-Intel / Portofolio-Signals `docs/SUITE-ONBOARDING.md`  
-- People path (C): Fund-Intel `docs/OPERATOR-ACCESS-ONBOARDING.md`  
-- Client lifecycle (B): Fund-Intel `docs/COMMERCIAL-CLIENT-LIFECYCLE.md`  
-- **Document pack:** Fund-Intel `docs/CLIENT-ONBOARDING-PACK.md` (code #104; platform apply PENDING)  
-- Second tenant (D): Fund-Intel `docs/SECOND-TENANT-ONBOARDING.md`  
-- Allocation pilot: Fund-Intel `docs/HACKER-DOJO-ALLOCATION-PILOT.md` · `docs/CURRENT-STATE.md`
+- **Hub:** [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) `docs/SUITE-ONBOARDING.md`  
+- People path (C): Portfolio-Signals `docs/OPERATOR-ACCESS-ONBOARDING.md`  
+- Client lifecycle (B): Portfolio-Signals `docs/COMMERCIAL-CLIENT-LIFECYCLE.md`  
+- **Document pack:** Portfolio-Signals `docs/CLIENT-ONBOARDING-PACK.md` (platform schema + Edge OBSERVED 2026-08-08; MFA dry-run still PENDING — [#18](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/18))  
+- Second tenant (D): Portfolio-Signals `docs/SECOND-TENANT-ONBOARDING.md`  
+- Allocation pilot: Portfolio-Signals `docs/HACKER-DOJO-ALLOCATION-PILOT.md` · `docs/CURRENT-STATE.md` (recorded 2026-08-15)
 
 ## Bootstrap
 
@@ -83,5 +82,5 @@ Script location: [`scripts/setup-github-project.sh`](../scripts/setup-github-pro
 
 - Prefer **issues** as the project item (not only PRs).  
 - Cross-repo work: issue in AGI or Specs with checklist linking the other repos.  
-- Allocation middleware work lives primarily in **Fund-Intel** issues; Specs holds design-only items.  
+- Allocation middleware work lives primarily in **Portfolio-Signals** issues; Specs holds design-only items.  
 - Do not put secrets, donor PII, or operator tokens in issue bodies.  
