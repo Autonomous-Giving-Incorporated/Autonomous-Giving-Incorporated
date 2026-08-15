@@ -75,7 +75,7 @@ Restated from vision and product principles:
 - It does not mark Phase C complete.
 - It does not approve Phase D runtime reads.
 - It does not replace the public privacy notice or create a new legal basis.
-- It does not assert that matching fixtures exist yet in Fund-Intel or Impact Relay.
+- It does not assert that matching fixtures exist yet in Fund-Intel / Portfolio Signals. Impact Relay Phase C fixtures are already published under `fixtures/agi_phase_c/` ([PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5), `cfc611a0b12aca080b043959de4de5c5340628a4`).
 
 ---
 

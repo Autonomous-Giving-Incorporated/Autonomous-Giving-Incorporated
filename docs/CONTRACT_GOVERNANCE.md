@@ -7,7 +7,7 @@ This document is the Phase C index for the shared public narrative contracts. It
 | C1 Field owners | Recorded as continuation-plan roles; current operator `scrimshawlife-ctrl` / Danny |
 | C2 Vocabulary / `allocationId` | Shared glossary + matching fixtures in this repo |
 | C3 Public-data policy | **PROPOSED** — not approved |
-| C4 Public-safe fixtures | Published and validated in this repo |
+| C4 Public-safe fixtures | Published and validated in this repo; Impact Relay copies landed; Fund-Intel / Portfolio Signals still a follow-up |
 | C5 Versioning | Existing date-string + SPEC-012 language formalized; no version bump |
 | Phase D | Still gated |
 
@@ -63,8 +63,9 @@ Draft: [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md).
 | Narrative JSON fixture | `integration/fixtures/community-hardware-narrative.json` | same contracts |
 | Public-campaign fixture | `integration/public-document-fixtures.ts` | published campaign shape |
 | Public-impact fixture | `integration/public-document-fixtures.ts` | published impact shape |
+| Impact Relay Phase C fixtures | [Impact-Relay `fixtures/agi_phase_c/`](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/tree/cfc611a0b12aca080b043959de4de5c5340628a4/fixtures/agi_phase_c) | public-impact shape + AGI `ImpactEvent`; landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`cfc611a0b12aca080b043959de4de5c5340628a4`) |
 
-No donor-level fields. Fund-Intel and Impact Relay still need matching published copies in those repositories; this PR does not claim they exist.
+No donor-level fields. Fund-Intel / Portfolio Signals still need matching published copies; this draft does not claim they exist on that repo’s main.
 
 ---
 
