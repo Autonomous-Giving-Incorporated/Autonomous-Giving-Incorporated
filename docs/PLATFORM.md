@@ -17,8 +17,8 @@ See [superpowers/specs/2026-08-06-agi-suite-vercel-public-design.md](./superpowe
 | Surface | Path on apex | Host | Repo |
 | --- | --- | --- | --- |
 | AGI workbench | `/` | Cloudflare Worker `agi-public` (intended); Vercel `autonomous-giving-incorporated` until DNS cutover | Autonomous-Giving-Incorporated |
-| Portfolio Signals public | `/portfolio-signals/` | Proxied to `fund-intel` → https://fund-intel-ten.vercel.app | Fund-Intel |
-| Portfolio Signals workspace | `/portfolio-signals/workspace` | same `fund-intel` project | Fund-Intel |
+| Portfolio Signals public | `/portfolio-signals/` | Proxied to `fund-intel` → https://fund-intel-ten.vercel.app | [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) |
+| Portfolio Signals workspace | `/portfolio-signals/workspace` | same `fund-intel` project | [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) |
 | Impact Relay public | `/impact-relay/` | Proxied to `impact-relay` → https://impact-relay.vercel.app | Impact-Relay |
 
 **Apex domain:** `https://autogive.app` (www also attached).  
@@ -40,7 +40,7 @@ GitHub Pages remains optional fallback only. Do not merge Portfolio Signals or I
 1. New tenancy, AGI admin, and multi-client work use **platform** only (`utdioxwiskzatwoejgiu`).
 2. Do not create a third Supabase project without updating this file first.
 3. Browser may use **anon** key only; never commit service-role keys.
-4. Schema source of truth: Fund-Intel `supabase/migrations`. **Operator applies migrations** to platform when linking (`supabase link --project-ref utdioxwiskzatwoejgiu`).
+4. Schema source of truth: [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) `supabase/migrations`. **Operator applies migrations** to platform when linking (`supabase link --project-ref utdioxwiskzatwoejgiu`).
 5. Legacy `ecxkhihlbrcwpavfoaoq` is frozen for new tenancy.
 
 ## Platform administration
@@ -49,9 +49,9 @@ GitHub Pages remains optional fallback only. Do not merge Portfolio Signals or I
 | --- | --- |
 | Primary `master_admin` | `scrimshawlife@gmail.com` |
 | Second `master_admin` | `qi@enkeyai.com` (Qi Diaz) — granted 2026-08-08; MFA enroll still required |
-| Operator SQL | Fund-Intel `scripts/platform/` (bootstrap + isolation) |
+| Operator SQL | [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) `scripts/platform/` (bootstrap + isolation) |
 
-Operator onboarding hub (Fund-Intel / Portofolio-Signals): `docs/SUITE-ONBOARDING.md` (C→B→doc pack→D→pilot; done without login vs needs every.org/admin). People path: `docs/OPERATOR-ACCESS-ONBOARDING.md`. Document pack: `docs/CLIENT-ONBOARDING-PACK.md` (workspace nav; code on main #104; platform migrate PENDING).
+Operator onboarding hub ([Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals)): `docs/SUITE-ONBOARDING.md` (C→B→doc pack→D→pilot; done without login vs needs every.org/admin). People path: `docs/OPERATOR-ACCESS-ONBOARDING.md`. Document pack: `docs/CLIENT-ONBOARDING-PACK.md` (platform schema + Edge OBSERVED 2026-08-08; MFA workspace dry-run still PENDING — [Portfolio-Signals #18](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/18)).
 
 ## Shared identifiers
 
@@ -72,15 +72,15 @@ From AGI repo after public deploys:
 | --- | --- | --- |
 | Public (now) | Path-prefixed static FI/IR under autogive.app + smoke | Live |
 | Phase 2 | Platform Supabase + AGI admin + tenant director login | **Operator-complete** — migrations on `utdioxwiskzatwoejgiu`, Vercel `PLATFORM_*` anon, master_admin + HD director, workspace magic-link login verified |
-| Phase 3 | Allocation middleware pilot + IR live cohort + every.org | **In progress** — unit tests + local Node pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED; **live every.org webhook (#73) and full director sign-off (#74) still open** |
+| Phase 3 | Allocation middleware pilot + IR live cohort + every.org | **In progress** — unit tests + local Node pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED; Worker allocation API + every.org webhook **CODE_SHIPPED**; live named host + every.org pointing + director acceptance still **PENDING** ([Portfolio-Signals #20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20)) |
 | Phase 3+ | Agentic ops, dual-control at scale | Planned |
 
 ## Phase 2 design
 
 [Platform foundation + workspace login](./superpowers/specs/2026-08-06-agi-platform-foundation-design.md) — **Implemented and operator-verified** (workspace login on production). Residual hygiene: rotate chat-shared secrets; optional custom SMTP for email OTP volume.
 
-Fund-Intel operator docs (retargeted to platform):
+[Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) operator docs (retargeted to platform):
 
-- Bootstrap: Fund-Intel `docs/STAGING-BOOTSTRAP.md`
-- Workspace: Fund-Intel `docs/AUTHENTICATED-WORKSPACE.md`
-- Alignment: Fund-Intel `docs/PLATFORM.md`
+- Bootstrap: Portfolio-Signals `docs/STAGING-BOOTSTRAP.md`
+- Workspace: Portfolio-Signals `docs/AUTHENTICATED-WORKSPACE.md`
+- Alignment: Portfolio-Signals `docs/PLATFORM.md` · suite current-state: Portfolio-Signals `docs/CURRENT-STATE.md` (recorded 2026-08-15)
