@@ -43,7 +43,7 @@ Defined in AGI `integration/contracts.ts` (version `2026-08-02`):
 - `ImpactEvent` — allocationId, eventId, type, occurredAt, verificationStatus, optional public-safe evidenceReference
 - `PublicImpactNarrative` — decision + ordered events
 
-These contracts are the intended governed seam. The current public-source adapter still projects a narrower slice; full deserialization is Phase C work.
+These contracts are the intended governed seam. The current public-source adapter still projects a narrower slice; full remote deserialization is Phase D work and remains gated.
 
 ## Full integration checklist
 
@@ -57,11 +57,14 @@ These contracts are the intended governed seam. The current public-source adapte
 
 ### B. Identifier and vocabulary alignment (Phase C)
 
-- [ ] Shared definition of `allocationId` (generation rules + format)
-- [ ] Shared status / verification vocabulary mapped across the three systems
-- [ ] Named field owners for every contract field
-- [ ] Representative public-safe fixtures published in all three repositories
-- [ ] Contract version bump process agreed and documented
+Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
+
+- [x] Shared definition of `allocationId` (generation rules + format) — AGI [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md); matching fixtures only
+- [x] Shared status / verification vocabulary mapped across the three systems — same glossary; unmapped values are not coerced
+- [x] Named field owners for every contract field — continuation-plan roles in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md); current operator `scrimshawlife-ctrl` / Danny
+- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Fund-Intel and Impact Relay copies still needed
+- [x] Contract version bump process documented — date-string bump on compatibility break; SPEC-012 SemVer unchanged for the platform pin
+- [ ] C3 evidence-access / retention / redaction / publication rules approved — draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**)
 
 ### C. Reliability & observability (Phase B)
 
@@ -102,8 +105,8 @@ Only after B + C are complete and a separate architecture review is approved:
 | Public campaign advisory document | Fund-Intel |
 | Public verified impact outcomes | Impact-Relay |
 | Narrative presentation + fail-closed projection | AGI |
-| Shared contract vocabulary + allocationId rules | Joint (all three) |
-| Public-data / retention / redaction policy | Leadership + all three eng leads |
+| Shared contract vocabulary + allocationId rules | Joint (all three); AGI glossary draft in [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) |
+| Public-data / retention / redaction policy | Leadership + all three eng leads; AGI draft is **PROPOSED** in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) |
 
 ## Change control
 

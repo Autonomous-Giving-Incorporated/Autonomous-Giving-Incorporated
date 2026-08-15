@@ -15,7 +15,9 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Vercel](VERCEL.md)                               | Fallback host until DNS cutover; keep vercel.json               |
 | [Integration contracts](INTEGRATION_CONTRACTS.md) | Accepted public inputs, validation rules, and fallback behavior |
 | [Three-repo integration](THREE_REPO_INTEGRATION.md) | Full cross-repository surface, checklist, and ownership       |
-| [Contract governance](CONTRACT_GOVERNANCE.md)     | Phase C field ownership, vocabulary, allocationId proposals     |
+| [Contract governance](CONTRACT_GOVERNANCE.md)     | Phase C field ownership, vocabulary, fixtures, versioning       |
+| [Suite glossary](SUITE_GLOSSARY.md)               | Shared `allocationId` and status vocabulary                     |
+| [Public-data policy](PUBLIC_DATA_POLICY.md)       | PROPOSED evidence, retention, redaction, publication rules      |
 | [Design system](DESIGN_SYSTEM.md)                 | AGI identity, tokens, composition, and accessibility             |
 
 ## Planning

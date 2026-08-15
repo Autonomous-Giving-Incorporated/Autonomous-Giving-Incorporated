@@ -38,7 +38,7 @@ The site does not collect donations, persist records, authenticate people, expos
 
 **Exit criteria:** deterministic state coverage, reviewed freshness semantics, monitored fallback behavior, and accessible status copy.
 
-**Status:** landed in [PR #5](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/5). Phase C (field owners, vocabulary sign-off, leadership approvals) and Phase D (runtime read-only host) are not started.
+**Status:** landed in [PR #5](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/5). Phase C engineering draft follows. Phase D (runtime read-only host) is not started.
 
 ## Phase C — Contract governance
 
@@ -46,15 +46,17 @@ The site does not collect donations, persist records, authenticate people, expos
 
 ### Engineering / governance tasks
 
-| ID | Task | Notes |
-|----|------|-------|
-| C1 | Name ownership for every `FundingDecision` and `ImpactEvent` field | Record in INTEGRATION_CONTRACTS.md |
-| C2 | Align `allocationId` generation and status vocabulary across Fund-Intel, Impact-Relay, and AGI | Shared glossary + matching fixtures |
-| C3 | Approve evidence-access, retention, redaction, and public-publication rules | Leadership + eng sign-off; referenced by all three repos |
-| C4 | Publish representative public-safe fixtures in all three repositories | Fixtures must validate against the contracts |
-| C5 | Formalize contract versioning and change-management process | Version bump required on any compatibility break |
+| ID | Task | Status |
+|----|------|--------|
+| C1 | Name ownership for every `FundingDecision` and `ImpactEvent` field | Engineering draft: role owners recorded in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md). Current human filling those seats: Danny (`scrimshawlife-ctrl`). Not a sign-off. |
+| C2 | Align `allocationId` generation and status vocabulary across Fund-Intel, Impact-Relay, and AGI | Engineering draft: [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) + matching fixtures. Live adapter semantics unchanged. |
+| C3 | Approve evidence-access, retention, redaction, and public-publication rules | **PROPOSED** draft in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md). Not approved. Leadership + eng sign-off still required. |
+| C4 | Publish representative public-safe fixtures in all three repositories | This repo: narrative JSON/TS fixtures validate against the contracts. Fund-Intel and Impact Relay copies are still a cross-repo follow-up. |
+| C5 | Formalize contract versioning and change-management process | Formalized existing date-string + SPEC-012 language. Compatibility break requires a version bump. No bump in this draft. |
 
 **Exit criteria:** reviewed schemas, approved public-data rules, deterministic fixtures, and named field owners.
+
+**Status:** engineering draft in this repository. C3 is not approved. Phase C is not complete. Phase D remains gated.
 
 ## Phase D — Runtime read-only narrative
 

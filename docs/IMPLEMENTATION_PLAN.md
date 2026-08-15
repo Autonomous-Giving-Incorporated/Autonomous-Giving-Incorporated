@@ -24,11 +24,13 @@ Landed in [PR #5](https://github.com/Autonomous-Giving-Incorporated/Autonomous-G
 
 ## Workstream 2 — Contract governance (Phase C)
 
-1. Name the owner of every shared field.
-2. Reconcile allocation identifiers and status vocabulary across the suite.
-3. Approve public evidence, retention, redaction, and publication rules.
-4. Version incompatible contract changes.
-5. Maintain representative public-safe fixtures in all affected repositories.
+Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D remains gated.
+
+1. Name the owner of every shared field (continuation-plan roles; current operator recorded).
+2. Reconcile allocation identifiers and status vocabulary across the suite (glossary + matching fixtures).
+3. Draft public evidence, retention, redaction, and publication rules — approval still required.
+4. Version incompatible contract changes (date-string bump required; no bump in this draft).
+5. Maintain representative public-safe fixtures in this repository; other repos still need matching copies.
 
 Cross-repository surface and checklist live in [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md).
 

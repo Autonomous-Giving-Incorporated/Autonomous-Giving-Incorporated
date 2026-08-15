@@ -14,6 +14,8 @@
  * - no evidence is inferred from a document that fails validation.
  */
 
+import { isAllocationId } from "./glossary.ts";
+
 export type ValidationFailure = {
   kind: "malformed" | "policy_rejected";
   reason: string;
@@ -81,10 +83,6 @@ function isDateOnly(value: unknown): value is string {
 
 function isNonNegInt(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value >= 0;
-}
-
-function isAllocationId(value: unknown): value is string {
-  return typeof value === "string" && /^alloc_[a-z0-9_]+$/.test(value);
 }
 
 function isGateId(value: unknown): value is string {

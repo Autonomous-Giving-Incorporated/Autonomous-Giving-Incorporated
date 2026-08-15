@@ -44,7 +44,9 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 | `integration/freshness.ts`      | 24 h soft / 7 d hard freshness policy and clock assumptions           |
 | `integration/diagnostics.ts`    | Privacy-safe build-log summary (source, age, state, reason)           |
 | `integration/signal-copy.ts`    | Accessible provenance and freshness copy                              |
-| `integration/contracts.ts`      | Defines versioned narrative contracts for future governed integration |
+| `integration/contracts.ts`      | Defines versioned narrative contracts, field owners, and versioning |
+| `integration/glossary.ts`       | Shared allocationId and status vocabulary for matching fixtures |
+| `integration/validate-contracts.ts` | Fail-closed validation for narrative contract fixtures |
 | `integration/fixtures.ts`       | Supplies public-safe deterministic contract fixtures                  |
 | `workers/suite-gateway.ts`   | Reverse-proxies suite paths on Cloudflare (same role as `vercel.json`) |
 
