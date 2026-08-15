@@ -118,12 +118,7 @@ describe("narrative contract fixtures", () => {
   });
 
   it("contains no donor-level keys", () => {
-    const blob = JSON.stringify({
-      narrative: communityHardwareFixture,
-      campaign: validPublicCampaign,
-      impact: validPublicImpact,
-    });
-    for (const bad of [
+    const forbidden = new Set([
       "donor_id",
       "donorId",
       "donation_id",
@@ -131,8 +126,27 @@ describe("narrative contract fixtures", () => {
       "donorName",
       "donorEmail",
       "approved_by",
-    ]) {
-      assert.equal(blob.includes(bad), false);
+    ]);
+    const keys: string[] = [];
+    const walk = (value: unknown) => {
+      if (Array.isArray(value)) {
+        value.forEach(walk);
+        return;
+      }
+      if (value && typeof value === "object") {
+        for (const [key, nested] of Object.entries(value)) {
+          keys.push(key);
+          walk(nested);
+        }
+      }
+    };
+    walk({
+      narrative: communityHardwareFixture,
+      campaign: validPublicCampaign,
+      impact: validPublicImpact,
+    });
+    for (const key of keys) {
+      assert.equal(forbidden.has(key), false, key);
     }
   });
 });
