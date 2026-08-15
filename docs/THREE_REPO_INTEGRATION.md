@@ -62,7 +62,7 @@ Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
 - [x] Shared definition of `allocationId` (generation rules + format) — AGI [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md); matching fixtures only
 - [x] Shared status / verification vocabulary mapped across the three systems — same glossary; unmapped values are not coerced
 - [x] Named field owners for every contract field — continuation-plan roles in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md); current operator `scrimshawlife-ctrl` / Danny
-- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Fund-Intel and Impact Relay copies still needed
+- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Fund-Intel / Portfolio Signals copies still needed
 - [x] Contract version bump process documented — date-string bump on compatibility break; SPEC-012 SemVer unchanged for the platform pin
 - [ ] C3 evidence-access / retention / redaction / publication rules approved — draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**)
 
