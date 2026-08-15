@@ -24,9 +24,9 @@ The products share a visual and navigation foundation but keep separate authorit
 
 In addition to the public workbench, the suite ships a **transaction-light allocation middleware**: connect donation platforms (canonical **every.org**), maintain campaign/program **pots**, human-approve **allocations**, automate the rest via an **exception inbox**, and produce board **packets**.
 
-**Status:** MVP implemented in Fund-Intel (`services/allocation-middleware/`); Hacker Dojo pilot seed ready; live webhook + hosted host operator-owned. This AGI repo remains the public narrative surface.
+**Status:** MVP implemented in Portfolio Signals (`services/allocation-middleware/`); Hacker Dojo pilot seed ready; live webhook + hosted host operator-owned. This AGI repo remains the public narrative surface.
 
-Full product note: [PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md). Design: [Specs design doc](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/blob/main/docs/superpowers/specs/2026-08-03-allocation-middleware-design.md).
+Full product note: [PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md). Design: [Specs design doc](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/docs/superpowers/specs/2026-08-03-allocation-middleware-design.md).
 
 ## Current experience
 

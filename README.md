@@ -6,7 +6,7 @@
 
 Autonomously Giving Incorporated (AGI) is the corporate brand and public, evidence-first entry point for its giving platform. It explains how a funding decision can become an inspectable impact story without exposing donor records or claiming that this site moves money. Zero State is the software builder and appears only in the footer credit.
 
-**[Visit autogive.app](https://autogive.app/)** · [GitHub Pages fallback](https://scrimshawlife-ctrl.github.io/Autonomous-Giving-Incorporated/)
+**[Visit autogive.app](https://autogive.app/)** · [GitHub Pages fallback](https://scrimshawlife-ctrl.github.io/Autonomous-Giving-Incorporated/) (historical github.io mirror)
 
 ## Product suite
 
@@ -27,7 +27,9 @@ Cross-repo delivery board for AGI, Portfolio Signals, Impact Relay, and Specs:
 
 ## Platform specification
 
-Pinned platform canon: **[Autonomous Giving Specs v1.0.0](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/releases/tag/v1.0.0)**.
+Pinned platform canon: **[Autonomous Giving Specs v2.0.0](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/releases/tag/v2.0.0)** (tag `v2.0.0`; do not track floating `main`). This is a documentation pin, not a READY or runtime-conformance claim.
+
+**Money lock:** AGI never processes donations. Stripe is tenant/SaaS billing only. Gift tracking is third-party connectors (P0 every.org). **Host lock:** Cloudflare + existing Supabase. Render / Fly / Railway / Cloud Run are historical or optional only.
 
 Conformance declaration: [`platform-spec/conformance.yml`](platform-spec/conformance.yml). See [`platform-spec/README.md`](platform-spec/README.md).
 
@@ -35,11 +37,11 @@ Conformance declaration: [`platform-spec/conformance.yml`](platform-spec/conform
 
 Transaction-light **middleware** between donation platforms (canonical **every.org**) and human allocation: pots → allocate → proof → exception inbox → board packet. Not a finance ledger.
 
-**Status (2026-08-07):** MVP in [Fund-Intel `services/allocation-middleware/`](https://github.com/scrimshawlife-ctrl/Fund-Intel/tree/main/services/allocation-middleware); unit tests + local pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED. **Live every.org webhook** still open (operator). AGI stays the public explanatory workbench.
+**Status (2026-08-07):** MVP in [Portfolio Signals `services/allocation-middleware/`](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/tree/main/services/allocation-middleware); unit tests + local pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED. **Live every.org webhook** still open (operator). AGI stays the public explanatory workbench.
 
 - [docs/PRODUCT-ALLOCATION-MIDDLEWARE.md](docs/PRODUCT-ALLOCATION-MIDDLEWARE.md)  
-- [Full design (Specs)](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs/blob/main/docs/superpowers/specs/2026-08-03-allocation-middleware-design.md)  
-- [Fund-Intel pilot runbook](https://github.com/scrimshawlife-ctrl/Fund-Intel/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md)
+- [Full design (Specs v2.0.0)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/docs/superpowers/specs/2026-08-03-allocation-middleware-design.md)  
+- [Portfolio Signals pilot runbook](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md)
 
 ## Current status
 
@@ -51,7 +53,7 @@ AGI is a static Next.js export. The designed stack is **Cloudflare + existing Su
 | `/portfolio-signals/` | Portfolio Signals public + **workspace** login |
 | `/impact-relay/` | Impact Relay public aggregates |
 
-**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Client Onboarding Pack** (private org docs in Portfolio Signals workspace) is **code on main** ([#104](https://github.com/scrimshawlife-ctrl/Portofolio-Signals/pull/104)); platform migrate + Edge deploy still operator. **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; live every.org webhook and full director sign-off remain. Suite hub: [docs/PLATFORM.md](docs/PLATFORM.md) · Fund-Intel [SUITE-ONBOARDING](https://github.com/scrimshawlife-ctrl/Portofolio-Signals/blob/main/docs/SUITE-ONBOARDING.md).
+**Phase 2 (platform Auth + workspace)** is **operator-complete** (2026-08-07): platform Supabase `utdioxwiskzatwoejgiu`, migrations, Vercel anon env, master_admin login verified. **Client Onboarding Pack** (private org docs in Portfolio Signals workspace) is **code on main**; platform migrate + Edge deploy still operator. **Phase 3** allocation pilot is in progress: director JWT + ephemeral HTTPS OBSERVED; live every.org webhook and full director sign-off remain. Suite hub: [docs/PLATFORM.md](docs/PLATFORM.md) · Portfolio Signals [SUITE-ONBOARDING](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE-ONBOARDING.md).
 
 During the production build AGI requests two approved public aggregate documents:
 
@@ -72,7 +74,7 @@ The **AGI marketing site** does **not** collect donations, authenticate operator
 ### Setup
 
 ```bash
-git clone https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated.git
+git clone https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated.git
 cd Autonomous-Giving-Incorporated
 npm ci
 npm run dev

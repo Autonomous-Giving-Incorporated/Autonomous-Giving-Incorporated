@@ -8,10 +8,10 @@ One **Projects (v2)** board owns delivery across all suite repositories.
 
 | Repo | Role |
 | --- | --- |
-| [Autonomous-Giving-Incorporated](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated) | Public workbench + suite narrative |
-| [Fund-Intel](https://github.com/scrimshawlife-ctrl/Fund-Intel) | Decision workspace + allocation middleware host |
-| [Impact-Relay](https://github.com/scrimshawlife-ctrl/Impact-Relay) | Evidence / ledger / receipts |
-| [Autonomous-Giving-Specs](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Specs) | Platform specs (no app code) |
+| [Autonomous-Giving-Incorporated](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated) | Public workbench + suite narrative |
+| [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) | Decision workspace + allocation middleware host (formerly Fund-Intel) |
+| [Impact-Relay](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay) | Evidence / ledger / receipts |
+| [Autonomous-Giving-Specs](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs) | Platform specs (no app code); pin **v2.0.0** |
 
 ## Board fields (configured)
 
@@ -52,7 +52,7 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 
 ### Platform specs
 
-- Specs v1.x pin, conformance manifests, design docs under `docs/superpowers/`  
+- Specs v2.0.0 pin, conformance manifests, design docs under `docs/superpowers/`  
 
 ### Public suite surfaces
 

@@ -7,7 +7,7 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | Document                                          | Use it for                                                      |
 | ------------------------------------------------- | --------------------------------------------------------------- |
 | [Product](PRODUCT.md)                             | Current users, value proposition, scope, and non-goals          |
-| [Allocation middleware](PRODUCT-ALLOCATION-MIDDLEWARE.md) | Client ops product (MVP in Fund-Intel; pilot next)        |
+| [Allocation middleware](PRODUCT-ALLOCATION-MIDDLEWARE.md) | Client ops product (MVP in Portfolio Signals; pilot next)        |
 | [Architecture](ARCHITECTURE.md)                   | Runtime model, trust boundaries, components, and deployment     |
 | [Custom domain](CUSTOM-DOMAIN.md)                 | autogive.app DNS (Cloudflare intended; Vercel until cutover)    |
 | [Platform canon](PLATFORM.md)                       | Suite hosts, Supabase platform ref, phase map              |
