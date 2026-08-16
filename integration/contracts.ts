@@ -13,7 +13,7 @@ export const CONTRACT_VERSIONING = {
   current: INTEGRATION_CONTRACT_VERSION,
   bumpRequiredOnCompatibilityBreak: true,
   additiveOptionalFieldsKeepVersion: true,
-  platformSpecPin: "1.0.0",
+  platformSpecPin: "2.0.0",
   platformSpecScheme: "semver",
 } as const;
 

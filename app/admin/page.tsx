@@ -33,11 +33,12 @@ export default function AdminPage() {
         <div className="control-plane-status" role="status">
           <span className="control-plane-status-dot" aria-hidden="true" />
           <div>
-            <strong>Authentication boundary ready for integration</strong>
+            <strong>Control-plane runtime is parked</strong>
             <p>
-              This static export is a control-plane shell. Production sign-in and
-              capability handoff are enabled only when the AGI edge auth boundary is
-              configured.
+              This static export is a labeled shell. Production sign-in, SPEC-028
+              runtime, and director JWT acceptance are parked (2026-08-16 PT). Do
+              not enter credentials here. Hacker Dojo projects below are a
+              non-canonical integration fixture, not the SPEC-011 demo.
             </p>
           </div>
         </div>

@@ -202,7 +202,7 @@ describe("contract versioning and C3 status", () => {
     assert.equal(CONTRACT_VERSIONING.current, "2026-08-02");
     assert.equal(CONTRACT_VERSIONING.scheme, "date-string");
     assert.equal(CONTRACT_VERSIONING.bumpRequiredOnCompatibilityBreak, true);
-    assert.equal(CONTRACT_VERSIONING.platformSpecPin, "1.0.0");
+    assert.equal(CONTRACT_VERSIONING.platformSpecPin, "2.0.0");
     assert.equal(CONTRACT_VERSIONING.platformSpecScheme, "semver");
   });
 

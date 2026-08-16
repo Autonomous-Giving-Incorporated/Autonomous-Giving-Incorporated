@@ -1,7 +1,7 @@
 # AGI Platform Foundation + Workspace Login
 
 **Date:** 2026-08-06  
-**Status:** Approved — code path in progress; operator migrate/login pending  
+**Status:** PARKED (2026-08-16 PT) — login, secrets, and director acceptance wait. Historical design; not complete. See [2026-08-16-autogive-app-finish-design.md](./2026-08-16-autogive-app-finish-design.md).  
 **Owner:** Zero State / AGI suite  
 **Depends on:** [2026-08-06-agi-suite-vercel-public-design.md](./2026-08-06-agi-suite-vercel-public-design.md) (public suite live)  
 **Supersedes for data plane:** legacy HD staging project as home for new tenancy  

@@ -22,7 +22,7 @@ https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v
 
 ### Docs pin vs implemented
 
-The `implements` list is the **tracked** set this public site cares about under the v2.0.0 pin. It is not a claim that those artifacts run here.
+**E1 not landed.** `implements` still overclaims. The locked target is SPEC-011/012/013 only, with empty `contracts`/`events`. SPEC-023/024/026/027/028 and CONTRACT-013 stay in `evidence.tracked` only. See [2026-08-16-autogive-app-finish-design.md](../docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). `npm run conformance-check` is an honest stub and **exits 1** until E1 shrinks the YAML. This is not a READY claim.
 
 | Artifact | Status on this public site |
 | --- | --- |

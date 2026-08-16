@@ -71,13 +71,13 @@ From AGI repo after public deploys:
 | Phase | Deliverable | Status |
 | --- | --- | --- |
 | Public (now) | Path-prefixed static FI/IR under autogive.app + smoke | Live |
-| Phase 2 | Platform Supabase + AGI admin + tenant director login | **Operator-complete** — migrations on `utdioxwiskzatwoejgiu`, Vercel `PLATFORM_*` anon, master_admin + HD director, workspace magic-link login verified |
+| Phase 2 | Platform Supabase + AGI admin + tenant director login | **PARKED** (2026-08-16 PT) — login, secrets, SPEC-028 runtime, Ed, and director JWT / director acceptance wait. This public site does not authenticate. Do not treat earlier operator-complete notes as current. |
 | Phase 3 | Allocation middleware pilot + IR live cohort + every.org | **In progress** — unit tests + local Node pilot + director JWT + ephemeral public HTTPS OBSERVED; seed allocate→proof→packet OBSERVED; Worker allocation API + every.org webhook **CODE_SHIPPED**; live named host + every.org pointing + director acceptance still **PENDING** ([Portfolio-Signals #20](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/issues/20)) |
 | Phase 3+ | Agentic ops, dual-control at scale | Planned |
 
 ## Phase 2 design
 
-[Platform foundation + workspace login](./superpowers/specs/2026-08-06-agi-platform-foundation-design.md) — **Implemented and operator-verified** (workspace login on production). Residual hygiene: rotate chat-shared secrets; optional custom SMTP for email OTP volume.
+[Platform foundation + workspace login](./superpowers/specs/2026-08-06-agi-platform-foundation-design.md) — **PARKED** (2026-08-16 PT). Residual login, secrets, MFA, and director acceptance wait. Public-site finish design: [2026-08-16-autogive-app-finish-design.md](./superpowers/specs/2026-08-16-autogive-app-finish-design.md).
 
 [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) operator docs (retargeted to platform):
 

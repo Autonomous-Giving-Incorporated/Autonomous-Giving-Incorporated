@@ -97,7 +97,7 @@ describe("route intents", () => {
     assert.equal(createRouteIntent(context, "fund-intel", "", NOW), null);
   });
 
-  it("keeps Hacker Dojo projects individually allocatable", () => {
+  it("keeps Hacker Dojo as a non-canonical integration fixture", () => {
     assert.equal(tenantFixture.client_id, tenantFixture.tenant_id);
     assert.ok(tenantFixture.projects.length >= 3);
     assert.equal(

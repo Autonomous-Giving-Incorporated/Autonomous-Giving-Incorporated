@@ -23,11 +23,11 @@ export default function LoginPage() {
 
         <section className="control-plane-login-card" aria-labelledby="login-status">
           <p className="kicker">Integration state</p>
-          <h2 id="login-status">Production sign-in is not enabled in this static export.</h2>
+          <h2 id="login-status">Sign-in is parked. Production login is not enabled.</h2>
           <p>
-            Do not enter credentials on this page yet. The next runtime slice will
-            connect this boundary to the AGI edge auth worker, secure cookies, and
-            short-lived audience-scoped capability context.
+            Login, Phase 2 workspace completion, SPEC-028 runtime, and director JWT
+            acceptance are parked (2026-08-16 PT). Do not enter credentials on this
+            page. This static export does not authenticate.
           </p>
           <div className="control-plane-actions">
             <Link className="button button-primary focus-ring" href="/admin">

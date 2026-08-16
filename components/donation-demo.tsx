@@ -166,7 +166,7 @@ export function DonationDemo() {
                 ) : null}
                 {step >= 8 ? (
                   <div className="notification-row">
-                    <p className="evidence-title">Delivered to Jane</p>
+                    <p className="evidence-title">Notification delivered</p>
                     <strong>{scenario.notification.title}</strong>
                     <p>{scenario.notification.message}</p>
                   </div>
