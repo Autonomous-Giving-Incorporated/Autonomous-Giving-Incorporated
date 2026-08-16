@@ -7,10 +7,10 @@ import { formatDiagnosticLine } from "@/integration/diagnostics";
 import { getPublicSignals } from "@/integration/public-sources";
 
 const lifecycle = [
-  ["01", "Contribution received", "recorded"],
-  ["02", "Community Hardware allocation", "assigned"],
-  ["03", "Raspberry Pi kits", "approved"],
-  ["04", "Robotics workshop · 18 students", "verified"],
+  ["01", "Need · 25 laptops", "stated"],
+  ["02", "Human approval", "approved"],
+  ["03", "Allocation · $2,500", "assigned"],
+  ["04", "Community AI Lab verified", "verified"],
 ];
 
 const system = [
@@ -94,7 +94,7 @@ export default async function Home() {
               aria-label="Example contribution lifecycle"
             >
               <div className="instrument-head">
-                <strong>$250</strong>
+                <strong>$2,500</strong>
                 <span>Evidence chain 04/04</span>
               </div>
               {lifecycle.map(([index, label, state]) => (

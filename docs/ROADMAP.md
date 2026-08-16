@@ -20,7 +20,7 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 
 ## Next — Public-site Phase E (conformance and boundary)
 
-Design locked 2026-08-16: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Implementation of E1–E7 is **not** complete. This is **not** READY.
+Design and public-site code slice 2026-08-16: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). E1–E7 landed in this repository. This is **not** READY.
 
 - Pin stays **Autonomous-Giving-Specs v2.0.0** (documentation pin, not runtime conformance).
 - `implements` must shrink to the public narrative/projection this site ships (SPEC-011/012/013). SPEC-023/024/026/027/028 and CONTRACT-013 stay tracked only.

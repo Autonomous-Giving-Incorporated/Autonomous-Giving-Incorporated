@@ -16,23 +16,26 @@ This pin is a **documentation alignment**. It is not a READY claim, not runtime 
 
 ## Manifest
 
-[`conformance.yml`](conformance.yml) declares the platform artifacts this product surface aligns with. Schema:
+[`conformance.yml`](conformance.yml) declares the platform artifacts this product surface **implements** versus those it only **tracks**. Schema:
 
 https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/schemas/meta/conformance-manifest.schema.json
 
-### Docs pin vs implemented
-
-**E1 not landed.** `implements` still overclaims. The locked target is SPEC-011/012/013 only, with empty `contracts`/`events`. SPEC-023/024/026/027/028 and CONTRACT-013 stay in `evidence.tracked` only. See [2026-08-16-autogive-app-finish-design.md](../docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). `npm run conformance-check` is an honest stub and **exits 1** until E1 shrinks the YAML. This is not a READY claim.
+`implements` is the public narrative/projection this static export ships. Tracked ≠ implements.
 
 | Artifact | Status on this public site |
 | --- | --- |
-| SPEC-001, SPEC-002, SPEC-004–008, SPEC-011–013 | Documented alignment for the static workbench and public narrative |
+| [SPEC-011](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-011-demo-specification.md) | **Implements.** Community AI Lab / 25 laptops / 2500 USD deterministic demo. |
+| [SPEC-012](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-012-versioning.md) | **Implements.** Documentation pin to tag `v2.0.0`. |
+| [SPEC-013](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-013-repository-conformance.md) | **Implements.** Honest manifest + `npm run conformance-check`. Not READY. |
+| SPEC-001, SPEC-002, SPEC-004–008 | Alignment notes only. Not in `implements`. |
 | [SPEC-023](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-023-financial-ledger-invariants.md) tracking ledger | **Tracked.** Money lock observed here (AGI never processes donations). This site does not run a tracking ledger. |
 | [SPEC-024](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-024-integration-boundaries.md) every.org P0 / Stripe billing-only | **Tracked.** Boundary only. This site has no Stripe and no donation connector. |
 | [SPEC-026](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-026-donation-source-connectors.md) connectors | **Tracked.** P0 every.org lives in [Portfolio Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) allocation middleware, not this static export. |
 | [SPEC-027](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-027-impact-loop.md) impact loop | **Tracked.** Not implemented on this public site. |
-| [SPEC-028](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-028-agi-control-plane.md) control plane | **Tracked.** This repo is the public workbench, not an authenticated control plane. Operator auth stays on Portfolio Signals workspace. |
+| [SPEC-028](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-028-agi-control-plane.md) control plane | **Tracked.** This repo is the public workbench, not an authenticated control plane. Operator auth stays on Portfolio Signals workspace. Login is **PARKED**. |
 | [CONTRACT-013](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/contracts/CONTRACT-013-impact-notice.md) ImpactNotice | **Tracked** in evidence only (not produced or consumed at runtime here). Impact Relay is the producer. |
+
+Canonical contracts and events are empty in `implements`. Local `integration/contracts.ts` types are AGI narrative contracts, not `CONTRACT-003` / `CONTRACT-005`.
 
 ## Boundary note
 

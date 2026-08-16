@@ -36,9 +36,9 @@ Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D 
 
 Cross-repository surface and checklist live in [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md).
 
-## Workstream 3 — Phase E public-site finish (not started as a complete slice)
+## Workstream 3 — Phase E public-site finish
 
-Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Pin **v2.0.0**. Login **PARKED**. Honest conformance. C3 remains **PROPOSED**. Not READY.
+Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Pin **v2.0.0**. Login **PARKED**. Honest conformance. C3 remains **PROPOSED**. Not READY. Public-site E1–E7 landed (`nanoid@3.3.18` lockfile bump).
 
 1. Shrink `platform-spec/conformance.yml` `implements` to SPEC-011/012/013; tracked-only IDs stay out of `implements`.
 2. Replace the public demo with Community AI Lab / 25 laptops / 2500 USD and the required lifecycle order.

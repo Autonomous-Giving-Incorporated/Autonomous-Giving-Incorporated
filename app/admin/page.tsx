@@ -63,13 +63,16 @@ export default function AdminPage() {
 
         <section className="control-plane-projects" aria-labelledby="tenant-projects">
           <div>
-            <p className="kicker">Tenant workspace · {tenantFixture.tenant_id}</p>
+            <p className="kicker">
+              Non-canonical integration fixture (not SPEC-011) · {tenantFixture.tenant_id}
+            </p>
             <h2 id="tenant-projects" className="section-heading">
               {tenantFixture.name} projects ready for delegation.
             </h2>
             <p className="section-copy">
-              AGI keeps the tenant boundary stable while each project remains an
-              individually allocatable and impact-trackable unit.
+              Hacker Dojo is a labeled non-canonical integration fixture, not the
+              Community AI Lab SPEC-011 demo. AGI keeps the tenant boundary stable
+              while each project remains an individually allocatable unit.
             </p>
           </div>
           <div className="control-plane-project-list">

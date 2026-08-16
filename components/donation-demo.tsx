@@ -2,29 +2,11 @@
 
 import { Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
-import { scenario } from "@/demo/scenario";
+import { CANONICAL_DEMO_STAGES, scenario } from "@/demo/scenario";
 
-const steps = [
-  "Donation received",
-  "Assigned to Community Hardware Fund",
-  "Raspberry Pi kits selected",
-  "Purchase approved",
-  "Receipt attached",
-  "Equipment delivered",
-  "Intro to Robotics workshop held",
-  "Attendance verified: 18 students",
-  "Donor notification delivered",
-];
+const steps = [...CANONICAL_DEMO_STAGES];
 
-const provenance = [
-  "Notification",
-  "Workshop verified",
-  "Attendance evidence",
-  "Equipment used",
-  "Receipt approved",
-  "Fund allocation",
-  "Donation",
-];
+const provenance = [...CANONICAL_DEMO_STAGES].reverse();
 
 export function DonationDemo() {
   const [step, setStep] = useState(-1);
@@ -62,14 +44,15 @@ export function DonationDemo() {
           </div>
           <p className="section-copy">
             A deterministic representation of allocation-backed transparency—not
-            a live payment or one-to-one attribution system.
+            a live payment or one-to-one attribution system. Gift tracked, not
+            processed by AGI.
           </p>
         </div>
 
         <div className="demo-workbench">
           <div className="timeline">
             <p className="demo-label">
-              Donation lifecycle · ${scenario.donation.amount}
+              Community AI Lab lifecycle · ${scenario.donation.amount.toLocaleString("en-US")}
             </p>
             <ol
               className="timeline-list"
@@ -99,7 +82,7 @@ export function DonationDemo() {
                   onClick={start}
                 >
                   <Play aria-hidden="true" fill="currentColor" size={15} />{" "}
-                  Donate $250
+                  Replay $2,500 demo
                 </button>
               ) : (
                 <button
@@ -129,7 +112,7 @@ export function DonationDemo() {
             <p className="demo-label">Evidence ledger</p>
             {step < 0 ? (
               <div className="ledger-idle">
-                <p className="ledger-amount">$250</p>
+                <p className="ledger-amount">$2,500</p>
                 <p>Ready to become visible impact.</p>
               </div>
             ) : showProvenance ? (
@@ -140,40 +123,47 @@ export function DonationDemo() {
               </ol>
             ) : (
               <div className="evidence-list">
+                {step >= 0 ? (
+                  <Evidence title="Need" value={scenario.need.summary} />
+                ) : null}
                 {step >= 1 ? (
                   <Evidence
-                    title="Fund allocation"
+                    title="Fund Intel Recommendation"
                     value={scenario.allocation.name}
+                  />
+                ) : null}
+                {step >= 2 ? (
+                  <Evidence title="Human Approval" value="Approved before allocation" />
+                ) : null}
+                {step >= 3 ? (
+                  <Evidence
+                    title="Allocation"
+                    value={scenario.allocation.allocationId}
                   />
                 ) : null}
                 {step >= 4 ? (
                   <Evidence
-                    title="Approved receipt"
+                    title="Purchase"
                     value={`${scenario.purchase.item} · ${scenario.purchase.vendor}`}
                   />
                 ) : null}
                 {step >= 6 ? (
                   <Evidence
-                    title="Program event"
-                    value={`${scenario.program.name} at ${scenario.organization.name}`}
-                  />
-                ) : null}
-                {step >= 7 ? (
-                  <Evidence
-                    title="Verified attendance"
-                    value={`${scenario.impact.attendees} students`}
+                    title="Receipt"
+                    value={`$${scenario.purchase.amount.toLocaleString("en-US")} ${scenario.donation.currency}`}
                   />
                 ) : null}
                 {step >= 8 ? (
+                  <Evidence
+                    title="Impact"
+                    value={`${scenario.impact.attendees} laptops at ${scenario.organization.name}`}
+                  />
+                ) : null}
+                {step >= 9 ? (
                   <div className="notification-row">
                     <p className="evidence-title">Notification delivered</p>
                     <strong>{scenario.notification.title}</strong>
                     <p>{scenario.notification.message}</p>
-                  </div>
-                ) : null}
-                {step === 0 ? (
-                  <div className="ledger-idle">
-                    <p>Evidence appears as the story advances.</p>
                   </div>
                 ) : null}
               </div>
