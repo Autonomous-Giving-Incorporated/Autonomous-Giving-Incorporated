@@ -139,7 +139,7 @@ for (const file of scanFiles) {
 
 function hasUnnegatedReady(source) {
   for (const line of source.split(/\n/)) {
-    if (/\bREADY\b/.test(line) && !/not a READY/i.test(line)) return true;
+    if (/\bREADY\b/.test(line) && !/not(?: a)? READY/i.test(line)) return true;
     if (/\bfreeze SHA\b/.test(line) && !/not a runtime freeze/i.test(line)) {
       return true;
     }
