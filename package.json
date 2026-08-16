@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test integration/*.test.ts workers/*.test.ts",
+    "conformance-check": "node scripts/conformance-check.mjs",
     "cf:build": "next build",
     "cf:preview": "npm run cf:build && wrangler dev",
     "cf:deploy": "npm run cf:build && wrangler deploy",

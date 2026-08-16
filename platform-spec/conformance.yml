@@ -9,57 +9,35 @@ service:
 
 implements:
   specs:
-    - SPEC-001
-    - SPEC-002
-    - SPEC-004
-    - SPEC-005
-    - SPEC-006
-    - SPEC-007
-    - SPEC-008
     - SPEC-011
     - SPEC-012
     - SPEC-013
-    - SPEC-023
-    - SPEC-024
-    - SPEC-026
-    - SPEC-027
-    - SPEC-028
   contracts:
-    produces:
-      - CONTRACT-003
-      - CONTRACT-005
-    consumes:
-      - CONTRACT-001
-      - CONTRACT-002
-      - CONTRACT-004
-      - CONTRACT-006
+    produces: []
+    consumes: []
   events:
-    produces:
-      - EVENT-004
-      - EVENT-005
-      - EVENT-006
-      - EVENT-008
-    consumes:
-      - EVENT-002
-      - EVENT-003
-      - EVENT-007
-      - EVENT-009
-      - EVENT-010
+    produces: []
+    consumes: []
 
 evidence:
   integration_tests: docs/THREE_REPO_INTEGRATION.md
+  demo: demo/scenario.ts
+  demo_ui: components/donation-demo.tsx
+  demo_test: integration/demo-scenario.test.ts
+  conformance_check: scripts/conformance-check.mjs
   notes: >
     Documentation pin to Autonomous Giving Specs v2.0.0 (tag v2.0.0).
     This manifest is not a READY or runtime-conformance claim.
+    implements lists only the public narrative/projection this static
+    export ships: SPEC-011 demo, SPEC-012 pin, SPEC-013 declaration.
+    This site does not produce or consume canonical CONTRACT-* or EVENT-*
+    at runtime. Local integration/contracts.ts are AGI narrative contracts
+    (date-string schemaVersion), not CONTRACT-003/005.
     Money lock: this public site never processes donations; Stripe is
     tenant/SaaS billing only and unused here; gift tracking is third-party
     connectors (P0 every.org) in Portfolio Signals.
-    Host lock: Cloudflare + existing Supabase. Render/Fly/Railway/Cloud Run
-    are historical or optional only.
-    SPEC-023/024/026/027/028 are tracked for this public surface's money,
-    connector, loop, and control-plane boundaries — not implemented here.
-    CONTRACT-013 ImpactNotice is tracked only; Impact Relay is the producer
-    and this site does not produce or consume it at runtime.
+    Host lock: Cloudflare + existing Supabase.
+    SPEC-023/024/026/027/028 and CONTRACT-013 are tracked only.
   tracked:
     - SPEC-023
     - SPEC-024

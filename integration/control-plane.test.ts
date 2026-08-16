@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   createRouteIntent,
@@ -97,7 +98,12 @@ describe("route intents", () => {
     assert.equal(createRouteIntent(context, "fund-intel", "", NOW), null);
   });
 
-  it("keeps Hacker Dojo projects individually allocatable", () => {
+  it("keeps Hacker Dojo as a non-canonical integration fixture", () => {
+    const adminCopy = readFileSync(
+      new URL("../app/admin/page.tsx", import.meta.url),
+      "utf8",
+    );
+    assert.match(adminCopy, /Non-canonical integration fixture \(not SPEC-011\)/);
     assert.equal(tenantFixture.client_id, tenantFixture.tenant_id);
     assert.ok(tenantFixture.projects.length >= 3);
     assert.equal(

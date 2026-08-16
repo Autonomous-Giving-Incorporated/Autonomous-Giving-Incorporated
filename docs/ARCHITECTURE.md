@@ -38,7 +38,7 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 | `components/public-signals.tsx` | Renders the selected live or fallback aggregate projection            |
 | `components/donation-demo.tsx`  | Runs the deterministic, non-payment contribution story                |
 | `components/navbar.tsx`         | Provides AGI and reciprocal suite navigation                          |
-| `demo/scenario.ts`              | Defines the canonical local demonstration state                       |
+| `demo/scenario.ts`              | Canonical SPEC-011 Community AI Lab demonstration state               |
 | `integration/public-sources.ts` | Fetches, validates, selects, and normalizes public projections        |
 | `integration/validate-public.ts` | Fail-closed schema validation for both published public documents   |
 | `integration/freshness.ts`      | 24 h soft / 7 d hard freshness policy and clock assumptions           |

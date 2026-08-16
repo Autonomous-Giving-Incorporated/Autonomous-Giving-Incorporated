@@ -33,11 +33,12 @@ export default function AdminPage() {
         <div className="control-plane-status" role="status">
           <span className="control-plane-status-dot" aria-hidden="true" />
           <div>
-            <strong>Authentication boundary ready for integration</strong>
+            <strong>Control-plane runtime is parked</strong>
             <p>
-              This static export is a control-plane shell. Production sign-in and
-              capability handoff are enabled only when the AGI edge auth boundary is
-              configured.
+              This static export is a labeled shell. Production sign-in, SPEC-028
+              runtime, and director JWT acceptance are parked (2026-08-16 PT). Do
+              not enter credentials here. Hacker Dojo projects below are a
+              non-canonical integration fixture, not the SPEC-011 demo.
             </p>
           </div>
         </div>
@@ -62,13 +63,16 @@ export default function AdminPage() {
 
         <section className="control-plane-projects" aria-labelledby="tenant-projects">
           <div>
-            <p className="kicker">Tenant workspace · {tenantFixture.tenant_id}</p>
+            <p className="kicker">
+              Non-canonical integration fixture (not SPEC-011) · {tenantFixture.tenant_id}
+            </p>
             <h2 id="tenant-projects" className="section-heading">
               {tenantFixture.name} projects ready for delegation.
             </h2>
             <p className="section-copy">
-              AGI keeps the tenant boundary stable while each project remains an
-              individually allocatable and impact-trackable unit.
+              Hacker Dojo is a labeled non-canonical integration fixture, not the
+              Community AI Lab SPEC-011 demo. AGI keeps the tenant boundary stable
+              while each project remains an individually allocatable unit.
             </p>
           </div>
           <div className="control-plane-project-list">

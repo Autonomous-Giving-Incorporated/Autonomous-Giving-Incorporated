@@ -18,6 +18,16 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 - Deterministic source-selection tests.
 - Privacy-safe build diagnostics and accessible provenance copy.
 
+## Next — Public-site Phase E (conformance and boundary)
+
+Design and public-site code slice 2026-08-16: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). E1–E7 landed in this repository. This is **not** READY.
+
+- Pin stays **Autonomous-Giving-Specs v2.0.0** (documentation pin, not runtime conformance).
+- `implements` must shrink to the public narrative/projection this site ships (SPEC-011/012/013). SPEC-023/024/026/027/028 and CONTRACT-013 stay tracked only.
+- Canonical public demo is Community AI Lab / 25 laptops / 2500 USD. Hacker Dojo is a labeled non-canonical fixture only.
+- No donor identity on the public surface.
+- Login / Phase 2 / SPEC-028 runtime / Ed / director JWT is **PARKED** (2026-08-16 PT). Director acceptance waits.
+
 ## Next — Contract governance
 
 Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D remains gated.

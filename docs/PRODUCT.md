@@ -34,7 +34,7 @@ A visitor can:
 
 1. understand the gap between a receipt and evidence of impact;
 2. inspect approved public signals from Portfolio Signals and Impact Relay;
-3. replay a deterministic $250 community-hardware scenario;
+3. replay a deterministic Community AI Lab / 25-laptop / $2,500 scenario;
 4. see how allocation, purchase, activity, verification, and notification relate;
 5. continue to the decision or evidence product for more context.
 

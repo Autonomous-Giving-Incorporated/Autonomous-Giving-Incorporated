@@ -28,6 +28,7 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Continuation plan](CONTINUATION_PLAN.md)     | Detailed next phases, gates, and ownership    |
 | [Implementation plan](IMPLEMENTATION_PLAN.md) | Engineering sequence and definition of done   |
 | [AGI vs Specs audit](AGI_SPEC_AUDIT_2026-08-15.md) | 2026-08-15 conformance, boundary, and contamination audit |
+| [Public-site finish design](superpowers/specs/2026-08-16-autogive-app-finish-design.md) | 2026-08-16 Phase E execution brief (v2.0.0 pin; login PARKED; not READY) |
 
 ## Operations and history
 

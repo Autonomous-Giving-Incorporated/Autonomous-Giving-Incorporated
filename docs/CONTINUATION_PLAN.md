@@ -96,33 +96,39 @@ See also [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md) for the complete
 
 The full evidence record is in [AGI_SPEC_AUDIT_2026-08-15.md](AGI_SPEC_AUDIT_2026-08-15.md).
 
-Engineering direction for the next control-plane slice is now recorded in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md), with the private harness requirements in [Specs architecture/secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md). AGI remains responsible for implementing and evidencing its own control-plane behavior; the proposed Specs contracts are not yet an AGI conformance claim.
+Engineering direction for a later control-plane slice is recorded in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md) (**non-normative** current-status; not the v2.0.0 pin) and [Specs architecture/secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md) (**non-normative**). That slice is **PARKED**. AGI remains responsible for implementing and evidencing its own control-plane behavior when unparked; the proposed Specs contracts are not an AGI conformance claim.
+
+**Public-site execution brief (2026-08-16):** [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). An implementer can run Phase E without director login. Do not claim READY. C3 stays **PROPOSED**.
 
 ### Audit verdict
 
-The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk is specification and boundary drift: the conformance manifest is broader than the static public implementation, the demo is not the canonical `SPEC-011` scenario, a synthetic donor name appears in public demo copy, and cross-repository operational status is inconsistent.
+The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk after this slice is parked login / SPEC-028 runtime (not this public-site code) and C3 still **PROPOSED**. The public demo is Community AI Lab. The manifest `implements` list is the public narrative/projection only.
 
 ### Phase E — Conformance and boundary reconciliation
 
 **Goal:** make AGI’s declared responsibility no broader than its evidence-backed public workbench while preserving suite integration boundaries.
 
-| ID | Task | Priority | Exit evidence |
-|----|------|----------|---------------|
-| E1 | Reconcile `platform-spec/conformance.yml` with the actual static public capability. Remove unsupported canonical contracts/events, or implement and evidence them in their owning repository. | P0 | Manifest IDs have matching schemas, tests, and ownership links; no runtime capability is implied by a static projection. |
-| E2 | Choose the canonical demo. Prefer the Specs Community AI Lab / 25-laptop scenario for `SPEC-011`; otherwise remove `SPEC-011` and label Hacker Dojo as an integration fixture. | P0 | Demo test proves the selected scenario and required lifecycle order. |
-| E3 | Remove `donor.name` and “Delivered to Jane” from the public deterministic demo. | P0 | Source and rendered-copy scan finds no donor identity field in public demo data. |
-| E4 | Replace normative floating Specs `main` links with the pinned `v1.0.0` release, and mark current-status links as non-normative. | P1 | Link audit distinguishes pinned authority from discovery/status links. |
-| E5 | Resolve the Phase 2 status contradiction using one dated operator evidence record. Keep Fund-Intel execution steps in Fund-Intel and retain only AGI’s dependency boundary here. | P1 | README, platform docs, and foundation status agree. |
-| E6 | Add a conformance-check command that validates the manifest against the pinned release and requires evidence paths for declared artifacts. | P1 | CI fails on unknown IDs, missing evidence, floating normative pins, or unsupported claims. |
-| E7 | Upgrade the transitive `nanoid` dependency through a reviewed lockfile change. | P2 | `npm audit --omit=dev` has no high-severity finding, or an approved exception is documented. |
+**Status (2026-08-16):** Public-site E1–E7 code slice landed against [2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Login / Phase 2 / SPEC-028 runtime / Ed / director JWT is **PARKED**. Pin is **v2.0.0**. C3 is **PROPOSED**. This is not READY.
+
+| ID | Task | Priority | Status | Exit evidence |
+|----|------|----------|--------|---------------|
+| E1 | Shrink `platform-spec/conformance.yml` `implements` to SPEC-011/012/013 only. Empty `contracts`/`events`. Keep SPEC-023/024/026/027/028 and CONTRACT-013 in `evidence.tracked` only. | P0 | Landed | Manifest IDs match the design YAML; no runtime capability is implied by a static projection. |
+| E2 | Make Community AI Lab / 25 laptops / 2500 USD the canonical public `SPEC-011` demo with the required lifecycle order. Keep Hacker Dojo $250/18-attendee only as a labeled non-canonical integration fixture. | P0 | Landed | Demo test proves Community AI Lab and required stage order. |
+| E3 | Remove `donor.name` and “Delivered to Jane” from the public deterministic demo. Neutral notification copy. Regression test required. | P0 | Landed; re-confirmed after E2 | Source and rendered-copy scan finds no donor identity on the public demo surface. |
+| E4 | Keep the normative Specs pin at **v2.0.0**. Label floating `main` links non-normative. Do not revert to v1.0.0. Bump `CONTRACT_VERSIONING.platformSpecPin` to `2.0.0`. | P1 | Landed | Link audit distinguishes pinned authority from discovery/status links. |
+| E5 | Record login / Phase 2 / SPEC-028 / Ed / director JWT as **PARKED** (2026-08-16 PT). Keep Fund-Intel execution steps in Fund-Intel. Do not write a new “operator-complete” evidence record. | P1 | Landed | README, platform docs, foundation status, and login/admin copy agree: **PARKED**. |
+| E6 | Add `npm run conformance-check` that validates the manifest against the pinned v2.0.0 catalog and requires evidence paths. Do not fake a pass against overclaimed IDs. | P1 | Landed; hooked in CI after E1 | CI fails on unknown IDs, tracked IDs in `implements`, missing evidence, floating normative pins, or unsupported claims. |
+| E7 | Upgrade transitive `nanoid` to `>=3.3.18` through a reviewed lockfile change. | P2 | Landed (`nanoid@3.3.18` in lockfile; `npm audit --omit=dev` clean) | `npm audit --omit=dev` has no high-severity finding, or an approved exception is documented. |
 
 ### Phase E guardrails
 
-- Do not add a backend, database, authentication, payments, or runtime writes to the AGI public site to satisfy a conformance declaration.
+- Do not add a backend, database, authentication, payments, secrets, or runtime writes to the AGI public site to satisfy a conformance declaration.
 - Do not merge Fund-Intel or Impact Relay application code into this repository.
 - Keep public fixtures synthetic, aggregate-safe, and free of donor identity.
-- Keep the platform pin at `Autonomous-Giving-Specs v1.0.0` until a deliberate compatibility review approves an update.
+- Keep the platform pin at `Autonomous-Giving-Specs v2.0.0`. Do not revert to v1.0.0.
+- Do not unpark login, SPEC-028 runtime, Ed, or director JWT from this repository.
+- Do not claim C3 approved. Do not claim READY. Do not invent live Worker URLs or freeze SHAs.
 
 ### Phase E definition of done
 
-Phase E is complete when the manifest, demo, privacy copy, documentation status, and tests tell the same story; unrelated-project scans remain clean; lint, typecheck, tests, production build, and the conformance check pass; and every cross-repository responsibility links to its owning repository without duplicating its execution plan.
+Phase E is complete when the manifest, demo, privacy copy, documentation status, and tests tell the same story; login is unmistakably parked; the pin is v2.0.0; unrelated-project scans remain clean; lint, typecheck, tests, production build, and the conformance check pass; and every cross-repository responsibility links to its owning repository without duplicating its execution plan. See the design spec for the file-level checklist. Phase E done is **not** READY and **not** C3 approval.

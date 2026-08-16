@@ -3,7 +3,9 @@
 **Audit date:** 2026-08-15  
 **Repository:** `Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated`  
 **Audited revision:** `71c2e42d0858bc36c50b6bd3bfadd7899545a0ce` (`main`)  
-**Pinned platform release:** `Autonomous-Giving-Specs` `v1.0.0`
+**Pinned platform release (historical, this audit):** `Autonomous-Giving-Specs` `v1.0.0`
+
+> **Supersession (2026-08-16):** Current pin is **v2.0.0**. Do not execute this audit’s “replace floating links with v1.0.0” instruction. Login / Phase 2 / SPEC-028 runtime is **PARKED**, not a new completion record. Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Findings below remain the 2026-08-15 evidence record.
 
 ## Executive verdict
 
@@ -126,7 +128,7 @@ The validation run passed, but `npm audit --omit=dev` reports one high-severity 
 ## Recommended continuation order
 
 1. **P0: make conformance honest.** Decide the exact AGI capability claim and update `platform-spec/conformance.yml` plus evidence links.
-2. **P0: choose the canonical demo.** Prefer Community AI Lab / 25 laptops for `SPEC-011`; keep Hacker Dojo only as a clearly labeled public integration fixture if still needed. The control-plane direction and Hacker Dojo multi-project fixture are now specified in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md).
+2. **P0: choose the canonical demo.** Prefer Community AI Lab / 25 laptops for `SPEC-011`; keep Hacker Dojo only as a clearly labeled public integration fixture if still needed. The control-plane direction and Hacker Dojo multi-project fixture are specified in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md) (**non-normative** current-status; that slice is PARKED).
 3. **P0: remove donor identity from public demo data and copy.** Add a regression test that rejects donor fields from public demo fixtures.
 4. **P1: reconcile status and links.** Replace floating normative Specs links, correct dated Phase 2 status, and separate AGI boundary docs from Fund-Intel runbooks.
 5. **P1: add a conformance-check command.** Validate `platform-spec/conformance.yml` against the pinned release and require evidence paths for every declared artifact.
