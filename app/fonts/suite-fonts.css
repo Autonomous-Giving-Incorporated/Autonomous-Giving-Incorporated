@@ -1,9 +1,6 @@
 /* Self-hosted OFL suite fonts as data URIs so the static export builds without binary git-push. */
 
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url("data:font/woff2;base64,SEE_DISK_FILE") format("woff2");
-}
+@import "./space-grotesk.css";
+@import "./inter-400.css";
+@import "./inter-500-700.css";
+@import "./ibm-plex-mono.css";
