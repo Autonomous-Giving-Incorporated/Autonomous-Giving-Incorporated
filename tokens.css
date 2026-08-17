@@ -1,4 +1,8 @@
 :root {
+  --agi-paper: #f7f8fa;
+  --agi-ink: #0e1116;
+  --agi-accent: #e6b23c;
+  --agi-verified: #2e7d6b;
   --color-paper: #f7f8fa;
   --color-paper-raised: #ffffff;
   --color-paper-cool: #e6e9ec;
