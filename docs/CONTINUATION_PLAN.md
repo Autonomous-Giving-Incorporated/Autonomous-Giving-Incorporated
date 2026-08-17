@@ -132,3 +132,16 @@ The application tree is clean from unrelated projects such as Abraxas Orchestra,
 ### Phase E definition of done
 
 Phase E is complete when the manifest, demo, privacy copy, documentation status, and tests tell the same story; login is unmistakably parked; the pin is v2.0.0; unrelated-project scans remain clean; lint, typecheck, tests, production build, and the conformance check pass; and every cross-repository responsibility links to its owning repository without duplicating its execution plan. See the design spec for the file-level checklist. Phase E done is **not** READY and **not** C3 approval.
+
+## 2026-08-17 stack follow-up (this repository)
+
+Suite-wide audit: [Portfolio Signals SUITE_STACK_AUDIT_2026-08-17.md](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE_STACK_AUDIT_2026-08-17.md). AGI-owned items from that audit:
+
+| Item | Status |
+| --- | --- |
+| Retarget public-source URLs to org raw GitHub | This slice |
+| SPEC-011 Community AI Lab signals fallback | This slice |
+| Gate GitHub Pages deploy on CI (same as Cloudflare) | This slice |
+| CSP + `next/font` self-hosted suite fonts | This slice |
+
+Do not claim live public signals. Org documents currently fail closed (empty `VERIFIED` outcomes / blocked campaign shell). Do not unpark login, SPEC-028, or Phase D. Sibling-repo items stay in their owners.

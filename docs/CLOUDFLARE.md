@@ -94,7 +94,7 @@ Cloudflare custom domains require `autogive.app` to be a zone on the same Cloudf
 | Cloudflare Worker `agi-public` + `autogive.app` | **Designed** public production after DNS cutover |
 | Existing platform Supabase | **Designed** durable data and auth (not this static site) |
 | Vercel + current `autogive.app` DNS | **Fallback** public host until DNS cutover; keep [`vercel.json`](../vercel.json) |
-| `*.github.io/Autonomous-Giving-Incorporated/` | Fallback mirror (existing Pages workflow) |
+| `*.github.io/Autonomous-Giving-Incorporated/` | Fallback mirror. Pages deploy waits for a successful `CI` run on `main`, matching Cloudflare. |
 
 Render, Fly, and Railway are not remaining hosts for this suite.
 
@@ -117,3 +117,4 @@ DNS for `autogive.app` can target **one** web origin at a time. Do not dual-poin
 - Build-time fetch of public Portfolio Signals / Impact Relay aggregates only
 - Fail closed to the deterministic local scenario
 - No donor PII, no payments, no server writes on this site
+- Content-Security-Policy on Worker, Vercel, and Pages; suite fonts self-hosted via `next/font`

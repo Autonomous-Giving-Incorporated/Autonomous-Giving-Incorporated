@@ -26,7 +26,8 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 - **Build:** Node.js 22; static export to `out/` at site root (`basePath` empty).
 - **Suite paths:** `/portfolio-signals/` and `/impact-relay/` are reverse-proxied by a thin Worker (`workers/suite-gateway.ts`), matching [`vercel.json`](../vercel.json). Those products are not merged into this repo.
 - **State:** local React state for the replayable demonstration; no persistence on this site.
-- **External data:** two fixed HTTPS sources fetched at build time with a bundled fallback.
+- **External data:** two fixed HTTPS sources fetched at build time with a bundled fallback. Source URLs are the org raw GitHub documents. Historical `scrimshawlife-ctrl/Fund-Intel` URLs are not fetched.
+- **Security headers:** CSP, frame denial, and related headers are set on the Worker (including static assets), Vercel, and Pages `_headers`. Suite fonts are self-hosted at build time with `next/font` (no `fonts.googleapis.com` at runtime).
 
 `site.ts` owns the canonical production origin (`https://autogive.app`). `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and cutover: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
 

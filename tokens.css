@@ -1,4 +1,8 @@
 :root {
+  --agi-paper: #f7f8fa;
+  --agi-ink: #0e1116;
+  --agi-accent: #e6b23c;
+  --agi-verified: #2e7d6b;
   --color-paper: #f7f8fa;
   --color-paper-raised: #ffffff;
   --color-paper-cool: #e6e9ec;
@@ -23,9 +27,9 @@
   --color-graphite-ink: #f7f8fa;
   --color-graphite-muted: #c8ced3;
   --color-nav-surface: #f7f8fa;
-  --font-display: "Space Grotesk", Inter, system-ui, sans-serif;
-  --font-body: Inter, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;

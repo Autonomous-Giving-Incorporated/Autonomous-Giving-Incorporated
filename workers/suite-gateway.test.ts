@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { suiteGateway } from "./suite-gateway.ts";
+import { suiteGateway, CONTENT_SECURITY_POLICY } from "./suite-gateway.ts";
 
 const securityHeaders = {
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-frame-options": "DENY",
   "permissions-policy": "camera=(), microphone=(), geolocation=()",
+  "content-security-policy": CONTENT_SECURITY_POLICY,
 };
 
 function assertSecurityHeaders(response: Response): void {
@@ -90,5 +91,21 @@ describe("suiteGateway", () => {
     } finally {
       globalThis.fetch = originalFetch;
     }
+  });
+
+  it("applies security headers to static asset responses", async () => {
+    const response = await suiteGateway.fetch(
+      new Request("https://autogive.app/"),
+      {
+        ASSETS: {
+          fetch: async () =>
+            new Response("<html></html>", {
+              headers: { "content-type": "text/html" },
+            }),
+        },
+      },
+    );
+    assert.equal(response.status, 200);
+    assertSecurityHeaders(response);
   });
 });

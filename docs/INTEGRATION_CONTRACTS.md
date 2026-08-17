@@ -8,12 +8,14 @@ The complete cross-repository checklist lives in [THREE_REPO_INTEGRATION.md](THR
 
 `integration/public-sources.ts` retrieves these fixed sources during the static build:
 
-| Source | Required authority | Data used by AGI |
-| ------ | ------------------ | ---------------- |
-| Portfolio Signals `data/public-campaign.json` | `advisory_only` | update timestamp, execution state, optional `allocationId` |
-| Impact Relay `data/public-impact.json` | `public_aggregate_only` | update timestamp and one `VERIFIED` aggregate outcome |
+| Source | Exact URL | Required authority | Data used by AGI |
+| ------ | --------- | ------------------ | ---------------- |
+| Portfolio Signals `data/public-campaign.json` | `https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Portfolio-Signals/main/data/public-campaign.json` | `advisory_only` | update timestamp, execution state, optional `allocationId` |
+| Impact Relay `data/public-impact.json` | `https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Impact-Relay/main/data/public-impact.json` | `public_aggregate_only` | update timestamp and one `VERIFIED` aggregate outcome |
 
-The adapter validates each document against the published Fund-Intel / Portfolio Signals public-campaign shape and the published Impact Relay public-impact shape, then normalizes accepted data into `PublicSignals`. Unknown authority is never accepted. Unknown additive fields are ignored. The deterministic fixture is the only fallback content.
+The adapter validates each document against the published Fund-Intel / Portfolio Signals public-campaign shape and the published Impact Relay public-impact shape, then normalizes accepted data into `PublicSignals`. Unknown authority is never accepted. Unknown additive fields are ignored. The deterministic fixture is the only fallback content. Fallback organization, program, and participant counts match the canonical SPEC-011 Community AI Lab demo (`demo/scenario.ts`), not the labeled Hacker Dojo routing fixture.
+
+Org raw URLs currently return 200 with a blocked campaign shell and an empty Impact Relay `outcomes` list, so the live path stays fail-closed until a `VERIFIED` aggregate exists. That is correct. Do not relabel fixture data as live.
 
 ### Freshness (Phase B)
 

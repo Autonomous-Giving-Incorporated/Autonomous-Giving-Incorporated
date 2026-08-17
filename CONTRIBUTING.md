@@ -28,13 +28,14 @@ npm ci
 npm run lint
 npm run typecheck
 npm test
+npm run conformance-check
 npm run build
 git diff --check
 ```
 
 For interface changes, also review narrow mobile and desktop layouts, keyboard operation, focus visibility, reduced motion, and source/fallback states.
 
-Documentation-only changes under `docs/**` (and other non-site paths) do not trigger the GitHub Pages deploy workflow. Cloudflare deploys on every push to `main` (see [CLOUDFLARE.md](CLOUDFLARE.md)). Use **Actions → Deploy GitHub Pages → Run workflow** if a docs-only merge must refresh the Pages fallback.
+Documentation-only changes under `docs/**` (and other non-site paths) do not refresh production until CI on `main` succeeds. Cloudflare and GitHub Pages both wait for the `CI` workflow (see [CLOUDFLARE.md](CLOUDFLARE.md)). Use **Actions → Deploy GitHub Pages → Run workflow** if a docs-only merge must refresh the Pages fallback.
 
 ## Code conventions
 
