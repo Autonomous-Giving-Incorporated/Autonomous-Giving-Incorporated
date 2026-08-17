@@ -10,6 +10,24 @@ Phase E public-site finish: [docs/superpowers/specs/2026-08-16-autogive-app-fini
 
 # This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory) before writing any code. Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Cursor Cloud specific instructions
+
+This repo is a single, self-contained static **Next.js 16** site — no backend, database, auth, or Docker to run locally. Node 22 is required (`engines.node: 22.x`) and is preinstalled. Dependencies are refreshed automatically by the environment update script (`npm ci`); you do not need to install them manually.
+
+Services and commands (all defined in `package.json`; see the README "Commands" table for the full list):
+
+- Dev server: `npm run dev` (Next.js + Turbopack on `http://localhost:3000`). This is the primary way to run the app. Prefer running it in a long-lived terminal.
+- Verification gates (mirror CI in `.github/workflows/ci.yml`): `npm run lint`, `npm run typecheck`, `npm test`, `npm run conformance-check`, `npm run build`.
+
+Non-obvious notes:
+
+- `npm run build` (static export to `out/`) intentionally **fails closed** to the bundled deterministic local scenario when the remote public aggregate sources are unavailable/stale. A build log line like `agi.public_signals source=policy_rejected reason=...` is expected in this offline environment and does **not** indicate a broken build — the build still exits 0.
+- The homepage "Replay $2,500 demo" proof-timeline is the core interactive demo; it is fully deterministic and local (no network/payment), so it works offline and is the easiest end-to-end smoke test.
+- `npm start` is intentionally a no-op that errors out (static export only); do not use it to run the app.
+- `npm run cf:preview` / `cf:deploy` use Wrangler for Cloudflare; these are deploy paths, not needed for local development.
