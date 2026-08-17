@@ -3,7 +3,7 @@
 **Label:** Informative cross-repository audit. **Not READY.** Not a release, freeze SHA, or operator acceptance receipt.  
 **Date:** 2026-08-17  
 **Auditor:** Cursor cloud agent (read-only inspection of local checkouts + live HTTP probes of public raw URLs)  
-**Canon:** [ADR-013](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-013-cloudflare-workers-public-host.md), [ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md), [ADR-015](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-015-donation-tracking-money-boundary.md), [SPEC-011](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/specs/SPEC-011-demo-specification.md), [SPEC-016](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/specs/SPEC-016-security-and-trust-boundaries.md), [SPEC-023](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/specs/SPEC-023-financial-ledger-invariants.md), [SPEC-027](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/specs/SPEC-027-impact-loop.md), [SPEC-028](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/specs/SPEC-028-agi-control-plane.md)
+**Canon (Specs v2.0.0 pin):** [ADR-013](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/adr/ADR-013-cloudflare-workers-public-host.md), [ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/adr/ADR-014-agi-control-plane.md), [ADR-015](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/adr/ADR-015-donation-tracking-money-boundary.md), [SPEC-011](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-011-demo-specification.md), [SPEC-016](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-016-security-and-trust-boundaries.md), [SPEC-023](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-023-financial-ledger-invariants.md), [SPEC-027](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-027-impact-loop.md), [SPEC-028](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/v2.0.0/specs/SPEC-028-agi-control-plane.md). Specs `main` links below are **non-normative** current-status pointers.
 
 This document is the first **stack-wide** audit of the Autonomously Giving Incorporated (AGI / Autogive) suite. It is checked in here because this repository is the live workspace host and already holds [CURRENT-STATE.md](CURRENT-STATE.md). Per-repo audits already exist; this record joins them. A copy also belongs in Specs `docs/audits/` and AGI `docs/` when those remotes accept the same text.
 
@@ -41,7 +41,7 @@ The suite is a **disciplined, fail-closed v0.1 / v0.9 stack** with honest confor
 - SPEC-028 control-plane runtime is **PARKED**. Auth lives on the Portfolio Signals workspace, not an AGI-issued capability JWT.
 - Designed Cloudflare Worker `portfolio-signals` is **ABSENT**. Live traffic is `agi-public` → Vercel (`fund-intel-ten.vercel.app` / `impact-relay.vercel.app`).
 - every.org webhook, ImpactNotice send, MFA dry-run, and director acceptance are operator-pending.
-- The private harness is a JWT/route-intent prototype (~5–10% of [secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md)).
+- The private harness is a JWT/route-intent prototype (~5–10% of [secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md) — **non-normative**).
 - AGI build-time public signals **always fall back**: historical `scrimshawlife-ctrl` raw URLs return **404**; org URLs return **200** but Impact Relay’s committed `public-impact.json` has zero `VERIFIED` outcomes, so live projection would still be rejected.
 
 **One-line posture:** architecture and library quality are ahead of hosted cutover, live connectors, and unified auth.
@@ -92,8 +92,8 @@ Canonical public demo is **Community AI Lab** (SPEC-011: 25 laptops, $2500). Hac
 | Sev | Finding |
 |-----|---------|
 | Med | ADR-002 / ADR-003 **filenames are swapped** vs titles (`adr/ADR-002-signals-stack.md` holds platform canon). |
-| Med | Conformance examples and [implementation-consumption.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/docs/implementation-consumption.md) still say `scrimshawlife-ctrl/Autonomous-Giving-Specs`. |
-| Med | [IMPLEMENTATION-PROGRESS.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/docs/superpowers/IMPLEMENTATION-PROGRESS.md) is dated 2026-08-08 (pre-v2.0.0). |
+| Med | Conformance examples and [implementation-consumption.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/docs/implementation-consumption.md) (**non-normative**) still say `scrimshawlife-ctrl/Autonomous-Giving-Specs`. |
+| Med | [IMPLEMENTATION-PROGRESS.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/docs/superpowers/IMPLEMENTATION-PROGRESS.md) (**non-normative**) is dated 2026-08-08 (pre-v2.0.0). |
 | Low | ADR-013 still says “Stripe — payment processing”; ADR-015 refined that to billing-only. |
 | Info | SPEC-029/030 are Proposed on `main` only. Portfolio Signals already ships experimental readers against them under the unchanged v2.0.0 pin. |
 
