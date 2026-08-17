@@ -51,7 +51,7 @@ The site does not collect donations, persist records, authenticate people, expos
 | C1 | Name ownership for every `FundingDecision` and `ImpactEvent` field | Engineering draft: role owners recorded in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md). Current human filling those seats: Danny (`scrimshawlife-ctrl`). Not a sign-off. |
 | C2 | Align `allocationId` generation and status vocabulary across Fund-Intel, Impact-Relay, and AGI | Engineering draft: [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) + matching fixtures. Live adapter semantics unchanged. |
 | C3 | Approve evidence-access, retention, redaction, and public-publication rules | **PROPOSED** draft in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md). Not approved. Leadership + eng sign-off still required. |
-| C4 | Publish representative public-safe fixtures in all three repositories | This repo: narrative JSON/TS fixtures validate against the contracts. Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`cfc611a0b12aca080b043959de4de5c5340628a4`, `fixtures/agi_phase_c/`). Fund-Intel / Portfolio Signals copies are still a follow-up. |
+| C4 | Publish representative public-safe fixtures in all three repositories | This repo: narrative JSON/TS fixtures validate against the contracts. Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`cfc611a0b12aca080b043959de4de5c5340628a4`, `fixtures/agi_phase_c/`). Portfolio Signals copies landed in [PR 34](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/34). |
 | C5 | Formalize contract versioning and change-management process | Formalized existing date-string + SPEC-012 language. Compatibility break requires a version bump. No bump in this draft. |
 
 **Exit criteria:** reviewed schemas, approved public-data rules, deterministic fixtures, and named field owners.
@@ -135,7 +135,7 @@ Phase E is complete when the manifest, demo, privacy copy, documentation status,
 
 ## 2026-08-17 stack follow-up (this repository)
 
-Suite-wide audit: [Portfolio Signals SUITE_STACK_AUDIT_2026-08-17.md](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE_STACK_AUDIT_2026-08-17.md). AGI-owned items from that audit:
+Suite-wide audit: [SUITE_STACK_AUDIT_2026-08-17.md](SUITE_STACK_AUDIT_2026-08-17.md) (copy of the Portfolio Signals canonical file). AGI-owned items from that audit:
 
 | Item | Status |
 | --- | --- |

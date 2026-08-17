@@ -7,7 +7,7 @@ This document is the Phase C index for the shared public narrative contracts. It
 | C1 Field owners | Recorded as continuation-plan roles; current operator `scrimshawlife-ctrl` / Danny |
 | C2 Vocabulary / `allocationId` | Shared glossary + matching fixtures in this repo |
 | C3 Public-data policy | **PROPOSED** — not approved |
-| C4 Public-safe fixtures | Published and validated in this repo; Impact Relay copies landed; Fund-Intel / Portfolio Signals still a follow-up |
+| C4 Public-safe fixtures | Published and validated in this repo; Impact Relay copies landed; Portfolio Signals copies landed in [PR 34](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/34) |
 | C5 Versioning | Existing date-string + SPEC-012 language formalized; no version bump |
 | Phase D | Still gated |
 

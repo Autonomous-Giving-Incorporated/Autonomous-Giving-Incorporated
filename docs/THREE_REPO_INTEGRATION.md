@@ -121,4 +121,4 @@ Any change that affects the public JSON shapes, authority values, or contract fi
 ---
 
 Last updated: 2026-08-17
-Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) · suite stack audit in [Portfolio Signals SUITE_STACK_AUDIT_2026-08-17.md](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/SUITE_STACK_AUDIT_2026-08-17.md)
+Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) · [suite stack audit](SUITE_STACK_AUDIT_2026-08-17.md)
