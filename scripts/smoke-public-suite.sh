@@ -89,7 +89,7 @@ fi
 
 if [[ "$EDGE_PROXY_CHECKS" == "1" ]]; then
   check_header "/" "X-Content-Type-Options" "nosniff"
-  check_header "/" "Content-Security-Policy" "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  check_header "/" "Content-Security-Policy" "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
   check_header "/portfolio-signals/" "X-Frame-Options" "DENY"
   check_header "/impact-relay/" "Referrer-Policy" "strict-origin-when-cross-origin"
   check_proxy_method_guard
