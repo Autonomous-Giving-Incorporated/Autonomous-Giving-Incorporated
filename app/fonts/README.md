@@ -1,5 +1,5 @@
 # Suite fonts
 
-The public site still loads Space Grotesk, Inter, and IBM Plex Mono from Google Fonts so the static export builds without binary git-push access.
+Space Grotesk, Inter, and IBM Plex Mono ship as SIL OFL 1.1 woff2 files and are inlined in `suite-fonts.css` so the static export does not need `fonts.googleapis.com` / `fonts.gstatic.com`.
 
-Self-hosted OFL woff2 files can replace that import once they are on the branch (`font-src 'self'` only). Prepared locally: `space-grotesk-600.woff2`, `inter-400.woff2`, `inter-600.woff2`, `ibm-plex-mono-400.woff2`.
+CSP allows `font-src 'self' data:` for those data URIs. The raw woff2 files stay here for a later binary git-push if someone wants file URLs instead of inlined CSS.
