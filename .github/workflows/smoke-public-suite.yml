@@ -1,0 +1,25 @@
+name: Smoke public suite
+
+# Hits live autogive.app. Not a PR gate — production availability is operator-owned.
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Public suite origin
+        required: false
+        default: https://autogive.app
+      edge_proxy_checks:
+        description: Also assert security headers and POST 405
+        required: false
+        default: "1"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Smoke public suite
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          EDGE_PROXY_CHECKS: ${{ inputs.edge_proxy_checks }}
+        run: bash scripts/smoke-public-suite.sh
