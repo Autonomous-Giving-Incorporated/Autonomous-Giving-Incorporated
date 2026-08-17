@@ -107,7 +107,7 @@ describe("validatePublicImpact", () => {
   it("accepts a document with a VERIFIED outcome and allocationId", () => {
     const result = validatePublicImpact(validPublicImpact);
     assert.ok(!("kind" in result));
-    assert.equal(result.outcome.participantsPublic, 18);
+    assert.equal(result.outcome.participantsPublic, 25);
     assert.equal(result.outcome.evidenceState, "VERIFIED");
     assert.equal(result.outcome.allocationId, "alloc_community_hardware");
   });

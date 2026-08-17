@@ -12,9 +12,9 @@ import {
 } from "./validate-public.ts";
 
 export const FUND_INTEL_PUBLIC_URL =
-  "https://raw.githubusercontent.com/scrimshawlife-ctrl/Fund-Intel/main/data/public-campaign.json";
+  "https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Portfolio-Signals/main/data/public-campaign.json";
 export const IMPACT_RELAY_PUBLIC_URL =
-  "https://raw.githubusercontent.com/scrimshawlife-ctrl/Impact-Relay/main/data/public-impact.json";
+  "https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Impact-Relay/main/data/public-impact.json";
 
 /** Explicit source states for the public projection seam. */
 export type SignalSourceState =
@@ -67,11 +67,11 @@ const fallbackBase = {
     updatedAt:
       communityHardwareFixture.events.at(-1)?.occurredAt ??
       communityHardwareFixture.decision.publishedAt,
-    organizationName: "Hacker Dojo",
-    programName: "Intro to Robotics",
+    organizationName: "Community AI Lab",
+    programName: "Neighborhood AI learning lab",
     allocationName: communityHardwareFixture.decision.fundName,
     allocationId: communityHardwareFixture.decision.allocationId,
-    participants: 18,
+    participants: 25,
     verified: true,
   },
 } as const;

@@ -66,19 +66,19 @@ export const validPublicImpact = {
   },
   summary: {
     outcomeCount: 1,
-    totalParticipantsPublic: 18,
+    totalParticipantsPublic: 25,
   },
   outcomes: [
     {
       publicId: "imp_001",
       impactEventId: "evt_workshop_001",
-      organizationName: "Hacker Dojo",
-      programName: "Intro to Robotics",
+      organizationName: "Community AI Lab",
+      programName: "Neighborhood AI learning lab",
       allocationId: "alloc_community_hardware",
       allocationName: "Community Hardware Fund",
       eventType: "CLASS_HELD",
       eventDate: "2026-08-12",
-      participantsPublic: 18,
+      participantsPublic: 25,
       evidenceState: "VERIFIED",
       attributionMethod: "aggregate_attendance",
       receiptHash: "sha256:public-safe-placeholder",
