@@ -6,6 +6,9 @@
     "node": "22.x"
   },
   "scripts": {
+    "assemble-fonts": "node scripts/assemble-suite-fonts.mjs",
+    "predev": "node scripts/assemble-suite-fonts.mjs",
+    "prebuild": "node scripts/assemble-suite-fonts.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "echo 'Static export only. Serve out/ with any static file server.' && exit 1",
@@ -13,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test integration/*.test.ts workers/*.test.ts",
     "conformance-check": "node scripts/conformance-check.mjs",
-    "cf:build": "next build",
+    "cf:build": "node scripts/assemble-suite-fonts.mjs && next build",
     "cf:preview": "npm run cf:build && wrangler dev",
     "cf:deploy": "npm run cf:build && wrangler deploy",
     "format": "prettier --write ."

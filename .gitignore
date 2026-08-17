@@ -10,3 +10,7 @@ coverage
 .vercel
 .turbo
 .wrangler
+
+# Assembled from app/fonts/parts by scripts/assemble-suite-fonts.mjs
+app/fonts/inter-400.css
+app/fonts/inter-500-700.css
