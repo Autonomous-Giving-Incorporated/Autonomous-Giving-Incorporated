@@ -11,7 +11,7 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 - Fail-closed fallback for unavailable or disallowed source data.
 - CI for lint, typecheck, and production build.
 - Platform pin **v2.0.0** (documentation pin, not READY). Login / Phase 2 / SPEC-028 runtime **PARKED**.
-- Phase E design locked; E1–E7 implementation is the next public-site slice. C3 remains **PROPOSED**.
+- Phase E E1–E7 landed. C3 remains **PROPOSED**.
 
 ## Workstream 1 — Public-source reliability (Phase B)
 

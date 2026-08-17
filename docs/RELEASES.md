@@ -2,6 +2,17 @@
 
 Material production changes are recorded newest first. Each entry links the reviewed change and its deployment evidence.
 
+## 2026-08-16 — Phase E public-site finish
+
+- **Merge commit:** [`a3633ef`](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/commit/a3633ef6fde797a3844acf3db118325050aa2572)
+- **Note:** Documentation pin to Specs **v2.0.0**. Login / SPEC-028 runtime **PARKED**. Not READY.
+
+### Shipped
+
+- Honest `implements` (SPEC-011/012/013 only).
+- Canonical Community AI Lab / 25 laptops / 2500 USD demo.
+- Donor-identity regression tests; `nanoid` lockfile bump.
+
 ## 2026-08-04 — Next.js 16.3 framework upgrade
 
 - **Merge commit:** [`8f56546`](https://github.com/scrimshawlife-ctrl/Autonomous-Giving-Incorporated/commit/8f5654658b1089b2bdf751eea87cc23c72ee069d)

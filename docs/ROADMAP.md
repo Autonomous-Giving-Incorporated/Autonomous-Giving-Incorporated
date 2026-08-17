@@ -18,7 +18,7 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 - Deterministic source-selection tests.
 - Privacy-safe build diagnostics and accessible provenance copy.
 
-## Next — Public-site Phase E (conformance and boundary)
+## Shipped — Public-site Phase E (conformance and boundary)
 
 Design and public-site code slice 2026-08-16: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). E1–E7 landed in this repository. This is **not** READY.
 
