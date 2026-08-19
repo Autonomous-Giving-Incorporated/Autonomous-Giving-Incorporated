@@ -22,11 +22,11 @@ function sample(source: PublicSignals["source"], reason?: string): PublicSignals
     },
     impactRelay: {
       updatedAt: "2026-08-14",
-      organizationName: "Hacker Dojo",
-      programName: "Intro to Robotics",
+      organizationName: "Community AI Lab",
+      programName: "Neighborhood AI learning lab",
       allocationName: "Community Hardware Fund",
       allocationId: "alloc_community_hardware",
-      participants: 18,
+      participants: 25,
       verified: true,
       freshness: assessFreshness("2026-08-14", NOW),
     },
@@ -55,6 +55,8 @@ describe("formatDiagnosticLine", () => {
     assert.match(line, /fund_age_ms=/);
     assert.match(line, /impact_freshness=/);
     assert.match(line, /impact_age_ms=/);
+    assert.doesNotMatch(line, /Community AI Lab/);
+    assert.doesNotMatch(line, /Neighborhood AI learning lab/);
     assert.doesNotMatch(line, /Hacker Dojo/);
     assert.doesNotMatch(line, /Intro to Robotics/);
     assert.doesNotMatch(line, /receiptHash/);

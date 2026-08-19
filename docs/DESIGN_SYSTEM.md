@@ -7,7 +7,7 @@ AGI is the corporate master brand and explanatory entry point to the product sui
 - Paper `#f7f8fa`; raised surface `#ffffff`; cool gray `#e6e9ec`.
 - Ink `#0e1116`; graphite `#1f232b`; rule derived from the cool-gray scale.
 - AGI gold `#e6b23c` for attention and focus; AGI green `#2e7d6b` and mint `#a5cbb8` for verified state and suite links.
-- Space Grotesk for display type, Inter for body and interface copy, and IBM Plex Mono for metadata.
+- Space Grotesk for display type, Inter for body and interface copy, and IBM Plex Mono for metadata. Those faces are self-hosted at build time with `next/font` (no Google Fonts CDN at runtime).
 - Two- and four-pixel corners, thin rules, and no decorative elevation.
 
 All implementation values originate in [`tokens.css`](../tokens.css). Components consume named variables rather than one-off colors.

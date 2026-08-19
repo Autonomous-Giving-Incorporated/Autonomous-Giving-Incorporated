@@ -30,8 +30,8 @@ Cross-repo implementation should keep **public aggregate JSON** contracts stable
 
 | Source | Exact URL | Required authority | Required content | Failure behavior |
 |--------|-----------|--------------------|------------------|------------------|
-| Portfolio Signals | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Fund-Intel/main/data/public-campaign.json` (historical published raw URL still fetched by `integration/public-sources.ts`) | `advisory_only` | `updatedAt` + `execution.state` | Fail closed → deterministic fixture |
-| Impact-Relay | `https://raw.githubusercontent.com/scrimshawlife-ctrl/Impact-Relay/main/data/public-impact.json` (historical published raw URL still fetched by `integration/public-sources.ts`) | `public_aggregate_only` | At least one outcome with `evidenceState: "VERIFIED"` | Fail closed → deterministic fixture |
+| Portfolio Signals | `https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Portfolio-Signals/main/data/public-campaign.json` | `advisory_only` | `updatedAt` + `execution.state` | Fail closed → deterministic fixture |
+| Impact-Relay | `https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Impact-Relay/main/data/public-impact.json` | `public_aggregate_only` | At least one outcome with `evidenceState: "VERIFIED"` | Fail closed → deterministic fixture |
 
 Implementation: `integration/public-sources.ts`.
 
@@ -62,7 +62,7 @@ Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
 - [x] Shared definition of `allocationId` (generation rules + format) — AGI [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md); matching fixtures only
 - [x] Shared status / verification vocabulary mapped across the three systems — same glossary; unmapped values are not coerced
 - [x] Named field owners for every contract field — continuation-plan roles in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md); current operator `scrimshawlife-ctrl` / Danny
-- [ ] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Portfolio Signals copies still needed
+- [x] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Portfolio Signals copies landed in [PR 34](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/34)
 - [x] Contract version bump process documented — date-string bump on compatibility break; SPEC-012 SemVer unchanged for the platform pin
 - [ ] C3 evidence-access / retention / redaction / publication rules approved — draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**)
 
@@ -120,5 +120,5 @@ Any change that affects the public JSON shapes, authority values, or contract fi
 
 ---
 
-Last updated: 2026-08-15
-Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md)
+Last updated: 2026-08-17
+Related: [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [CONTINUATION_PLAN.md](CONTINUATION_PLAN.md) · [suite stack audit](SUITE_STACK_AUDIT_2026-08-17.md)

@@ -4,11 +4,16 @@ import {
   suitePrefixForOrigin,
 } from "./suite-routes.ts";
 
+/** Shared with Vercel and Pages `_headers`. Next hydration needs script/style unsafe-inline. Fonts are self-hosted via next/font. */
+export const CONTENT_SECURITY_POLICY =
+  "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
+
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "X-Frame-Options": "DENY",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  "Content-Security-Policy": CONTENT_SECURITY_POLICY,
 };
 
 const SAFE_UPSTREAM_HEADERS = [
@@ -112,7 +117,7 @@ export const suiteGateway = {
       return proxySuite(request, route.origin, route.pathname);
     }
 
-    return env.ASSETS.fetch(request);
+    return withSecurityHeaders(await env.ASSETS.fetch(request));
   },
 };
 

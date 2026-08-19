@@ -69,7 +69,7 @@ describe("selectPublicSignals happy path", () => {
     assert.equal(result.fundIntel.executionState, "blocked");
     assert.equal(result.fundIntel.allocationId, "alloc_community_hardware");
     assert.equal(result.impactRelay.verified, true);
-    assert.equal(result.impactRelay.participants, 18);
+    assert.equal(result.impactRelay.participants, 25);
     assert.equal(result.impactRelay.allocationId, "alloc_community_hardware");
     assert.notEqual(result.fundIntel.updatedAt, FIXTURE_PUBLISHED_AT);
   });
@@ -85,7 +85,9 @@ describe("selectPublicSignals rejection paths", () => {
     assert.equal(result.source, "fallback");
     assert.equal(result.reason, "network_failure");
     assert.equal(result.fundIntel.allocationId, FIXTURE_ALLOCATION_ID);
-    assert.equal(result.impactRelay.programName, "Intro to Robotics");
+    assert.equal(result.impactRelay.organizationName, "Community AI Lab");
+    assert.equal(result.impactRelay.programName, "Neighborhood AI learning lab");
+    assert.equal(result.impactRelay.participants, 25);
   });
 
   it("returns fallback on non-2xx", () => {
@@ -157,7 +159,7 @@ describe("selectPublicSignals rejection paths", () => {
     assert.equal(result.reason, "soft_stale");
     assert.equal(result.fundIntel.freshness.label, "stale");
     assert.equal(result.fundIntel.updatedAt, SOFT_STALE_DATE);
-    assert.equal(result.impactRelay.participants, 18);
+    assert.equal(result.impactRelay.participants, 25);
   });
 
   it("returns fallback when a source is past the seven-day hard window", () => {
@@ -231,5 +233,15 @@ describe("getPublicSignals fetch adapter", () => {
       },
     });
     assert.deepEqual(seen, [FUND_INTEL_PUBLIC_URL, IMPACT_RELAY_PUBLIC_URL]);
+    assert.match(
+      FUND_INTEL_PUBLIC_URL,
+      /^https:\/\/raw\.githubusercontent\.com\/Autonomous-Giving-Incorporated\/Portfolio-Signals\//,
+    );
+    assert.match(
+      IMPACT_RELAY_PUBLIC_URL,
+      /^https:\/\/raw\.githubusercontent\.com\/Autonomous-Giving-Incorporated\/Impact-Relay\//,
+    );
+    assert.doesNotMatch(FUND_INTEL_PUBLIC_URL, /scrimshawlife-ctrl|Fund-Intel/);
+    assert.doesNotMatch(IMPACT_RELAY_PUBLIC_URL, /scrimshawlife-ctrl/);
   });
 });

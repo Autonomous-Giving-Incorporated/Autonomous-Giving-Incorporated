@@ -11,7 +11,7 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 - Fail-closed fallback for unavailable or disallowed source data.
 - CI for lint, typecheck, and production build.
 - Platform pin **v2.0.0** (documentation pin, not READY). Login / Phase 2 / SPEC-028 runtime **PARKED**.
-- Phase E design locked; E1–E7 implementation is the next public-site slice. C3 remains **PROPOSED**.
+- Phase E E1–E7 landed. C3 remains **PROPOSED**.
 
 ## Workstream 1 — Public-source reliability (Phase B)
 
@@ -49,6 +49,8 @@ Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](su
 7. Reviewed `nanoid` lockfile bump to `>=3.3.18`.
 
 Do not start Phase D, auth, payments, or director JWT from this workstream.
+
+2026-08-17 follow-up (not Phase D): org public-source URLs, Community AI Lab signals fallback, Pages CI gate, CSP + `next/font`. Live projection stays fail-closed until a `VERIFIED` aggregate exists.
 
 ## Workstream 4 — Release quality
 
