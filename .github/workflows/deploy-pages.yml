@@ -1,9 +1,12 @@
 name: Deploy GitHub Pages
 
+# Manual-only. GitHub Pages is a historical fallback mirror; Cloudflare Workers is
+# the automatic production deploy (see deploy-cloudflare.yml). Pages is not enabled
+# on this org repo, so an automatic post-CI deploy fails at actions/deploy-pages with
+# a 404 ("Ensure GitHub Pages has been enabled"). Keep this workflow_dispatch-only so
+# it does not report failed production deploys on every push to main. Before running
+# it manually, enable Pages in repo Settings -> Pages.
 on:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -17,16 +20,9 @@ concurrency:
 
 jobs:
   build:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.event == 'push' &&
-       github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-node@v7
         with: { node-version: 22, cache: npm }
       - run: npm ci
