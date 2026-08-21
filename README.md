@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/ci.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/ci.yml)
 [![Deploy Cloudflare](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-cloudflare.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-cloudflare.yml)
-[![Deploy GitHub Pages](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/workflows/deploy-pages.yml)
 
 Autonomously Giving Incorporated (AGI) is the corporate brand and public, evidence-first entry point for its giving platform. It explains how a funding decision can become an inspectable impact story without exposing donor records or claiming that this site moves money. Zero State is the software builder and appears only in the footer credit.
 

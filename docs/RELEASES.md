@@ -2,6 +2,28 @@
 
 Material production changes are recorded newest first. Each entry links the reviewed change and its deployment evidence.
 
+## 2026-08-19 — Public-source retarget, SPEC-011 fallback, and CSP
+
+- **Merge commit:** [`256cda8`](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/commit/256cda8ada24b23eeed1b9b174039af51e90892c)
+- **Pull request:** [#13](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/13)
+- **CI:** [successful run](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/32219016398)
+- **Cloudflare deployment:** [successful run](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/32219061669)
+- **Production:** [autogive.app](https://autogive.app/)
+- **Note:** GitHub Pages mirror deploy failed (Pages not enabled on the org repo). Automatic Pages deploy has since been retired to manual-only; Cloudflare is the automatic production deploy. Live projection stays **fail-closed** (`source=policy_rejected`). Not READY.
+
+### Shipped
+
+- Retargeted public-source URLs to the org raw GitHub documents (Portfolio Signals / Impact Relay).
+- Community AI Lab / 25 laptops / 2500 USD SPEC-011 signals fallback.
+- Content Security Policy on the Worker, Vercel, and Pages `_headers`.
+- Self-hosted Space Grotesk, Inter, and IBM Plex Mono via `next/font` (no Google Fonts at runtime).
+- Gated the GitHub Pages deploy on a successful CI run; removed unused `framer-motion`.
+
+### Verification
+
+- Lint, typecheck, 86 tests, conformance check, and the static export passed.
+- `main` CI and the Cloudflare Workers deploy completed successfully after merge.
+
 ## 2026-08-16 — Phase E public-site finish
 
 - **Merge commit:** [`a3633ef`](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/commit/a3633ef6fde797a3844acf3db118325050aa2572)
