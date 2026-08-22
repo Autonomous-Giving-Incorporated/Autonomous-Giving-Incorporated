@@ -6,6 +6,8 @@ Designed suite stack: **Cloudflare** (public static / edge) + **existing Supabas
 
 Phase E public-site finish: [docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md](docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). Platform pin is Specs **v2.0.0** (docs pin, not READY). SPEC-028 (AGI control plane) is **unparked** (2026-08-22); its cross-repo verification runs synthetically in [agi-cross-repo-harness](https://github.com/Autonomous-Giving-Incorporated/agi-cross-repo-harness). This public site itself stays static: do not add auth, secrets, a backend, or Phase D here.
 
+C3 public-data policy ([docs/PUBLIC_DATA_POLICY.md](docs/PUBLIC_DATA_POLICY.md)) is a **PROPOSED** decision packet. Do not write “approved”, fill the operator sign-off table, or change `PUBLIC_DATA_POLICY_STATUS` unless the named humans have already signed that table.
+
 Civic Forge synthetic v1 is a labeled `SYNTHETIC_ONLY` fixture pack (`integration/fixtures/civic-forge-*.json`). Do not make it the SPEC-011 demo, do not fetch it as live `data/`, and do not label it `OBSERVED`.
 
 <!-- BEGIN:nextjs-agent-rules -->
@@ -28,6 +30,7 @@ Services and commands (all defined in `package.json`; see the README "Commands" 
 Non-obvious notes:
 
 - `npm run build` (static export to `out/`) intentionally **fails closed** to the bundled deterministic local scenario when the remote public aggregate sources are unavailable/stale. A build log line like `agi.public_signals source=policy_rejected reason=...` is expected in this offline environment and does **not** indicate a broken build — the build still exits 0.
+- C3 remains **PROPOSED** until humans fill the sign-off table in `docs/PUBLIC_DATA_POLICY.md`. Do not treat chat direction as the four required seats.
 - The homepage "Replay $2,500 demo" proof-timeline is the core interactive demo; it is fully deterministic and local (no network/payment), so it works offline and is the easiest end-to-end smoke test.
 - `npm start` is intentionally a no-op that errors out (static export only); do not use it to run the app.
 - `npm run cf:preview` / `cf:deploy` use Wrangler for Cloudflare; these are deploy paths, not needed for local development.
