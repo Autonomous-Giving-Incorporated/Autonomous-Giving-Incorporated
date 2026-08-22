@@ -5,7 +5,7 @@ import { absoluteSiteUrl } from "@/site";
 export const metadata: Metadata = {
   title: "AGI sign in",
   description: "Sign in to the AGI control plane.",
-  alternates: { canonical: absoluteSiteUrl("/login") },
+  alternates: { canonical: absoluteSiteUrl() },
   robots: { index: false, follow: false },
 };
 

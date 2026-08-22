@@ -120,6 +120,7 @@ workers/                   Cloudflare suite-path reverse proxy (not an AGI API)
 wrangler.jsonc             Cloudflare Workers static assets config (`out/`)
 docs/                      Product, architecture, delivery, and release records
 site.ts                    Canonical production URL helpers
+site-public.ts             Official public HTML page list for sitemap/robots
 tokens.css                 Shared design-token source of truth
 ```
 
