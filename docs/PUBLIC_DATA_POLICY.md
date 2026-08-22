@@ -137,6 +137,7 @@ Until all four seats record `approve` with a date and signature:
 - Phase C is not complete
 - Phase D stays gated
 - Live public shells stay gated; AGI continues to fail closed when sources are empty, stale, or rejected
+- The cross-repo harness `pinned-sources` job fails closed if this status is flipped without a coordinated harness update
 
 How to record approval: edit this table in a follow-up commit on this repository, then set `PUBLIC_DATA_POLICY_STATUS` to a non-`PROPOSED` value in the same change. A PR comment or chat message is not enough unless it is copied into this table by the named human.
 
