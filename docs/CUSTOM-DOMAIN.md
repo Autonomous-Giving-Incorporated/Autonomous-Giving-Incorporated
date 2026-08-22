@@ -8,6 +8,8 @@ Canonical production origin for the AGI public workbench is **https://autogive.a
 
 Namecheap holds registration. Do not dual-point the apex at two web platforms.
 
+For the repository edits to land at cutover (as opposed to the DNS/dashboard steps below), see [DNS-CUTOVER-CHECKLIST.md](DNS-CUTOVER-CHECKLIST.md).
+
 ## Target end state
 
 | Host | Role |

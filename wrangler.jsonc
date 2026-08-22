@@ -5,6 +5,15 @@
   "compatibility_date": "2026-08-13",
   "workers_dev": true,
   "preview_urls": true,
+  // DNS cutover to autogive.app (Cloudflare): once the `autogive.app` zone exists on
+  // the same account as Worker `agi-public`, uncomment the routes block below to
+  // attach the apex as a Worker custom domain via IaC (instead of the dashboard).
+  // Keep it commented until the zone exists — an unresolvable custom domain fails
+  // `wrangler deploy` in CI. `www` should be a Cloudflare Redirect Rule to the apex
+  // (dashboard), not a second custom domain. See docs/DNS-CUTOVER-CHECKLIST.md.
+  // "routes": [
+  //   { "pattern": "autogive.app", "custom_domain": true }
+  // ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,
