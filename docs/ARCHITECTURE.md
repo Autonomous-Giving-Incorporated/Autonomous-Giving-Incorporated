@@ -2,7 +2,7 @@
 
 ## System overview
 
-AGI is a static Next.js App Router application. The designed suite stack is **Cloudflare + existing Supabase** only: this public site stays static on Cloudflare; durable data and auth stay on the existing platform Supabase project. GitHub Actions builds the site from `main`, retrieves approved public aggregate signals during that build, and exports static files to `out/`. Intended production uploads `out/` to Cloudflare Workers static assets. Vercel remains the live `autogive.app` apex until DNS cutover. GitHub Pages is a fallback mirror. Do not treat Render, Fly, or Railway as remaining hosts.
+AGI is a static Next.js App Router application. The designed suite stack is **Cloudflare + existing Supabase** only: this public site stays static on Cloudflare; durable data and auth stay on the existing platform Supabase project. GitHub Actions builds the site from `main`, retrieves approved public aggregate signals during that build, and exports static files to `out/`. Production uploads `out/` to Cloudflare Workers static assets, serving the `autogive.app` apex. Vercel is retained as rollback. GitHub Pages is a fallback mirror. Do not treat Render, Fly, or Railway as remaining hosts.
 
 ```mermaid
 flowchart LR
@@ -22,7 +22,7 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 - **Framework:** Next.js 16 App Router with React 19 and TypeScript.
 - **Output:** static export (`output: "export"`), Turbopack production build by default.
 - **Designed stack:** Cloudflare (this static site and public ingress) + existing Supabase (suite auth, Postgres, RLS). This repo does not call Supabase at runtime.
-- **Hosting:** **Cloudflare Workers static assets** (`agi-public`) is the intended production host at **https://autogive.app**. Vercel remains live until DNS cutover; GitHub Pages remains a github.io fallback. See [CLOUDFLARE.md](CLOUDFLARE.md).
+- **Hosting:** **Cloudflare Workers static assets** (`agi-public`) is the production host at **https://autogive.app**. Vercel is retained as rollback; GitHub Pages remains a github.io fallback. See [CLOUDFLARE.md](CLOUDFLARE.md).
 - **Build:** Node.js 22; static export to `out/` at site root (`basePath` empty).
 - **Suite paths:** `/portfolio-signals/` and `/impact-relay/` are reverse-proxied by a thin Worker (`workers/suite-gateway.ts`), matching [`vercel.json`](../vercel.json). Those products are not merged into this repo.
 - **State:** local React state for the replayable demonstration; no persistence on this site.

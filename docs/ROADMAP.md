@@ -7,7 +7,7 @@ Roadmap items describe product outcomes, not calendar commitments. Work advances
 - Responsive AGI public narrative and reciprocal suite navigation.
 - Replayable deterministic contribution lifecycle.
 - Approved Portfolio Signals and Impact Relay aggregate signals with fail-closed fallback.
-- Canonical metadata, social preview, robots, sitemap, CI, and static hosting (Cloudflare intended; Vercel / GitHub Pages until cutover).
+- Canonical metadata, social preview, robots, sitemap, CI, and static hosting (Cloudflare live; Vercel rollback; GitHub Pages mirror).
 - Documented public-data, attribution, and product-scope boundaries.
 
 ## Shipped — Public-source reliability

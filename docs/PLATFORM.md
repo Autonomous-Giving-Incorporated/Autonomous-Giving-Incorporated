@@ -2,7 +2,7 @@
 
 Single source of truth for **where** the suite lives so work does not fragment across hosts, projects, or databases.
 
-**Designed stack:** Cloudflare (public static site and ingress) + existing Supabase (durable data and auth). This public AGI site stays static. Vercel is fallback until `autogive.app` DNS cutover. Do not add Render, Fly, Railway, or a second database.
+**Designed stack:** Cloudflare (public static site and ingress) + existing Supabase (durable data and auth). This public AGI site stays static. Cloudflare serves the live `autogive.app` apex; Vercel is retained as rollback. Do not add Render, Fly, Railway, or a second database.
 
 ## Product (locked)
 
@@ -16,13 +16,13 @@ See [superpowers/specs/2026-08-06-agi-suite-vercel-public-design.md](./superpowe
 
 | Surface | Path on apex | Host | Repo |
 | --- | --- | --- | --- |
-| AGI workbench | `/` | Cloudflare Worker `agi-public` (intended); Vercel `autonomous-giving-incorporated` until DNS cutover | Autonomous-Giving-Incorporated |
+| AGI workbench | `/` | Cloudflare Worker `agi-public` (live); Vercel `autonomous-giving-incorporated` rollback | Autonomous-Giving-Incorporated |
 | Portfolio Signals public | `/portfolio-signals/` | Proxied to `fund-intel` → https://fund-intel-ten.vercel.app | [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) |
 | Portfolio Signals workspace | `/portfolio-signals/workspace` | same `fund-intel` project | [Portfolio-Signals](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals) |
 | Impact Relay public | `/impact-relay/` | Proxied to `impact-relay` → https://impact-relay.vercel.app | Impact-Relay |
 
 **Apex domain:** `https://autogive.app` (www also attached).  
-**AGI production path:** [CLOUDFLARE.md](CLOUDFLARE.md) (intended) · [VERCEL.md](VERCEL.md) (live until cutover).  
+**AGI production path:** [CLOUDFLARE.md](CLOUDFLARE.md) (live) · [VERCEL.md](VERCEL.md) (rollback).  
 **Workspace production URL:** https://autogive.app/portfolio-signals/workspace
 
 GitHub Pages remains optional fallback only. Do not merge Portfolio Signals or Impact Relay into this repository.

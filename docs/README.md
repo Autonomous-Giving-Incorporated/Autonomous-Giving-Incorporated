@@ -9,10 +9,11 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Product](PRODUCT.md)                             | Current users, value proposition, scope, and non-goals          |
 | [Allocation middleware](PRODUCT-ALLOCATION-MIDDLEWARE.md) | Client ops product (MVP in Portfolio Signals; pilot next)        |
 | [Architecture](ARCHITECTURE.md)                   | Runtime model, trust boundaries, components, and deployment     |
-| [Custom domain](CUSTOM-DOMAIN.md)                 | autogive.app DNS (Cloudflare intended; Vercel until cutover)    |
+| [Custom domain](CUSTOM-DOMAIN.md)                 | autogive.app DNS (Cloudflare live; Vercel rollback)             |
+| [DNS cutover checklist](DNS-CUTOVER-CHECKLIST.md) | Repo edits to land when the apex cuts over to Cloudflare        |
 | [Platform canon](PLATFORM.md)                       | Suite hosts, Supabase platform ref, phase map              |
 | [Cloudflare](CLOUDFLARE.md)                       | Designed public host (Cloudflare + existing Supabase stack)     |
-| [Vercel](VERCEL.md)                               | Fallback host until DNS cutover; keep vercel.json               |
+| [Vercel](VERCEL.md)                               | Rollback host after cutover; keep vercel.json until stable      |
 | [Integration contracts](INTEGRATION_CONTRACTS.md) | Accepted public inputs, validation rules, and fallback behavior |
 | [Three-repo integration](THREE_REPO_INTEGRATION.md) | Full cross-repository surface, checklist, and ownership       |
 | [Contract governance](CONTRACT_GOVERNANCE.md)     | Phase C field ownership, vocabulary, fixtures, versioning       |

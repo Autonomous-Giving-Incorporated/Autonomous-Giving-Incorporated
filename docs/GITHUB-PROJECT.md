@@ -55,7 +55,7 @@ Use the board **Status** field (Todo → In Progress → Done). Filter by **Trac
 
 ### Public suite surfaces
 
-- AGI public workbench on Cloudflare (static); Vercel until autogive.app DNS cutover  
+- AGI public workbench on Cloudflare (static); Vercel retained as rollback  
 
 ### Ops — operator access / commercial onboarding
 

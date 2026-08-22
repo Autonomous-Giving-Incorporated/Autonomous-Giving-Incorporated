@@ -5,6 +5,15 @@
   "compatibility_date": "2026-08-13",
   "workers_dev": true,
   "preview_urls": true,
+  // autogive.app is LIVE on this Worker (cutover verified 2026-08-22): the zone is on
+  // Cloudflare and the apex custom domain is attached via the dashboard. This routes
+  // block is left commented on purpose — the domain is dashboard-managed, and adding a
+  // conflicting IaC custom-domain declaration risks disrupting the live apex. Only
+  // uncomment if you intend to migrate domain management from the dashboard to
+  // wrangler. `www` is a Cloudflare Redirect Rule to the apex. See docs/DNS-CUTOVER-CHECKLIST.md.
+  // "routes": [
+  //   { "pattern": "autogive.app", "custom_domain": true }
+  // ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,
