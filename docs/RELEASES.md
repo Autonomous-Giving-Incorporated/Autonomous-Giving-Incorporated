@@ -2,6 +2,12 @@
 
 Material production changes are recorded newest first. Each entry links the reviewed change and its deployment evidence.
 
+## 2026-08-22 — autogive.app apex live on Cloudflare
+
+- **Change:** DNS cutover complete — the `autogive.app` apex is served by Cloudflare Worker `agi-public` (Cloudflare Workers static assets), replacing Vercel as the live origin. Nameservers are on Cloudflare (`ryleigh`/`ruben.ns.cloudflare.com`); `www` 301-redirects to the apex. Repo docs reconciled to "Cloudflare live / Vercel rollback."
+- **Verification:** `EDGE_PROXY_CHECKS=1 BASE_URL=https://autogive.app ./scripts/smoke-public-suite.sh` → `SMOKE PASSED` (apex, `robots.txt`, `sitemap.xml`, `/portfolio-signals/`, `/impact-relay/`, public JSON, authority checks, security headers, `POST` → 405). `curl -sI https://autogive.app/` → `200`, `server: cloudflare`, no `x-vercel-*` headers.
+- **Rollback:** Vercel project and `vercel.json` retained as rollback; retire as a later follow-up once the Cloudflare apex is confirmed stable.
+
 ## 2026-08-19 — Public-source retarget, SPEC-011 fallback, and CSP
 
 - **Merge commit:** [`256cda8`](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/commit/256cda8ada24b23eeed1b9b174039af51e90892c)
