@@ -16,11 +16,12 @@ Platform lifecycle terms remain those in [Autonomous Giving Specs glossary](http
 | Format | `alloc_<lowercase_snake_slug>` |
 | Pattern | `^alloc_[a-z0-9_]+$` |
 | Example | `alloc_community_hardware` |
+| Suite set (synthetic Civic Forge) | `alloc_community_hardware`, `alloc_access_scholarships`, `alloc_facility_resilience`, `alloc_community_programs` |
 | Issued by | Portfolio Signals owner, at decision publish time |
 | Echoed by | Impact Relay owner on public outcomes that join to that allocation |
 | Consumed by | AGI engineering; join only on this value |
 
-A sequence suffix (`_001`) is allowed by the pattern and is optional. Existing matching fixtures use `alloc_community_hardware` without a sequence.
+A sequence suffix (`_001`) is allowed by the pattern and is optional. Existing matching fixtures use `alloc_community_hardware` without a sequence. AutoGive Synthetic Dataset v1 also publishes the three sibling IDs above; see [SYNTHETIC-DATASET.md](SYNTHETIC-DATASET.md). Those IDs are join keys, not a live public-source change.
 
 Until a live public document exports the join key, AGI continues to project the narrower live slice (execution state + one `VERIFIED` aggregate) and uses the deterministic fixture for the full narrative demo.
 
@@ -89,4 +90,4 @@ Matching fixtures use `eventId` values `evt_001`–`evt_003` on the narrative co
 
 ---
 
-Last updated: 2026-08-15
+Last updated: 2026-08-22

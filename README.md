@@ -63,6 +63,8 @@ The build validates both documents against the published public-campaign and pub
 
 The **AGI marketing site** does **not** collect donations, authenticate operators, persist private records, or expose donor-level evidence. Operator authentication lives on **Portfolio Signals workspace** (`/portfolio-signals/workspace`).
 
+Civic Forge (`org_synthetic_civic_forge`) is a labeled `SYNTHETIC_ONLY` suite fixture for join-key tests. It is not the Community AI Lab SPEC-011 demo, not the Hacker Dojo reference tenant, and not the live `data/` fetch. See [docs/SYNTHETIC-DATASET.md](docs/SYNTHETIC-DATASET.md).
+
 ## Local development
 
 ### Prerequisites

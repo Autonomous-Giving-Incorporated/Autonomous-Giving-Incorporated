@@ -6,6 +6,8 @@ Designed suite stack: **Cloudflare** (public static / edge) + **existing Supabas
 
 Phase E public-site finish: [docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md](docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). Platform pin is Specs **v2.0.0** (docs pin, not READY). Login / SPEC-028 runtime is **PARKED**. Do not add auth, secrets, or Phase D.
 
+Civic Forge synthetic v1 is a labeled `SYNTHETIC_ONLY` fixture pack (`integration/fixtures/civic-forge-*.json`). Do not make it the SPEC-011 demo, do not fetch it as live `data/`, and do not label it `OBSERVED`.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

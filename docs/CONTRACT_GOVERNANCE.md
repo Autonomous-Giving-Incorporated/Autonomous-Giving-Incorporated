@@ -64,8 +64,9 @@ Draft: [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md).
 | Public-campaign fixture | `integration/public-document-fixtures.ts` | published campaign shape |
 | Public-impact fixture | `integration/public-document-fixtures.ts` | published impact shape |
 | Impact Relay Phase C fixtures | [Impact-Relay `fixtures/agi_phase_c/`](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/tree/cfc611a0b12aca080b043959de4de5c5340628a4/fixtures/agi_phase_c) | public-impact shape + AGI `ImpactEvent`; landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`cfc611a0b12aca080b043959de4de5c5340628a4`) |
+| Civic Forge synthetic v1 | `integration/fixtures/civic-forge-*.json` | `SYNTHETIC_ONLY` campaign + impact + hardware narrative; not the live fetch and not SPEC-011 |
 
-No donor-level fields. Fund-Intel / Portfolio Signals still need matching published copies; this draft does not claim they exist on that repo’s main.
+No donor-level fields. Civic Forge matching copies live in Portfolio Signals (`fixtures/autogive-v1/`) and Impact Relay (`fixtures/synthetic_v1/`). Live `data/` shells stay gated.
 
 ---
 
@@ -83,5 +84,5 @@ This draft does not bump `2026-08-02`.
 
 ---
 
-Last updated: 2026-08-15  
+Last updated: 2026-08-22  
 Status: **engineering draft — C3 PROPOSED, Phase D gated**

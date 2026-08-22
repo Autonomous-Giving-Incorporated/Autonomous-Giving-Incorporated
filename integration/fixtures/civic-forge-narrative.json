@@ -1,0 +1,40 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "decision": {
+    "schemaVersion": "2026-08-02",
+    "allocationId": "alloc_community_hardware",
+    "fundName": "Community Hardware Fund",
+    "rationale": "Synthetic Civic Forge workshop equipment. Not a live cohort.",
+    "status": "approved",
+    "publishedAt": "2026-08-16T12:00:00.000Z"
+  },
+  "events": [
+    {
+      "schemaVersion": "2026-08-02",
+      "allocationId": "alloc_community_hardware",
+      "eventId": "evt_syn_001",
+      "type": "purchase_approved",
+      "occurredAt": "2026-08-16T12:00:00.000Z",
+      "verificationStatus": "verified",
+      "evidenceReference": "civic-forge-invoice-001"
+    },
+    {
+      "schemaVersion": "2026-08-02",
+      "allocationId": "alloc_community_hardware",
+      "eventId": "evt_syn_002",
+      "type": "receipt_attached",
+      "occurredAt": "2026-08-16T12:05:00.000Z",
+      "verificationStatus": "verified",
+      "evidenceReference": "civic-forge-receipt-001"
+    },
+    {
+      "schemaVersion": "2026-08-02",
+      "allocationId": "alloc_community_hardware",
+      "eventId": "evt_syn_003",
+      "type": "program_held",
+      "occurredAt": "2026-08-17T18:00:00.000Z",
+      "verificationStatus": "verified",
+      "evidenceReference": "civic-forge-workshop-001"
+    }
+  ]
+}
