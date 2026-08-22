@@ -4,7 +4,7 @@ Preserve v0.1 scope. No backend, authentication, database, payments, monorepo, o
 
 Designed suite stack: **Cloudflare** (public static / edge) + **existing Supabase** (durable data and auth). This public site stays a **Next.js 16** App Router static `output: "export"`. Cloudflare Workers serves the live `autogive.app` apex; Vercel is retained as rollback (retire later per `docs/DNS-CUTOVER-CHECKLIST.md`); GitHub Pages is a mirror only. Prefer Turbopack defaults (`next dev` / `next build`). Do not reintroduce npm `overrides` for postcss/sharp unless a future Next release re-vendors vulnerable versions. Do not add a Node server, OpenNext SSR, D1, a second database, or Render / Fly / Railway.
 
-Phase E public-site finish: [docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md](docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). Platform pin is Specs **v2.0.0** (docs pin, not READY). Login / SPEC-028 runtime is **PARKED**. Do not add auth, secrets, or Phase D.
+Phase E public-site finish: [docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md](docs/superpowers/specs/2026-08-16-autogive-app-finish-design.md). Platform pin is Specs **v2.0.0** (docs pin, not READY). SPEC-028 (AGI control plane) is **unparked** (2026-08-22); its cross-repo verification runs synthetically in [agi-cross-repo-harness](https://github.com/Autonomous-Giving-Incorporated/agi-cross-repo-harness). This public site itself stays static: do not add auth, secrets, a backend, or Phase D here.
 
 Civic Forge synthetic v1 is a labeled `SYNTHETIC_ONLY` fixture pack (`integration/fixtures/civic-forge-*.json`). Do not make it the SPEC-011 demo, do not fetch it as live `data/`, and do not label it `OBSERVED`.
 
