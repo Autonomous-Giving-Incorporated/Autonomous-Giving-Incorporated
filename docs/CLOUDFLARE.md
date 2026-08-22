@@ -4,7 +4,7 @@ Designed suite stack: **Cloudflare + existing Supabase**. This public workbench 
 
 The app remains a **static Next.js export** (`output: "export"` → `out/`). A small Worker (`workers/suite-gateway.ts`) only reverse-proxies suite paths that already exist in [`vercel.json`](../vercel.json), so `/portfolio-signals/` and `/impact-relay/` keep working without merging those product repos.
 
-**Vercel remains the live apex until DNS cutover of `autogive.app`.** Do not point the domain at Cloudflare until the Worker is deployed and the checklist below has passed. Leave `vercel.json` in place until cutover is complete.
+**Cloudflare serves the live `autogive.app` apex.** Vercel is retained as rollback; leave `vercel.json` in place until the Cloudflare apex is verified stable, then retire it as a follow-up.
 
 ## Project settings
 
@@ -93,7 +93,7 @@ Cloudflare custom domains require `autogive.app` to be a zone on the same Cloudf
 | --- | --- |
 | Cloudflare Worker `agi-public` + `autogive.app` | **Designed** public production after DNS cutover |
 | Existing platform Supabase | **Designed** durable data and auth (not this static site) |
-| Vercel + current `autogive.app` DNS | **Fallback** public host until DNS cutover; keep [`vercel.json`](../vercel.json) |
+| Vercel | **Rollback** host after cutover; keep [`vercel.json`](../vercel.json) until verified stable |
 | `*.github.io/Autonomous-Giving-Incorporated/` | Fallback mirror. Pages deploy waits for a successful `CI` run on `main`, matching Cloudflare. |
 
 Render, Fly, and Railway are not remaining hosts for this suite.

@@ -3,7 +3,7 @@
 Canonical production origin for the AGI public workbench is **https://autogive.app**.
 
 **Designed host: Cloudflare Workers static assets** (see [CLOUDFLARE.md](CLOUDFLARE.md)). Durable data/auth stay on existing Supabase, not on this static site.  
-**Fallback until DNS cutover: Vercel** (see [VERCEL.md](VERCEL.md)).  
+**Rollback after cutover: Vercel** (see [VERCEL.md](VERCEL.md)).  
 **Mirror: GitHub Pages** at the github.io project URL. Do not add Render, Fly, or Railway.
 
 Namecheap holds registration. Do not dual-point the apex at two web platforms.

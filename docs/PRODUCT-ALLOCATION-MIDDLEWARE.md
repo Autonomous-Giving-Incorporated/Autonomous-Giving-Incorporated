@@ -56,7 +56,7 @@ Platform pin: Specs **v2.0.0** capability-first modular monolith ([SPEC-002A](ht
 | Pilot tenant | `org_hacker_dojo` + seed fixtures |
 | Director login | Existing platform Supabase JWT + membership (`/login.html`) |
 | Durable data/auth | Existing platform Supabase (`utdioxwiskzatwoejgiu`) |
-| Public host | Cloudflare (designed); Vercel until autogive.app DNS cutover. Not Render/Fly/Railway |
+| Public host | Cloudflare (live); Vercel rollback. Not Render/Fly/Railway |
 | Live every.org gifts | Operator-owned (setup wizard ready) |
 
 Portfolio Signals docs: [ALLOCATION-MIDDLEWARE](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/ALLOCATION-MIDDLEWARE.md) · [pilot](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/HACKER-DOJO-ALLOCATION-PILOT.md) · [director login](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/blob/main/docs/ALLOCATION-DIRECTOR-LOGIN.md)

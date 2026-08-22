@@ -1,8 +1,8 @@
-# Vercel deployment (fallback until cutover)
+# Vercel deployment (rollback after cutover)
 
 **Designed production host is Cloudflare Workers static assets**, with durable suite data/auth on existing Supabase. See [CLOUDFLARE.md](CLOUDFLARE.md) and [PLATFORM.md](PLATFORM.md).
 
-Vercel remains the **fallback** public host and the **live** apex for **https://autogive.app** until DNS cutover. Keep [`vercel.json`](../vercel.json) until that cutover is complete and verified. Do not delete the Vercel project or this file as part of adding Cloudflare. Render, Fly, and Railway are not remaining hosts.
+Vercel is retained as the **rollback** public host after the `autogive.app` apex cut over to Cloudflare. Keep [`vercel.json`](../vercel.json) and the Vercel project until the Cloudflare apex is verified stable, then retire them as a follow-up. Render, Fly, and Railway are not remaining hosts.
 
 The app is a **static Next.js export** (`output: "export"` → `out/`). No serverless functions, no runtime secrets, no auth on this site.
 
@@ -19,7 +19,7 @@ The app is a **static Next.js export** (`output: "export"` → `out/`). No serve
 
 > Do not set the Vercel framework preset to **Next.js** while using `output: "export"`. That preset expects a server build and fails looking for `routes-manifest.json` under `out/`.
 
-Config in repo: [`vercel.json`](../vercel.json) (suite path rewrites, security headers). The Cloudflare Worker mirrors those rewrites; keep both until cutover.
+Config in repo: [`vercel.json`](../vercel.json) (suite path rewrites, security headers). The Cloudflare Worker mirrors those rewrites; keep both until the rollback is retired.
 
 ## Link & deploy (CLI)
 
@@ -38,7 +38,7 @@ Git integration: import the AGI repo in the Vercel dashboard so `main` → produ
 
 ## Custom domain: autogive.app
 
-Until cutover, DNS still targets Vercel. After Cloudflare is verified, move the apex as described in [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md) and [CLOUDFLARE.md](CLOUDFLARE.md).
+DNS now targets Cloudflare. This Vercel domain config is retained only for rollback; see [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md) and [CLOUDFLARE.md](CLOUDFLARE.md).
 
 ### In Vercel (current live host)
 
@@ -85,8 +85,8 @@ ls out/index.html
 
 | Surface | Role |
 | --- | --- |
-| Cloudflare Worker `agi-public` + `autogive.app` | Intended production after DNS cutover |
-| Vercel + current `autogive.app` DNS | Live production until cutover |
+| Cloudflare Worker `agi-public` + `autogive.app` | Live production |
+| Vercel | Rollback host after cutover |
 | github.io project site | Fallback mirror (workflow still deploys) |
 
 Legacy project-site path (github.io only):

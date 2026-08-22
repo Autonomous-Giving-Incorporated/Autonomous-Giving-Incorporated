@@ -44,7 +44,7 @@ Transaction-light **middleware** between donation platforms (canonical **every.o
 
 ## Current status
 
-AGI is a static Next.js export. The designed stack is **Cloudflare + existing Supabase**: this public site stays static on [Cloudflare Workers](docs/CLOUDFLARE.md) at [autogive.app](https://autogive.app/); durable data and auth stay on platform Supabase. [Vercel](docs/VERCEL.md) remains the live apex until DNS cutover; GitHub Pages remains a fallback mirror. Path suite:
+AGI is a static Next.js export. The designed stack is **Cloudflare + existing Supabase**: this public site stays static on [Cloudflare Workers](docs/CLOUDFLARE.md) at [autogive.app](https://autogive.app/); durable data and auth stay on platform Supabase. The `autogive.app` apex is served by [Cloudflare Workers](docs/CLOUDFLARE.md); [Vercel](docs/VERCEL.md) is retained as rollback; GitHub Pages remains a fallback mirror. Path suite:
 
 | Path | Product |
 | --- | --- |

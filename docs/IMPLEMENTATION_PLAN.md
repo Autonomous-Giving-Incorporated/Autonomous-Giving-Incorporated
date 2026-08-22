@@ -4,7 +4,7 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 
 ## Current baseline
 
-- Static Next.js export for Cloudflare Workers static assets (intended production); Vercel and GitHub Pages remain fallbacks until cutover.
+- Static Next.js export for Cloudflare Workers static assets (production); Vercel is retained as rollback and GitHub Pages remains a fallback mirror.
 - AGI visual system and reciprocal suite navigation.
 - Deterministic contribution lifecycle.
 - Build-time Portfolio Signals and Impact Relay public projections.

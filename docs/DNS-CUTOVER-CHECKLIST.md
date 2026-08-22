@@ -13,19 +13,7 @@ The repo is already Cloudflare-ready: `site.ts` canonical origin is `https://aut
 
 1. **Attach the apex.** Either add it in the dashboard (Workers & Pages → `agi-public` → Domains → `autogive.app`), or uncomment the `routes` block in [`wrangler.jsonc`](../wrangler.jsonc) to manage it as code. Do this only once the `autogive.app` zone is on the same Cloudflare account — an unresolvable custom domain fails `wrangler deploy` in CI.
 2. **`www` redirect.** Add a Cloudflare Redirect Rule `www.autogive.app` → `https://autogive.app` (dashboard). Do not add `www` as a second custom domain.
-3. **Flip the host-status prose** from "Cloudflare intended / Vercel live until cutover" to "Cloudflare is live production / Vercel retained as rollback." Occurrences:
-   - `AGENTS.md` (Designed suite stack line)
-   - `README.md` (Current status paragraph)
-   - `docs/ARCHITECTURE.md` (overview + Hosting bullet)
-   - `docs/CLOUDFLARE.md` (intro + relationship table)
-   - `docs/CONTINUATION_PLAN.md` (Current baseline)
-   - `docs/CUSTOM-DOMAIN.md` (host list + "Current live" section)
-   - `docs/VERCEL.md` (title + intro + relationship table)
-   - `docs/PLATFORM.md` (Designed stack + path table + production path)
-   - `docs/ROADMAP.md` (Shipped hosting bullet)
-   - `docs/IMPLEMENTATION_PLAN.md` (hosting bullet)
-   - `docs/README.md` (Custom domain + Vercel index rows)
-   - Incidental mentions to sweep for consistency: `docs/GITHUB-PROJECT.md`, `docs/PRODUCT-ALLOCATION-MIDDLEWARE.md`, `docs/THREE_REPO_INTEGRATION.md`.
+3. **Host-status prose is already flipped in this PR** — `AGENTS.md`, `README.md`, and the living host docs (`ARCHITECTURE`, `CLOUDFLARE`, `CONTINUATION_PLAN`, `CUSTOM-DOMAIN`, `VERCEL`, `PLATFORM`, `ROADMAP`, `IMPLEMENTATION_PLAN`, `docs/README`, `GITHUB-PROJECT`, `PRODUCT-ALLOCATION-MIDDLEWARE`, `THREE_REPO_INTEGRATION`) now read "Cloudflare live / Vercel rollback." The dated design spec `docs/superpowers/specs/2026-08-16-*.md` is intentionally left as a historical record. Detailed step-by-step runbook bodies in `CUSTOM-DOMAIN.md`/`VERCEL.md` are kept as rollback reference. Sanity-check for any stragglers: `grep -rn -i "until.*cutover\|live apex" --include=*.md .`
 4. **Record the release** in [RELEASES.md](RELEASES.md): merge commit, the successful Cloudflare deploy run, and `curl -sI https://autogive.app/` confirming a Cloudflare (not Vercel/LiteSpeed) response.
 
 ## Do NOT do at cutover (later, after observation)

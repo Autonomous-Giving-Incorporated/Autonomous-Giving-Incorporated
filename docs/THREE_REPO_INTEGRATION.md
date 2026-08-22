@@ -21,7 +21,7 @@ The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUC
 | Auth | None | Supabase director / campaign_lead JWT (operator token fallback) |
 | Money path | Narrative only | every.org gift summaries → pots → allocation |
 | Writes | None | Pots, allocations, exceptions, proof links |
-| Host | Cloudflare Workers static assets (Vercel until DNS cutover) | Cloudflare + existing Supabase (auth/data); not Render/Fly/Railway |
+| Host | Cloudflare Workers static assets (Vercel rollback) | Cloudflare + existing Supabase (auth/data); not Render/Fly/Railway |
 | Specs | Pin v2.0.0 (docs pin; not READY) | Capability-first modular monolith |
 
 Cross-repo implementation should keep **public aggregate JSON** contracts stable while middleware modules map to Portfolio Signals (observe/credit), Autonomous Giving (allocate/approve), and Impact Relay (proof/trail) **capabilities**—not three mandatory deployables.
