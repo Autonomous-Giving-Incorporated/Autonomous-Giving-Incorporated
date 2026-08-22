@@ -10,6 +10,13 @@ This document is the canonical cross-repository integration list for the Autonom
 
 AGI public workbench is deliberately the thinnest and most constrained surface today. It never writes, never authenticates, and never sees donor-level data.
 
+### Other repositories in this org (not part of the AGI integration surface)
+
+The `Autonomous-Giving-Incorporated` GitHub org also contains repositories that are **not** part of the three-repo public-workbench integration above and are not consumed by AGI:
+
+- **Autonomous-Giving-Specs** — platform canon (pinned here at **v2.0.0**). Referenced as the spec pin, not a runtime dependency.
+- **Auto-Goods-Inc** — a separate venture ("a for-profit autonomous software company," Phase 0 constitution) with its own 50/50 profit-to-community-wellness contract. It shares the community-impact theme but is not part of the AGI public workbench and publishes no surface AGI consumes.
+
 ## Allocation middleware (authenticated client ops)
 
 The **allocation middleware** product ([PRODUCT-ALLOCATION-MIDDLEWARE.md](PRODUCT-ALLOCATION-MIDDLEWARE.md)) is a separate client-ops surface that authenticates and writes tenant data. It is **not** the current public AGI workbench.
@@ -34,6 +41,8 @@ Cross-repo implementation should keep **public aggregate JSON** contracts stable
 | Impact-Relay | `https://raw.githubusercontent.com/Autonomous-Giving-Incorporated/Impact-Relay/main/data/public-impact.json` | `public_aggregate_only` | At least one outcome with `evidenceState: "VERIFIED"` | Fail closed → deterministic fixture |
 
 Implementation: `integration/public-sources.ts`.
+
+**Observed live-projection state (2026-08-22):** both public documents are currently `updatedAt: 2026-08-08` (past the 7-day hard freshness threshold) and carry no live content — Portfolio Signals `execution.state: blocked` with empty `allocations`, and Impact-Relay `outcomes: []` (no `VERIFIED`). The AGI build therefore **fails closed to the deterministic fixture by design** (`source=policy_rejected`), so the public site shows the bundled Community AI Lab scenario. This is the intended steady state, not a defect: lighting up the live projection requires Portfolio Signals and Impact-Relay to publish fresh documents (a recent `updatedAt` plus at least one Impact-Relay `evidenceState: "VERIFIED"` outcome).
 
 ## Shared public contracts (versioned)
 
