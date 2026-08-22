@@ -7,6 +7,14 @@
 export const ALLOCATION_ID_PATTERN = /^alloc_[a-z0-9_]+$/;
 export const ALLOCATION_ID_EXAMPLE = "alloc_community_hardware";
 
+/** Stable suite join keys. Civic Forge synthetic v1 uses all four. */
+export const SUITE_ALLOCATION_IDS = [
+  "alloc_community_hardware",
+  "alloc_access_scholarships",
+  "alloc_facility_resilience",
+  "alloc_community_programs",
+] as const;
+
 export const ALLOCATION_ID_RULES = {
   issuer: "portfolio_signals_owner",
   issuedWhen: "decision publish time",

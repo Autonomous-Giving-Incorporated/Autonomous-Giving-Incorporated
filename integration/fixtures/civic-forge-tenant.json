@@ -1,0 +1,34 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "dataset": "autogive-synthetic-dataset",
+  "version": "1.0.0",
+  "seed": 20260821,
+  "campaign_id": "cmp_synthetic_builder_fund_2026",
+  "client_id": "org_synthetic_civic_forge",
+  "tenant_id": "org_synthetic_civic_forge",
+  "name": "Civic Forge Makerspace",
+  "reference_tenant": false,
+  "canonical_demo": false,
+  "allocations": [
+    {
+      "allocationId": "alloc_community_hardware",
+      "fundName": "Community Hardware Fund",
+      "status": "active"
+    },
+    {
+      "allocationId": "alloc_access_scholarships",
+      "fundName": "Access Scholarship Fund",
+      "status": "approved"
+    },
+    {
+      "allocationId": "alloc_facility_resilience",
+      "fundName": "Facility Resilience Fund",
+      "status": "active"
+    },
+    {
+      "allocationId": "alloc_community_programs",
+      "fundName": "Community Programs Fund",
+      "status": "proposed"
+    }
+  ]
+}
