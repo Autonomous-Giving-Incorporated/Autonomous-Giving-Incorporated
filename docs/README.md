@@ -19,7 +19,7 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Contract governance](CONTRACT_GOVERNANCE.md)     | Phase C field ownership, vocabulary, fixtures, versioning       |
 | [Suite glossary](SUITE_GLOSSARY.md)               | Shared `allocationId` and status vocabulary                     |
 | [Synthetic dataset v1](SYNTHETIC-DATASET.md)      | Civic Forge `SYNTHETIC_ONLY` join fixtures; not SPEC-011        |
-| [Public-data policy](PUBLIC_DATA_POLICY.md)       | PROPOSED evidence, retention, redaction, publication rules      |
+| [Public-data policy](PUBLIC_DATA_POLICY.md)       | PROPOSED C3 decision packet (unsigned)                          |
 | [Design system](DESIGN_SYSTEM.md)                 | AGI identity, tokens, composition, and accessibility             |
 
 ## Planning

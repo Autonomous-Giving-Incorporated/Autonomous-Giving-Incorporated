@@ -30,9 +30,9 @@ Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D 
 
 1. Name the owner of every shared field (continuation-plan roles; current operator recorded).
 2. Reconcile allocation identifiers and status vocabulary across the suite (glossary + matching fixtures).
-3. Draft public evidence, retention, redaction, and publication rules — approval still required.
+3. Draft public evidence, retention, redaction, and publication rules — [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) is a decision packet; approval still required.
 4. Version incompatible contract changes (date-string bump required; no bump in this draft).
-5. Maintain representative public-safe fixtures in this repository; other repos still need matching copies.
+5. Maintain representative public-safe fixtures in this repository; matching copies landed in Impact Relay (PR 5) and Portfolio Signals (PR 34).
 
 Cross-repository surface and checklist live in [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md).
 

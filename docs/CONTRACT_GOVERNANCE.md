@@ -49,9 +49,9 @@ Live product semantics are unchanged. The build-time adapter still projects the 
 
 ## C3 — Public-data rules
 
-Draft: [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md).
+Decision packet: [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md).
 
-**Status: PROPOSED.** Leadership and engineering sign-off have not been recorded.
+**Status: PROPOSED.** The draft is ready for the four named seats to approve, reject, or defer. Leadership and engineering sign-off have not been recorded. An agent must not fill the sign-off table or flip `PUBLIC_DATA_POLICY_STATUS`.
 
 ---
 
@@ -75,7 +75,7 @@ No donor-level fields. Civic Forge matching copies live in Portfolio Signals (`f
 Formalized in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md#change-management) and `CONTRACT_VERSIONING` in `integration/contracts.ts`.
 
 - Narrative contracts: date-string `schemaVersion`. Compatibility break requires a new date string.
-- Platform specification: SemVer per SPEC-012. This repo remains pinned at `1.0.0`.
+- Platform specification: SemVer per SPEC-012. This repo remains pinned at `2.0.0` (docs pin, not READY).
 - Public campaign/impact documents: their own `1.0.0` semver strings.
 - Additive optional fields may keep the current narrative version if unknown fields stay ignorable.
 - Fail-closed Phase B behavior must survive any bump.

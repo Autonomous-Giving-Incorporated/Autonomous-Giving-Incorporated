@@ -74,7 +74,7 @@ Engineering draft in AGI. C3 is **PROPOSED**, not approved. Phase D stays gated.
 - [x] Representative public-safe fixtures published in all three repositories — AGI fixtures published and validated; Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`fixtures/agi_phase_c/`); Portfolio Signals copies landed in [PR 34](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/34)
 - [x] AutoGive Synthetic Dataset v1 Civic Forge pack — AGI labeled fixtures in `integration/fixtures/civic-forge-*.json`; Portfolio Signals NATIVE corpus in [PR 47](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/47); Impact Relay BRIDGE corpus in [PR 12](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/12). `SYNTHETIC_ONLY`; does not replace live `data/` fetches or the SPEC-011 demo.
 - [x] Contract version bump process documented — date-string bump on compatibility break; SPEC-012 SemVer unchanged for the platform pin
-- [ ] C3 evidence-access / retention / redaction / publication rules approved — draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**)
+- [ ] C3 evidence-access / retention / redaction / publication rules approved — decision packet is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) (**PROPOSED**, sign-off table empty)
 
 ### C. Reliability & observability (Phase B)
 
@@ -116,7 +116,7 @@ Only after B + C are complete and a separate architecture review is approved:
 | Public verified impact outcomes | Impact-Relay |
 | Narrative presentation + fail-closed projection | AGI |
 | Shared contract vocabulary + allocationId rules | Joint (all three); AGI glossary draft in [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) |
-| Public-data / retention / redaction policy | Leadership + all three eng leads; AGI draft is **PROPOSED** in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) |
+| Public-data / retention / redaction policy | Leadership + all three eng leads; AGI decision packet is **PROPOSED** in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) |
 
 ## Change control
 
