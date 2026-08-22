@@ -103,7 +103,7 @@ Machine-readable copies live in `FUNDING_DECISION_FIELD_OWNERS` and `IMPACT_EVEN
 
 ## Public-data rules
 
-The following remain the implemented fail-closed rules. The consolidated evidence-access, retention, redaction, and public-publication draft is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) and is **PROPOSED**. It is not approved.
+The following remain the implemented fail-closed rules. The consolidated evidence-access, retention, redaction, and public-publication decision packet is [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md) and is **PROPOSED**. It is not approved. The sign-off table is empty.
 
 - Join only by `allocationId`, never donor identity.
 - Accept only documented public authority values.

@@ -210,4 +210,16 @@ describe("contract versioning and C3 status", () => {
     assert.equal(PUBLIC_DATA_POLICY_STATUS, "PROPOSED");
     assert.notEqual(PUBLIC_DATA_POLICY_STATUS, "approved");
   });
+
+  it("keeps the public-data policy document unsigned", () => {
+    const markdown = readFileSync(
+      new URL("../docs/PUBLIC_DATA_POLICY.md", import.meta.url),
+      "utf8",
+    );
+    assert.match(markdown, /\*\*Status: PROPOSED\.\*\*/);
+    assert.match(markdown, /## Operator sign-off \(unsigned\)/);
+    assert.match(markdown, /An agent must not write .approved./);
+    assert.doesNotMatch(markdown, /Status:\s*\*\*APPROVED\*\*/i);
+    assert.doesNotMatch(markdown, /\|\s*Leadership\s*\|\s*[^|\s]/);
+  });
 });

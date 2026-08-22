@@ -34,7 +34,7 @@ Engineering draft in this repository. C3 is **PROPOSED**, not approved. Phase D 
 
 - Named role ownership for shared fields (current operator recorded; not a sign-off).
 - Shared glossary and matching fixtures for `allocationId` and status vocabulary.
-- Evidence-access, retention, redaction, and publication rules drafted and still awaiting leadership + eng sign-off.
+- Evidence-access, retention, redaction, and publication decision packet is ready and still awaiting leadership + eng sign-off.
 - Representative public-safe fixtures published and validated in AGI.
 
 ## Later — Runtime read-only narrative

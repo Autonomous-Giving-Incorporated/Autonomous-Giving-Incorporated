@@ -17,7 +17,7 @@ export const CONTRACT_VERSIONING = {
   platformSpecScheme: "semver",
 } as const;
 
-/** C3 public-data policy is an engineering draft. Not approved. */
+/** C3 public-data policy is a decision packet. Not approved. */
 export const PUBLIC_DATA_POLICY_STATUS = "PROPOSED" as const;
 
 export type PublicVerificationStatus = "pending" | "verified" | "rejected";

@@ -50,7 +50,7 @@ The site does not collect donations, persist records, authenticate people, expos
 |----|------|--------|
 | C1 | Name ownership for every `FundingDecision` and `ImpactEvent` field | Engineering draft: role owners recorded in [INTEGRATION_CONTRACTS.md](INTEGRATION_CONTRACTS.md). Current human filling those seats: Danny (`scrimshawlife-ctrl`). Not a sign-off. |
 | C2 | Align `allocationId` generation and status vocabulary across Fund-Intel, Impact-Relay, and AGI | Engineering draft: [SUITE_GLOSSARY.md](SUITE_GLOSSARY.md) + matching fixtures. Live adapter semantics unchanged. |
-| C3 | Approve evidence-access, retention, redaction, and public-publication rules | **PROPOSED** draft in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md). Not approved. Leadership + eng sign-off still required. |
+| C3 | Approve evidence-access, retention, redaction, and public-publication rules | **PROPOSED** decision packet in [PUBLIC_DATA_POLICY.md](PUBLIC_DATA_POLICY.md). Recommended answers restated from the live fail-closed adapter. Sign-off table is empty. Leadership + eng still required. |
 | C4 | Publish representative public-safe fixtures in all three repositories | This repo: narrative JSON/TS fixtures validate against the contracts. Impact Relay copies landed in [PR 5](https://github.com/Autonomous-Giving-Incorporated/Impact-Relay/pull/5) (`cfc611a0b12aca080b043959de4de5c5340628a4`, `fixtures/agi_phase_c/`). Portfolio Signals copies landed in [PR 34](https://github.com/Autonomous-Giving-Incorporated/Portfolio-Signals/pull/34). |
 | C5 | Formalize contract versioning and change-management process | Formalized existing date-string + SPEC-012 language. Compatibility break requires a version bump. No bump in this draft. |
 
