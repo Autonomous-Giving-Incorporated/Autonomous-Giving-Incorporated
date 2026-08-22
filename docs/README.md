@@ -18,6 +18,7 @@ This directory is the source of truth for AGI product intent, architecture, desi
 | [Three-repo integration](THREE_REPO_INTEGRATION.md) | Full cross-repository surface, checklist, and ownership       |
 | [Contract governance](CONTRACT_GOVERNANCE.md)     | Phase C field ownership, vocabulary, fixtures, versioning       |
 | [Suite glossary](SUITE_GLOSSARY.md)               | Shared `allocationId` and status vocabulary                     |
+| [Synthetic dataset v1](SYNTHETIC-DATASET.md)      | Civic Forge `SYNTHETIC_ONLY` join fixtures; not SPEC-011        |
 | [Public-data policy](PUBLIC_DATA_POLICY.md)       | PROPOSED evidence, retention, redaction, publication rules      |
 | [Design system](DESIGN_SYSTEM.md)                 | AGI identity, tokens, composition, and accessibility             |
 
