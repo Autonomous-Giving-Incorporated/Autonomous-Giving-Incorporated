@@ -96,13 +96,13 @@ See also [THREE_REPO_INTEGRATION.md](THREE_REPO_INTEGRATION.md) for the complete
 
 The full evidence record is in [AGI_SPEC_AUDIT_2026-08-15.md](AGI_SPEC_AUDIT_2026-08-15.md).
 
-Engineering direction for a later control-plane slice is recorded in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md) (**non-normative** current-status; not the v2.0.0 pin) and [Specs architecture/secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md) (**non-normative**). That slice is **PARKED**. AGI remains responsible for implementing and evidencing its own control-plane behavior when unparked; the proposed Specs contracts are not an AGI conformance claim.
+Engineering direction for a later control-plane slice is recorded in [Specs ADR-014](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/adr/ADR-014-agi-control-plane.md) (**non-normative** current-status; not the v2.0.0 pin) and [Specs architecture/secure-cross-repo-harness.md](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Specs/blob/main/architecture/secure-cross-repo-harness.md) (**non-normative**). That slice is **unparked** (2026-08-22); its cross-repo verification runs synthetically in [agi-cross-repo-harness](https://github.com/Autonomous-Giving-Incorporated/agi-cross-repo-harness). AGI remains responsible for implementing and evidencing its own control-plane behavior; the proposed Specs contracts are not an AGI conformance claim, and the AGI public site itself stays static (no auth, backend, or secrets).
 
 **Public-site execution brief (2026-08-16):** [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). An implementer can run Phase E without director login. Do not claim READY. C3 stays **PROPOSED**.
 
 ### Audit verdict
 
-The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk after this slice is parked login / SPEC-028 runtime (not this public-site code) and C3 still **PROPOSED**. The public demo is Community AI Lab. The manifest `implements` list is the public narrative/projection only.
+The application tree is clean from unrelated projects such as Abraxas Orchestra, Hermes, OpenClaw, Enochian, and SafetyPass. Portfolio Signals / Fund-Intel, Impact Relay, Cloudflare, Supabase, and Zero State are intentional suite or builder references. The remaining risk after this slice is the control-plane runtime deployment (verified synthetically in agi-cross-repo-harness; not this public-site code) and C3 still **PROPOSED**. The public demo is Community AI Lab. The manifest `implements` list is the public narrative/projection only.
 
 ### Phase E — Conformance and boundary reconciliation
 
@@ -126,7 +126,7 @@ The application tree is clean from unrelated projects such as Abraxas Orchestra,
 - Do not merge Fund-Intel or Impact Relay application code into this repository.
 - Keep public fixtures synthetic, aggregate-safe, and free of donor identity.
 - Keep the platform pin at `Autonomous-Giving-Specs v2.0.0`. Do not revert to v1.0.0.
-- Do not unpark login, SPEC-028 runtime, Ed, or director JWT from this repository.
+- SPEC-028 control-plane verification is unparked (2026-08-22) and lives in agi-cross-repo-harness; do not add auth, secrets, a backend, or director JWT to this public-site repository.
 - Do not claim C3 approved. Do not claim READY. Do not invent live Worker URLs or freeze SHAs.
 
 ### Phase E definition of done
@@ -144,4 +144,4 @@ Suite-wide audit: [SUITE_STACK_AUDIT_2026-08-17.md](SUITE_STACK_AUDIT_2026-08-17
 | Gate GitHub Pages deploy on CI (same as Cloudflare) | This slice |
 | CSP + `next/font` self-hosted suite fonts | This slice |
 
-Do not claim live public signals. Org documents currently fail closed (empty `VERIFIED` outcomes / blocked campaign shell). Do not unpark login, SPEC-028, or Phase D. Sibling-repo items stay in their owners.
+Do not claim live public signals. Org documents currently fail closed (empty `VERIFIED` outcomes / blocked campaign shell). SPEC-028 control-plane verification is unparked (in agi-cross-repo-harness); do not add auth, a backend, or Phase D to this public site. Sibling-repo items stay in their owners.

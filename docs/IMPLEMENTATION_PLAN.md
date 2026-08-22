@@ -10,7 +10,7 @@ This plan translates the roadmap into an engineering sequence. It is intentional
 - Build-time Portfolio Signals and Impact Relay public projections.
 - Fail-closed fallback for unavailable or disallowed source data.
 - CI for lint, typecheck, and production build.
-- Platform pin **v2.0.0** (documentation pin, not READY). Login / Phase 2 / SPEC-028 runtime **PARKED**.
+- Platform pin **v2.0.0** (documentation pin, not READY). SPEC-028 (control plane) **unparked** (2026-08-22); cross-repo verification active in agi-cross-repo-harness. Platform login / Phase 2 runtime remain future; this site stays static.
 - Phase E E1–E7 landed. C3 remains **PROPOSED**.
 
 ## Workstream 1 — Public-source reliability (Phase B)
@@ -38,13 +38,13 @@ Cross-repository surface and checklist live in [THREE_REPO_INTEGRATION.md](THREE
 
 ## Workstream 3 — Phase E public-site finish
 
-Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Pin **v2.0.0**. Login **PARKED**. Honest conformance. C3 remains **PROPOSED**. Not READY. Public-site E1–E7 landed (`nanoid@3.3.18` lockfile bump).
+Execution brief: [superpowers/specs/2026-08-16-autogive-app-finish-design.md](superpowers/specs/2026-08-16-autogive-app-finish-design.md). Pin **v2.0.0**. Login absent from this static site (SPEC-028 control-plane verification unparked in agi-cross-repo-harness). Honest conformance. C3 remains **PROPOSED**. Not READY. Public-site E1–E7 landed (`nanoid@3.3.18` lockfile bump).
 
 1. Shrink `platform-spec/conformance.yml` `implements` to SPEC-011/012/013; tracked-only IDs stay out of `implements`.
 2. Replace the public demo with Community AI Lab / 25 laptops / 2500 USD and the required lifecycle order.
 3. Keep donor identity off the public surface; keep the privacy regression test green.
 4. Normative Specs links stay on v2.0.0; label floating `main` links non-normative.
-5. Keep README / PLATFORM / login / admin copy on **PARKED** for login and SPEC-028 runtime.
+5. Keep README / PLATFORM / login / admin copy honest: SPEC-028 control-plane verification is unparked (agi-cross-repo-harness); login remains absent from this static site.
 6. Add `npm run conformance-check` with the design’s fail conditions; hook CI only when it can fail honestly.
 7. Reviewed `nanoid` lockfile bump to `>=3.3.18`.
 
@@ -70,4 +70,4 @@ A change is complete when:
 - accessibility and responsive behavior are reviewed for UI changes;
 - the production release is linked to its commit, PR, CI, and deployment run.
 
-Runtime APIs, accounts, payments, persistence, notifications, and unparking login / SPEC-028 require a new approved plan rather than an extension of these workstreams. Do not claim READY.
+Runtime APIs, accounts, payments, persistence, notifications, and any login on this static site require a new approved plan rather than an extension of these workstreams. SPEC-028 control-plane verification is unparked in agi-cross-repo-harness. Do not claim READY.
