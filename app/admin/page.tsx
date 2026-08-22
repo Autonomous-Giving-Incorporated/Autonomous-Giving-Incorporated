@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Admin control plane",
   description:
     "AGI authentication and routing surface for authorized tenant and project work.",
-  alternates: { canonical: absoluteSiteUrl("/admin") },
+  alternates: { canonical: absoluteSiteUrl() },
   robots: { index: false, follow: false },
 };
 

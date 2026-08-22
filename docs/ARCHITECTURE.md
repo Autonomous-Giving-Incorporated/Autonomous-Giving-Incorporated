@@ -29,13 +29,15 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 - **External data:** two fixed HTTPS sources fetched at build time with a bundled fallback. Source URLs are the org raw GitHub documents. Historical `scrimshawlife-ctrl/Fund-Intel` URLs are not fetched.
 - **Security headers:** CSP, frame denial, and related headers are set on the Worker (including static assets), Vercel, and Pages `_headers`. Suite fonts are self-hosted at build time with `next/font` (no `fonts.googleapis.com` at runtime).
 
-`site.ts` owns the canonical production origin (`https://autogive.app`). `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and cutover: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
+`site.ts` owns the canonical production origin (`https://autogive.app`). `site-public.ts` is the official unique public HTML page list for this export (`/`, `/legal`, `/legal/privacy`, `/legal/terms`). `app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and `/robots.txt` on the static export so those files are served at the apex after deploy. Locs and canonicals use the apex host, not `www`, `vercel.app`, or `github.io`. `robots.txt` allows public crawlers, points `Sitemap:` at `https://autogive.app/sitemap.xml`, and disallows auth, admin, workspace, and PII-adjacent suite paths this host serves. Parked `/login` and `/admin` shells are `noindex` and canonical to the homepage. Proxied Portfolio Signals and Impact Relay landings are first-party 200s on the apex but are owned by other repos and are not listed in this export's sitemap. `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and cutover: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
 
 ## Component boundaries
 
 | Path                            | Responsibility                                                        |
 | ------------------------------- | --------------------------------------------------------------------- |
 | `app/page.tsx`                  | Composes the public narrative and requests validated public signals   |
+| `site-public.ts`                | Official public HTML page list for sitemap, robots, and canonicals    |
+| `app/sitemap.ts` / `app/robots.ts` | Static-export `/sitemap.xml` and `/robots.txt` at the apex          |
 | `components/public-signals.tsx` | Renders the selected live or fallback aggregate projection            |
 | `components/donation-demo.tsx`  | Runs the deterministic, non-payment contribution story                |
 | `components/navbar.tsx`         | Provides AGI and reciprocal suite navigation                          |

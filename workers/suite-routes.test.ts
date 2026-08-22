@@ -85,6 +85,7 @@ describe("matchSuiteRoute", () => {
     assert.deepEqual(matchSuiteRoute("/"), { kind: "pass" });
     assert.deepEqual(matchSuiteRoute("/legal"), { kind: "pass" });
     assert.deepEqual(matchSuiteRoute("/robots.txt"), { kind: "pass" });
+    assert.deepEqual(matchSuiteRoute("/sitemap.xml"), { kind: "pass" });
   });
 });
 
