@@ -16,6 +16,21 @@
       "source": "/fund-intel/:path*",
       "destination": "/portfolio-signals/:path*",
       "permanent": true
+    },
+    {
+      "source": "/workspace",
+      "destination": "/portfolio-signals/workspace.html",
+      "permanent": true
+    },
+    {
+      "source": "/workspace/",
+      "destination": "/portfolio-signals/workspace.html",
+      "permanent": true
+    },
+    {
+      "source": "/workspace.html",
+      "destination": "/portfolio-signals/workspace.html",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -74,18 +89,6 @@
     {
       "source": "/impact-relay/:path*",
       "destination": "https://impact-relay.vercel.app/:path*"
-    },
-    {
-      "source": "/workspace",
-      "destination": "https://fund-intel-ten.vercel.app/workspace.html"
-    },
-    {
-      "source": "/workspace/",
-      "destination": "https://fund-intel-ten.vercel.app/workspace.html"
-    },
-    {
-      "source": "/workspace.html",
-      "destination": "https://fund-intel-ten.vercel.app/workspace.html"
     }
   ],
   "headers": [
@@ -111,6 +114,24 @@
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/portfolio-signals/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://utdioxwiskzatwoejgiu.supabase.co; connect-src 'self' https://utdioxwiskzatwoejgiu.supabase.co wss://utdioxwiskzatwoejgiu.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/impact-relay/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://utdioxwiskzatwoejgiu.supabase.co; connect-src 'self' https://utdioxwiskzatwoejgiu.supabase.co wss://utdioxwiskzatwoejgiu.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
         }
       ]
     },

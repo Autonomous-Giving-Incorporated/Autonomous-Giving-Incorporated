@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { suiteGateway, CONTENT_SECURITY_POLICY } from "./suite-gateway.ts";
+import {
+  suiteGateway,
+  CONTENT_SECURITY_POLICY,
+  SUITE_CONTENT_SECURITY_POLICY,
+} from "./suite-gateway.ts";
 
-const securityHeaders = {
+const marketingSecurityHeaders = {
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-frame-options": "DENY",
@@ -10,10 +14,23 @@ const securityHeaders = {
   "content-security-policy": CONTENT_SECURITY_POLICY,
 };
 
-function assertSecurityHeaders(response: Response): void {
-  for (const [name, value] of Object.entries(securityHeaders)) {
+function assertMarketingSecurityHeaders(response: Response): void {
+  for (const [name, value] of Object.entries(marketingSecurityHeaders)) {
     assert.equal(response.headers.get(name), value, `${name} is present`);
   }
+}
+
+function assertSharedSecurityHeaders(response: Response): void {
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(
+    response.headers.get("referrer-policy"),
+    "strict-origin-when-cross-origin",
+  );
+  assert.equal(response.headers.get("x-frame-options"), "DENY");
+  assert.equal(
+    response.headers.get("permissions-policy"),
+    "camera=(), microphone=(), geolocation=()",
+  );
 }
 
 describe("suiteGateway", () => {
@@ -36,7 +53,7 @@ describe("suiteGateway", () => {
 
       assert.equal(response.status, 405);
       assert.equal(response.headers.get("allow"), "GET, HEAD");
-      assertSecurityHeaders(response);
+      assertMarketingSecurityHeaders(response);
       assert.equal(upstreamCalls, 0);
     } finally {
       globalThis.fetch = originalFetch;
@@ -87,7 +104,11 @@ describe("suiteGateway", () => {
         "https://autogive.app/portfolio-signals/sponsors.html",
       );
       assert.equal(response.headers.get("x-upstream"), "observed");
-      assertSecurityHeaders(response);
+      assertSharedSecurityHeaders(response);
+      assert.equal(
+        response.headers.get("content-security-policy"),
+        SUITE_CONTENT_SECURITY_POLICY,
+      );
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -106,6 +127,94 @@ describe("suiteGateway", () => {
       },
     );
     assert.equal(response.status, 200);
-    assertSecurityHeaders(response);
+    assertMarketingSecurityHeaders(response);
+  });
+
+  it("redirects /workspace to Portfolio Signals and keeps the query string", async () => {
+    const originalFetch = globalThis.fetch;
+    let upstreamCalls = 0;
+    globalThis.fetch = async () => {
+      upstreamCalls += 1;
+      return new Response("unexpected upstream request");
+    };
+
+    try {
+      const response = await suiteGateway.fetch(
+        new Request(
+          "https://autogive.app/workspace?code=pkce-test&token_hash=otp-test",
+        ),
+        { ASSETS: { fetch: async () => new Response("unexpected asset request") } },
+      );
+
+      assert.equal(response.status, 301);
+      assert.equal(
+        response.headers.get("location"),
+        "https://autogive.app/portfolio-signals/workspace.html?code=pkce-test&token_hash=otp-test",
+      );
+      assertMarketingSecurityHeaders(response);
+      assert.equal(upstreamCalls, 0);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
+  it("applies a suite CSP to proxied HTML when the upstream omits CSP", async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () =>
+      new Response("<html></html>", {
+        status: 200,
+        headers: { "content-type": "text/html" },
+      });
+
+    try {
+      const response = await suiteGateway.fetch(
+        new Request("https://autogive.app/portfolio-signals/workspace.html"),
+        { ASSETS: { fetch: async () => new Response("unexpected asset request") } },
+      );
+
+      assert.equal(response.status, 200);
+      assertSharedSecurityHeaders(response);
+      assert.equal(
+        response.headers.get("content-security-policy"),
+        SUITE_CONTENT_SECURITY_POLICY,
+      );
+      assert.match(SUITE_CONTENT_SECURITY_POLICY, /cdn\.jsdelivr\.net/);
+      assert.match(
+        SUITE_CONTENT_SECURITY_POLICY,
+        /utdioxwiskzatwoejgiu\.supabase\.co/,
+      );
+      assert.notEqual(SUITE_CONTENT_SECURITY_POLICY, CONTENT_SECURITY_POLICY);
+      assert.doesNotMatch(CONTENT_SECURITY_POLICY, /cdn\.jsdelivr\.net/);
+      assert.doesNotMatch(
+        CONTENT_SECURITY_POLICY,
+        /utdioxwiskzatwoejgiu\.supabase\.co/,
+      );
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
+  it("passes through an upstream suite CSP instead of replacing it", async () => {
+    const originalFetch = globalThis.fetch;
+    const upstreamCsp =
+      "default-src 'self'; script-src https://cdn.jsdelivr.net; connect-src https://utdioxwiskzatwoejgiu.supabase.co";
+    globalThis.fetch = async () =>
+      new Response("<html></html>", {
+        status: 200,
+        headers: { "Content-Security-Policy": upstreamCsp },
+      });
+
+    try {
+      const response = await suiteGateway.fetch(
+        new Request("https://autogive.app/portfolio-signals/workspace.html"),
+        { ASSETS: { fetch: async () => new Response("unexpected asset request") } },
+      );
+
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get("content-security-policy"), upstreamCsp);
+      assertSharedSecurityHeaders(response);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 });

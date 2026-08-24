@@ -3,7 +3,10 @@
  *
  * Mirrors vercel.json redirects/rewrites so `/portfolio-signals/` and
  * `/impact-relay/` keep working on Cloudflare without merging those
- * product repos. This is edge routing, not an AGI backend.
+ * product repos. `/workspace` 301s to the Portfolio Signals workspace
+ * so relative CSS/JS resolve under `/portfolio-signals/`. Query strings
+ * stay on the redirect; hash fragments are browser-only. This is edge
+ * routing, not an AGI backend.
  */
 
 export const PORTFOLIO_SIGNALS_ORIGIN = "https://fund-intel-ten.vercel.app";
@@ -49,9 +52,9 @@ export function matchSuiteRoute(pathname: string): SuiteRoute {
     pathname === "/workspace.html"
   ) {
     return {
-      kind: "proxy",
-      origin: PORTFOLIO_SIGNALS_ORIGIN,
-      pathname: "/workspace.html",
+      kind: "redirect",
+      status: 301,
+      pathname: "/portfolio-signals/workspace.html",
     };
   }
 
