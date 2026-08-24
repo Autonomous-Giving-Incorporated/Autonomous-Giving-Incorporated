@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   IMPACT_RELAY_ORIGIN,
@@ -43,10 +44,43 @@ describe("matchSuiteRoute", () => {
       pathname: "/sponsors.html",
     });
     assert.deepEqual(matchSuiteRoute("/workspace"), {
-      kind: "proxy",
-      origin: PORTFOLIO_SIGNALS_ORIGIN,
-      pathname: "/workspace.html",
+      kind: "redirect",
+      status: 301,
+      pathname: "/portfolio-signals/workspace.html",
     });
+    assert.deepEqual(matchSuiteRoute("/workspace/"), {
+      kind: "redirect",
+      status: 301,
+      pathname: "/portfolio-signals/workspace.html",
+    });
+    assert.deepEqual(matchSuiteRoute("/workspace.html"), {
+      kind: "redirect",
+      status: 301,
+      pathname: "/portfolio-signals/workspace.html",
+    });
+  });
+
+  it("keeps the Vercel rollback workspace paths as redirects, not rewrites", () => {
+    const vercel = JSON.parse(
+      readFileSync(new URL("../vercel.json", import.meta.url), "utf8"),
+    ) as {
+      redirects?: Array<{ source: string; destination: string }>;
+      rewrites?: Array<{ source: string; destination: string }>;
+    };
+    const workspaceSources = ["/workspace", "/workspace/", "/workspace.html"];
+    for (const source of workspaceSources) {
+      const redirect = vercel.redirects?.find((entry) => entry.source === source);
+      assert.equal(
+        redirect?.destination,
+        "/portfolio-signals/workspace.html",
+        source,
+      );
+      assert.equal(
+        vercel.rewrites?.some((entry) => entry.source === source),
+        false,
+        `${source} must not be a rewrite`,
+      );
+    }
   });
 
   it("passes nested public assets through unchanged", () => {

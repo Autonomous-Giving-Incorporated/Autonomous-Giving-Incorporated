@@ -8,6 +8,15 @@ import {
 export const CONTENT_SECURITY_POLICY =
   "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
 
+/**
+ * CSP for proxied Portfolio Signals and Impact Relay HTML when the upstream
+ * response does not send one. Allows the existing Portfolio Signals
+ * supabase-js module on jsDelivr and the platform Supabase project.
+ * Do not apply this policy to the AGI marketing export.
+ */
+export const SUITE_CONTENT_SECURITY_POLICY =
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://utdioxwiskzatwoejgiu.supabase.co; connect-src 'self' https://utdioxwiskzatwoejgiu.supabase.co wss://utdioxwiskzatwoejgiu.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
+
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -26,9 +35,16 @@ const SAFE_UPSTREAM_HEADERS = [
   "user-agent",
 ] as const;
 
-function withSecurityHeaders(response: Response): Response {
+function withSecurityHeaders(
+  response: Response,
+  options?: { contentSecurityPolicy?: string },
+): Response {
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    if (key === "Content-Security-Policy") {
+      headers.set(key, options?.contentSecurityPolicy ?? value);
+      continue;
+    }
     headers.set(key, value);
   }
   return new Response(response.body, {
@@ -77,12 +93,16 @@ async function proxySuite(
     );
   }
 
+  const upstreamCsp = responseHeaders.get("Content-Security-Policy");
   return withSecurityHeaders(
     new Response(upstream.body, {
       status: upstream.status,
       statusText: upstream.statusText,
       headers: responseHeaders,
     }),
+    {
+      contentSecurityPolicy: upstreamCsp ?? SUITE_CONTENT_SECURITY_POLICY,
+    },
   );
 }
 
