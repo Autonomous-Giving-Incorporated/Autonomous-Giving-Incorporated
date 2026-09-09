@@ -3,6 +3,9 @@
   "name": "agi-public",
   "main": "workers/index.ts",
   "compatibility_date": "2026-08-13",
+  // Use the public front door for the pinned FI Worker (same-zone fetch: CF1042).
+  // Keep origin/path/header guards unchanged; see docs/CLOUDFLARE.md.
+  "compatibility_flags": ["global_fetch_strictly_public"],
   "workers_dev": true,
   "preview_urls": true,
   // autogive.app is LIVE on this Worker (cutover verified 2026-08-22): the zone is on
