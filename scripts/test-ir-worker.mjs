@@ -6,11 +6,16 @@ import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Miniflare, Response, convertV4MiniflareOptions } from "miniflare";
+import { experimental_readRawConfig } from "wrangler";
 
 const directory = await mkdtemp(join(tmpdir(), "agi-ir-worker-"));
 const origin = "https://portfolio-signals.test-account.workers.dev";
 const authorization = "Bearer synthetic.human.signature";
 const config = await readFile("wrangler.jsonc", "utf8");
+const { rawConfig } = experimental_readRawConfig({ config: "wrangler.jsonc" });
+assert.deepEqual(rawConfig.compatibility_flags, [
+  "global_fetch_strictly_public",
+]);
 assert.match(config, /"run_worker_first"\s*:\s*\[[\s\S]*?"\/api"/);
 assert.match(config, /"run_worker_first"\s*:\s*\[[\s\S]*?"\/api\/\*"/);
 let mf;
@@ -37,7 +42,8 @@ try {
     modules: true,
     modulesRoot: directory,
     scriptPath: join(directory, "index.js"),
-    compatibilityDate: "2026-08-13",
+    compatibilityDate: rawConfig.compatibility_date,
+    compatibilityFlags: rawConfig.compatibility_flags,
     bindings: { FI_WORKER_ORIGIN: origin, FI_WORKER_ALLOWED_ORIGIN: origin },
     serviceBindings: {
       ASSETS: () => {
@@ -148,6 +154,49 @@ try {
     "asset fixture",
   );
   assert.equal(assets, 1);
+  // Exercise the deployed config on the second entry host too. outboundService
+  // isolates traffic; local workerd cannot reproduce Cloudflare's zone router.
+  const gateway = "https://agi-public.test-account.workers.dev";
+  calls = [];
+  for (const resource of ["provisioning", "workspaces"]) {
+    for (const method of ["GET", "POST"]) {
+      const path = `/api/ir/${resource}/org_local`;
+      const response = await mf.dispatchFetch(gateway + path, {
+        method,
+        headers: { authorization, origin: gateway, cookie: "private=1" },
+        ...(method === "POST" ? { body: "{}" } : {}),
+      });
+      assert.equal(response.status, 200);
+      assert.equal(calls.at(-1).url, origin + path);
+      assert.equal(calls.at(-1).headers.origin, gateway);
+      assert.equal(calls.at(-1).headers.authorization, authorization);
+      assert.equal(calls.at(-1).headers.cookie, undefined);
+    }
+  }
+  assert.equal(calls.length, 4);
+  calls = [];
+  for (const bindings of [
+    { FI_WORKER_ORIGIN: origin, FI_WORKER_ALLOWED_ORIGIN: "https://evil.test" },
+    { FI_WORKER_ORIGIN: gateway, FI_WORKER_ALLOWED_ORIGIN: gateway },
+    {
+      FI_WORKER_ORIGIN: "https://evil.test",
+      FI_WORKER_ALLOWED_ORIGIN: "https://evil.test",
+    },
+  ]) {
+    await mf.setOptions(convertV4MiniflareOptions({ ...options, bindings }));
+    const denied = await mf.dispatchFetch(
+      gateway + "/api/ir/workspaces/org_local",
+      {
+        headers: { authorization },
+      },
+    );
+    assert.equal(denied.status, 503);
+  }
+  assert.equal(
+    calls.length,
+    0,
+    "public fetch never bypasses origin pin/self-target guards",
+  );
   await mf.setOptions(convertV4MiniflareOptions({ ...options, bindings: {} }));
   const unavailable = await mf.dispatchFetch(
     "https://autogive.app/api/ir/workspaces/org_local",

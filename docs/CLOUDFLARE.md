@@ -130,6 +130,84 @@ FI itself needs its reviewed IR Worker/migrations and existing platform bindings
 gateway.** FI forwards the human token to Auth and user-authenticated RPCs;
 active-profile/platform-admin/AAL2 and tenant checks remain FI/Supabase authority.
 
+### Same-zone Worker fetch / CF1042 (configuration follow-up)
+
+The reported baseline is suite `49014919ace0f92b00cb60260f19b7c743e6450b`,
+gateway version prefix `5c99bb61`: the operator's IR denial/forwarding matrix
+passed all ten checks on `autogive.app`, but six upstream-forwarding checks on
+`agi-public.zer0state-noema.workers.dev` failed with Cloudflare 1042. This is
+pre-change evidence, **not** a deployment receipt for this fix.
+
+`wrangler.jsonc` explicitly enables `global_fetch_strictly_public`, retaining the
+existing compatibility date. Cloudflare's [error reference](https://developers.cloudflare.com/workers/observability/errors/)
+identifies 1042 as same-zone Worker fetch without this flag; its
+[fetch documentation](https://developers.cloudflare.com/workers/runtime-apis/fetch/)
+supports either this flag or a Service binding. The
+[flag documentation](https://developers.cloudflare.com/workers/configuration/compatibility-flags/#global-fetch-strictly-public)
+([official source](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/compatibility-flags/global-fetch-strictly-public.md))
+says global fetch goes through the public Internet/front door, including requests
+to the Worker's own zone. Without it, same-zone requests use the zone origin,
+ignoring mapped Workers and bypassing Cloudflare security settings. The inverse
+flag is `global_fetch_private_origin`; do not enable it alongside this fix.
+
+This is a Worker-wide fetch-routing change, **not** an authorization bypass or
+a new proxy endpoint. The IR origin must still match both deployment-controlled
+pins and the exact HTTPS FI hostname shape; it cannot be the gateway itself.
+Only the two existing root API resource paths and GET/POST methods are accepted.
+The bearer/header allowlist, body limit, manual redirect rejection, no-store,
+no cookies, and no-retry behavior are unchanged. Public suite proxies retain
+their existing targets and credential stripping. Public routing can re-enter a
+Worker, so do not retarget FI's origin to the gateway or attach a gateway route
+to FI's hostname. No DNS, routes, bindings, FI code, database, or access-policy
+changes are part of this fix.
+
+A [Service binding](https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/)
+is a supported alternative: bind the named same-account FI Worker and use its
+HTTP `fetch` interface. It adds a private invocation capability and requires
+transport/configuration changes and a separately reviewed trust contract. It
+is not required for this existing public, origin-pinned HTTP contract, so the
+single compatibility flag is the smaller supported change. The flag is not a
+replacement for FI/Supabase JWT, profile, tenant, or MFA checks.
+
+#### Required post-review live verification (not performed by this PR)
+
+Do not manually deploy or merge this follow-up before parent review. After an
+authorized normal main/CI deployment, record the merged source SHA, successful
+CI/deploy URLs, full active Worker version ID, resolved compatibility flags,
+and equality of the two origin pins to the verified FI origin. A dry-run or a
+local workerd success cannot prove Cloudflare's production same-zone routing:
+`test:worker` reads the real JSONC flags/date and exercises both entry hostnames
+with **all outbound traffic intercepted by fixtures**.
+
+Re-run the original operator ten-check matrix against **both** exact hosts,
+retaining its request definitions and expected statuses/bodies; require all ten
+on each, including all six previously failing upstream cases, without CF1042.
+Also use this explicitly read-only denial matrix, twice per row (resources
+`provisioning` and `workspaces`), on both `https://autogive.app` and
+`https://agi-public.zer0state-noema.workers.dev`:
+
+| GET `/api/ir/<resource>/org_gateway_probe` request | Required response |
+| --- | --- |
+| No Authorization | 401 JSON `authentication_required` (gateway) |
+| `Authorization: Bearer gateway.invalid.signature`, no Origin | 401 JSON `authentication_failed` (FI) |
+| Same invalid bearer, Origin equal to the host being tested | 401 JSON `authentication_failed` (FI) |
+| Same invalid bearer, no Origin, `X-Forwarded-Host: evil.test` | 401 JSON `authentication_failed` (FI) |
+| Same invalid bearer, `Origin: https://evil.test` | 403 JSON `origin_not_allowed` (gateway) |
+
+Use no real token and no POST for this additional matrix; it grants no database
+write authority. Require JSON content type, `Cache-Control: no-store`, no
+Set-Cookie/Location, and no HTML/1042 body. A generic gateway 401 or 503 is not
+proof that FI was reached: the six forwarded cases must carry FI's exact error.
+Retain status, safe error code, timestamp and request/CF-Ray identifiers, never
+credentials. If FI's reviewed error contract changes, investigate rather than
+weakening the oracle. This proves invalid-token denial/transport only, not valid
+JWT, MFA, tenant isolation, workspace initialization or database readiness.
+
+Re-run `EDGE_PROXY_CHECKS=1 BASE_URL=<each-host> bash scripts/smoke-public-suite.sh`
+for static/public/header/method regressions as well. If any check fails, hold
+release acceptance; do not introduce a broad proxy, relax pins, change DNS or
+apply migrations as a workaround.
+
 ### Credential / CORS boundary
 
 The gateway checks bearer syntax/size only; it does not authenticate users or
