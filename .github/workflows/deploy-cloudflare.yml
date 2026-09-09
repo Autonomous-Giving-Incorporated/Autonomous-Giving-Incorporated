@@ -30,7 +30,11 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build and deploy Workers static assets
-        run: npm run cf:deploy
+        run: |
+          npm run cf:build
+          npx wrangler deploy --var "FI_WORKER_ORIGIN:$FI_WORKER_ORIGIN" --var "FI_WORKER_ALLOWED_ORIGIN:$FI_WORKER_ALLOWED_ORIGIN"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          FI_WORKER_ORIGIN: ${{ vars.FI_WORKER_ORIGIN }}
+          FI_WORKER_ALLOWED_ORIGIN: ${{ vars.FI_WORKER_ALLOWED_ORIGIN }}

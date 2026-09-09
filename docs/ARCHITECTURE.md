@@ -31,6 +31,22 @@ The deployed browser receives only static HTML, CSS, JavaScript, brand assets, a
 
 `site.ts` owns the canonical production origin (`https://autogive.app`). `site-public.ts` is the official unique public HTML page list for this export (`/`, `/legal`, `/legal/privacy`, `/legal/terms`). `app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and `/robots.txt` on the static export so those files are served at the apex after deploy. Locs and canonicals use the apex host, not `www`, `vercel.app`, or `github.io`. `robots.txt` allows public crawlers, points `Sitemap:` at `https://autogive.app/sitemap.xml`, and disallows auth, admin, workspace, and PII-adjacent suite paths this host serves. Parked `/login` and `/admin` shells are `noindex` and canonical to the homepage. Proxied Portfolio Signals and Impact Relay landings are first-party 200s on the apex but are owned by other repos and are not listed in this export's sitemap. `next.config.ts` defaults to an empty base path so the custom domain serves assets from `/`. DNS and cutover: [CUSTOM-DOMAIN.md](CUSTOM-DOMAIN.md).
 
+## IR edge transport boundary
+
+`workers/index.ts` is the deploy entrypoint and exports only the Worker handler;
+`workers/suite-gateway.ts` retains shared CSP/test exports that workerd must not
+load as named entrypoints. The marketing export and public GET/HEAD proxies are
+unchanged. Separately, two explicit root API paths used by FI's proxied workspace
+UI forward GET/POST requests to a deployment-configured, independently pinned
+FI Worker: `/api/ir/provisioning/org_<id>` and `/api/ir/workspaces/org_<id>`.
+`workers/ir-api.ts` only enforces transport bounds and credential destination
+containment; it does not validate JWT claims, call Supabase, persist state or
+implement provisioning. FI and existing Supabase remain the auth/data owners.
+Unknown API routes fail closed; missing routing bindings produce JSON 503,
+never a Vercel/static fallback. See [CLOUDFLARE.md](CLOUDFLARE.md#authenticated-ir-api-routing-held-pending-review-and-operator-configuration)
+for exact bindings, limits, same-origin policy and local workerd acceptance.
+This forwarding exception is not implemented by the Vercel rollback config.
+
 ## Component boundaries
 
 | Path                            | Responsibility                                                        |
@@ -82,4 +98,4 @@ The UI labels each explicit state and never surfaces raw payloads. Delayed recor
 
 ## Deliberate exclusions
 
-The current architecture has no backend, authentication, database, payment processing, CMS, donor account, runtime write operation, or notification delivery **on this public site**. Durable suite data and auth stay on **existing Supabase**. The Cloudflare Worker is suite-path reverse proxy only (the same role as Vercel rewrites), not an AGI API. Do not add OpenNext SSR, a Node server, D1/KV, a second database, or Render / Fly / Railway. Adding any of those to this site changes the threat model and requires a separately reviewed architecture plan.
+The current architecture has no backend, authentication, database, payment processing, CMS, donor account, runtime write operation, or notification delivery **on this public site**. Durable suite data and auth stay on **existing Supabase**. The Cloudflare Worker is suite-path routing only (public Vercel-equivalent proxies plus the narrowly pinned FI IR API transport above), not an AGI API implementation. Do not add OpenNext SSR, a Node server, D1/KV, a second database, or Render / Fly / Railway. Adding any of those to this site changes the threat model and requires a separately reviewed architecture plan.

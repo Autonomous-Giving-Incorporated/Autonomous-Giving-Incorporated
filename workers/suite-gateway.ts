@@ -1,3 +1,4 @@
+import { forwardIrApi, type IrApiEnv } from "./ir-api.ts";
 import {
   matchSuiteRoute,
   rewriteUpstreamLocation,
@@ -113,10 +114,24 @@ type AssetFetcher = {
 export const suiteGateway = {
   async fetch(
     request: Request,
-    env: { ASSETS: AssetFetcher },
+    env: { ASSETS: AssetFetcher } & IrApiEnv,
   ): Promise<Response> {
     const url = new URL(request.url);
     const route = matchSuiteRoute(url.pathname);
+    if (route.kind === "ir-api") {
+      return withSecurityHeaders(await forwardIrApi(request, env));
+    }
+    if (route.kind === "deny-api") {
+      return withSecurityHeaders(
+        Response.json(
+          { error: "not_found" },
+          {
+            status: 404,
+            headers: { "cache-control": "no-store" },
+          },
+        ),
+      );
+    }
 
     if (route.kind === "redirect") {
       const location = new URL(route.pathname + url.search, url.origin);
