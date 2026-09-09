@@ -35,9 +35,26 @@ const PORTFOLIO_SIGNALS_HTML_PAGES: Record<string, string> = {
 export type SuiteRoute =
   | { kind: "redirect"; status: 301; pathname: string }
   | { kind: "proxy"; origin: string; pathname: string }
+  | { kind: "ir-api" }
+  | { kind: "deny-api" }
   | { kind: "pass" };
 
 export function matchSuiteRoute(pathname: string): SuiteRoute {
+  // Only the root API used by FI's workspace UI is executable. No aliases.
+  if (
+    /^\/api\/ir\/(?:provisioning|workspaces)\/org_[a-z0-9_]{1,124}$/.test(
+      pathname,
+    )
+  ) {
+    return { kind: "ir-api" };
+  }
+  if (
+    /^\/(?:portfolio-signals\/|impact-relay\/|fund-intel\/)?api(?:\/|$)/i.test(
+      pathname,
+    )
+  ) {
+    return { kind: "deny-api" };
+  }
   if (pathname === "/fund-intel" || pathname.startsWith("/fund-intel/")) {
     return {
       kind: "redirect",

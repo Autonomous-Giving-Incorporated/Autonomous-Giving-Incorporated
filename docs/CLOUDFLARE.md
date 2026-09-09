@@ -2,7 +2,7 @@
 
 Designed suite stack: **Cloudflare + existing Supabase**. This public workbench is **static** on Cloudflare Workers static assets (canonical origin **https://autogive.app**). Durable data and auth stay on the existing platform Supabase project; this site does not authenticate, persist, or query it. Do not add Render, Fly, Railway, D1, KV, OpenNext SSR, or a Node server.
 
-The app remains a **static Next.js export** (`output: "export"` → `out/`). A small Worker (`workers/suite-gateway.ts`) only reverse-proxies suite paths that already exist in [`vercel.json`](../vercel.json), so `/portfolio-signals/` and `/impact-relay/` keep working without merging those product repos.
+The app remains a **static Next.js export** (`output: "export"` → `out/`). The Worker entrypoint (`workers/index.ts`) delegates to `workers/suite-gateway.ts`: public suite proxies mirror [`vercel.json`](../vercel.json); the separately documented IR API transport forwards only the explicit FI paths below. Product repos are not merged.
 
 **Cloudflare serves the live `autogive.app` apex.** Vercel is retained as rollback; leave `vercel.json` in place until the Cloudflare apex is verified stable, then retire it as a follow-up.
 
@@ -74,6 +74,98 @@ Trailing-slash and extensionless Portfolio Signals pages (`/portfolio-signals/`,
 Proxied suite HTML does **not** inherit the Next.js marketing Content-Security-Policy. If the upstream omits a CSP, the Worker applies a suite policy that allows the existing Portfolio Signals `supabase-js` module on `cdn.jsdelivr.net` and `connect-src` to the platform Supabase project. Marketing pages keep the stricter self-only CSP.
 
 This is routing only. It does not add AGI auth, donations, or a database. Suite auth and durable data remain on existing Supabase.
+
+## Authenticated IR API routing (held pending review and operator configuration)
+
+This edge-only exception is separate from the read-only public proxy. FI's
+`workspace/ir-provisioning.js` calls root-relative URLs, not the Vercel HTML host:
+
+| Route | Methods | FI target path |
+| --- | --- | --- |
+| `/api/ir/provisioning/org_<id>` | GET, POST | unchanged |
+| `/api/ir/workspaces/org_<id>` | GET, POST | unchanged |
+
+Identity must match `org_[a-z0-9_]{1,124}` exactly (128 characters maximum).
+There are no aliases under `/portfolio-signals`, `/impact-relay`, or `/fund-intel`.
+Unknown `/api` paths return JSON 404 without contacting assets or Vercel.
+`wrangler.jsonc` runs `/api` and `/api/*` Worker-first, including when an asset
+would otherwise match. API methods other than GET/POST (including OPTIONS and
+HEAD) return 405. Any query, even a bare `?`, is rejected. POST streams are capped
+at 1024 **bytes**, independent of Content-Length, with a 10-second read deadline;
+compressed bodies are rejected. Bytes are not decoded/re-encoded at the gateway.
+FI owns JSON/operation UUID validation. Its POST wire body is
+`{"operation_id":"<existing operation UUID>"}`. Upstream fetch has a 30-second
+header deadline and is never retried. After a failed POST, use GET to check status
+before retrying; a gateway timeout is not proof that FI did not commit.
+
+### Deployment bindings (non-secret, fail closed by default)
+
+Set **both** GitHub repository Actions variables, after verifying the actual
+FI deployment, to the **same exact** approved origin:
+
+- `FI_WORKER_ORIGIN`: `https://portfolio-signals.<verified-account-subdomain>.workers.dev`
+- `FI_WORKER_ALLOWED_ORIGIN`: the independently reviewed identical origin pin
+
+The angle-bracket value is a **shape, not a deployed hostname**. Do not copy it
+literally. FI's recorded account audit says `portfolio-signals` was absent;
+`agi-public.zer0state-noema.workers.dev` is the suite gateway, not the FI API.
+No current FI deployment is established by this PR. Obtain the actual hostname
+from the operator's FI deployment receipt; do not infer deployment from naming.
+Only a lowercase HTTPS `portfolio-signals.<account>.workers.dev` origin is accepted:
+no slash suffix, port, credentials, path, query, fragment, wildcard, custom domain,
+Vercel host, or gateway self-target. A custom domain or alternate Worker name
+requires a separately reviewed routing change, not weakening the origin pin.
+These are deployment-controlled trust settings, never request headers or public
+runtime-config inputs. The deployment workflow passes both through quoted env
+variables to Wrangler; missing/empty/mismatched values safely disable the API
+with JSON 503, while static routes continue working. No external bindings are
+set by this PR. For an operator-authorized local deploy, supply the same two
+`--var "NAME:value"` flags to `wrangler deploy`; plain `cf:deploy` does not supply
+them and must not be used to enable IR routing.
+
+FI itself needs its reviewed IR Worker/migrations and existing platform bindings:
+`PLATFORM_SUPABASE_URL=https://utdioxwiskzatwoejgiu.supabase.co` and
+`PLATFORM_SUPABASE_ANON_KEY` (existing public anon key, or FI's documented
+`SUPABASE_URL`/`SUPABASE_ANON_KEY` fallback). **Never add a service-role key to this
+gateway.** FI forwards the human token to Auth and user-authenticated RPCs;
+active-profile/platform-admin/AAL2 and tenant checks remain FI/Supabase authority.
+
+### Credential / CORS boundary
+
+The gateway checks bearer syntax/size only; it does not authenticate users or
+issue tokens. Authorization is preserved byte-for-byte as received in the Fetch
+Headers API, only to the configured/pinned FI Worker. Only Authorization,
+Content-Type, Accept, and Origin are copied (plus forced Cache-Control no-store).
+Cookies, apikey, spoofed forwarding headers and conditional caching headers are
+not sent. Public/static upstreams still never receive Authorization or cookies.
+Same-origin browser Origin is preserved, not rewritten to FI's host; requests
+without Origin are supported for non-browser clients. Foreign/null Origin is
+rejected; no new CORS grants or OPTIONS success is introduced (FI currently has
+no cross-origin IR API contract). FI response CORS headers, if present, remain
+unchanged. All API responses are no-store, Set-Cookie/Location are stripped,
+and every upstream 3xx is rejected rather than followed or exposed as a redirect.
+Network exceptions return sanitized JSON 503. This does not add auth, persistence,
+financial execution, or readiness claims to the public Next static export.
+
+### Local acceptance, no credentials or deployed writes
+
+```bash
+npm ci
+npm test
+npm run lint
+npm run typecheck
+npm run conformance-check
+npm run build
+npm run test:worker
+```
+
+`test:worker` uses Wrangler **dry-run** and its existing transitive Miniflare/workerd
+runtime with an outbound fixture and an asset service fixture. It verifies real
+Worker request handling without contacting FI, Cloudflare APIs, or Supabase.
+This is edge transport evidence, **not** live JWT/MFA, FI execution, database
+readback, deployment, or operational readiness evidence. The node routing matrix
+covers exact identity/body boundaries, method/query/origin denial, trusted origin
+pinning, unchanged tokens, static regressions and upstream redirect/error handling.
 
 ## Custom domain: autogive.app
 
