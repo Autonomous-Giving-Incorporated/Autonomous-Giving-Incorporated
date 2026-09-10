@@ -2,6 +2,18 @@
 
 Material production changes are recorded newest first. Each entry links the reviewed change and its deployment evidence.
 
+## 2026-09-09 — IR gateway transport and denial path verified
+
+- **Merge commit:** [`ecbae3d`](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/commit/ecbae3dd6736d050460b221350f0112acb63436a)
+- **Pull request:** [#26](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/26)
+- **CI:** [successful run 34323274259](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34323274259)
+- **Cloudflare gateway deployment:** [successful run 34323354140](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34323354140), Worker version `bec941b1-f0c8-4091-87fc-a7845a34a0a7`
+- **Deployment active during verification:** [successful run 34420466302](https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34420466302), source `d70df85ab8a744e7a649ff8a717c989774f4490b`, Worker version `279af32a-85e3-4bc6-941c-5ccde0b4820c`
+- **Evidence receipt:** [`docs/evidence/2026-09-09-ir-gateway-deployment.json`](evidence/2026-09-09-ir-gateway-deployment.json)
+- **Bindings:** both deploy logs record equal pins to `https://portfolio-signals.zer0state-noema.workers.dev`.
+- **Live read-only verification:** On 2026-09-10, 20/20 timestamped invalid/missing-auth denial checks passed across both IR resources and both gateway hosts; forwarded invalid tokens returned FI's exact JSON `authentication_failed` without CF1042. Timestamped public-suite smoke also passed against both hosts.
+- **Boundary:** edge transport only. No real token, POST, hosted migration, tenant activation, financial operation, or operational-readiness claim was used or established.
+
 ## 2026-08-22 — autogive.app apex live on Cloudflare
 
 - **Change:** DNS cutover complete — the `autogive.app` apex is served by Cloudflare Worker `agi-public` (Cloudflare Workers static assets), replacing Vercel as the live origin. Nameservers are on Cloudflare (`ryleigh`/`ruben.ns.cloudflare.com`); `www` 301-redirects to the apex. Repo docs reconciled to "Cloudflare live / Vercel rollback."

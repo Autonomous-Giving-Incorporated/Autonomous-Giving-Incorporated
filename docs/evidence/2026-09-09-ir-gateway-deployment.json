@@ -1,0 +1,337 @@
+{
+  "schema_version": "agi.gateway.deployment-receipt.v1",
+  "receipt_created_at": "2026-09-10T00:45:17Z",
+  "gateway_change": {
+    "source_sha": "ecbae3dd6736d050460b221350f0112acb63436a",
+    "pull_request": "https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/pull/26",
+    "ci_run": "https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34323274259",
+    "deployment_run": "https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34323354140",
+    "worker_version_id": "bec941b1-f0c8-4091-87fc-a7845a34a0a7"
+  },
+  "verification_deployment": {
+    "source_sha": "d70df85ab8a744e7a649ff8a717c989774f4490b",
+    "deployment_run": "https://github.com/Autonomous-Giving-Incorporated/Autonomous-Giving-Incorporated/actions/runs/34420466302",
+    "worker_version_id": "279af32a-85e3-4bc6-941c-5ccde0b4820c",
+    "compatibility_flags_in_source": [
+      "global_fetch_strictly_public"
+    ],
+    "deployment_log_enumerated_compatibility_flags": false
+  },
+  "worker": {
+    "name": "agi-public",
+    "url": "https://agi-public.zer0state-noema.workers.dev",
+    "origin": "https://portfolio-signals.zer0state-noema.workers.dev",
+    "allowed_origin": "https://portfolio-signals.zer0state-noema.workers.dev"
+  },
+  "verification": {
+    "hosts": [
+      "https://autogive.app",
+      "https://agi-public.zer0state-noema.workers.dev"
+    ],
+    "resources": [
+      "provisioning",
+      "workspaces"
+    ],
+    "denial_matrix": {
+      "checks": 20,
+      "failures": 0,
+      "method": "GET",
+      "real_token_used": false,
+      "started_at": "2026-09-10T00:26:24.385985Z",
+      "completed_at": "2026-09-10T00:27:06.316899Z"
+    },
+    "observations": [
+      {
+        "observed_at": "2026-09-10T00:26:24.385985Z",
+        "host": "https://autogive.app",
+        "resource": "provisioning",
+        "case": "no_auth",
+        "status": 401,
+        "error": "authentication_required",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d0faa905c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:24.813577Z",
+        "host": "https://autogive.app",
+        "resource": "provisioning",
+        "case": "invalid_no_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d124d475c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:25.750642Z",
+        "host": "https://autogive.app",
+        "resource": "provisioning",
+        "case": "invalid_same_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d1819e85c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:26.285631Z",
+        "host": "https://autogive.app",
+        "resource": "provisioning",
+        "case": "invalid_spoofed_forward",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d1b8cae5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:26.687066Z",
+        "host": "https://autogive.app",
+        "resource": "provisioning",
+        "case": "invalid_foreign_origin",
+        "status": 403,
+        "error": "origin_not_allowed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d1dfed25c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:26.999814Z",
+        "host": "https://autogive.app",
+        "resource": "workspaces",
+        "case": "no_auth",
+        "status": 401,
+        "error": "authentication_required",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d1fd85f5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:27.266423Z",
+        "host": "https://autogive.app",
+        "resource": "workspaces",
+        "case": "invalid_no_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d2189ab5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:27.667073Z",
+        "host": "https://autogive.app",
+        "resource": "workspaces",
+        "case": "invalid_same_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d240bcd5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:28.083176Z",
+        "host": "https://autogive.app",
+        "resource": "workspaces",
+        "case": "invalid_spoofed_forward",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d272e7e5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:28.811753Z",
+        "host": "https://autogive.app",
+        "resource": "workspaces",
+        "case": "invalid_foreign_origin",
+        "status": 403,
+        "error": "origin_not_allowed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d2b19285c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:29.068791Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "provisioning",
+        "case": "no_auth",
+        "status": 401,
+        "error": "authentication_required",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d3ed9215c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:32.222241Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "provisioning",
+        "case": "invalid_no_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d569c5e5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:36.162266Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "provisioning",
+        "case": "invalid_same_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d6e8ad75c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:39.986383Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "provisioning",
+        "case": "invalid_spoofed_forward",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4d8c8d255c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:44.903115Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "provisioning",
+        "case": "invalid_foreign_origin",
+        "status": 403,
+        "error": "origin_not_allowed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4dab393b5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:49.619972Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "workspaces",
+        "case": "no_auth",
+        "status": 401,
+        "error": "authentication_required",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4dc378845c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:53.438567Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "workspaces",
+        "case": "invalid_no_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4dda894c5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:26:57.257149Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "workspaces",
+        "case": "invalid_same_origin",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4dfcff215c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:27:02.754358Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "workspaces",
+        "case": "invalid_spoofed_forward",
+        "status": 401,
+        "error": "authentication_failed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4e123e7f5c22-SJC"
+      },
+      {
+        "observed_at": "2026-09-10T00:27:06.316899Z",
+        "host": "https://agi-public.zer0state-noema.workers.dev",
+        "resource": "workspaces",
+        "case": "invalid_foreign_origin",
+        "status": 403,
+        "error": "origin_not_allowed",
+        "content_type": "application/json",
+        "cache_control": "no-store",
+        "set_cookie_present": false,
+        "location_present": false,
+        "cf_ray": "a38a4e275ee75c22-SJC"
+      }
+    ],
+    "public_smoke": {
+      "hosts": 2,
+      "checks_per_host": 14,
+      "failures": 0,
+      "status_gets_per_host": 7,
+      "aggregate_authority_checks_per_host": 2,
+      "content_checks_per_host": 1,
+      "security_header_checks_per_host": 3,
+      "post_rejection_checks_per_host": 1,
+      "started_at": "2026-09-10T00:39:21Z",
+      "completed_at": "2026-09-10T00:39:25Z",
+      "host_runs": [
+        {
+          "host": "https://autogive.app",
+          "started_at": "2026-09-10T00:39:21Z",
+          "completed_at": "2026-09-10T00:39:23Z"
+        },
+        {
+          "host": "https://agi-public.zer0state-noema.workers.dev",
+          "started_at": "2026-09-10T00:39:23Z",
+          "completed_at": "2026-09-10T00:39:25Z"
+        }
+      ]
+    }
+  },
+  "authority": {
+    "hosted_migrations_verified": false,
+    "operational": false,
+    "post_used": false,
+    "tenant_activation_verified": false,
+    "valid_jwt_verified": false
+  }
+}

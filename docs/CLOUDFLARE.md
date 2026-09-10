@@ -75,7 +75,7 @@ Proxied suite HTML does **not** inherit the Next.js marketing Content-Security-P
 
 This is routing only. It does not add AGI auth, donations, or a database. Suite auth and durable data remain on existing Supabase.
 
-## Authenticated IR API routing (held pending review and operator configuration)
+## Authenticated IR API routing (transport deployed; authorization/readiness held)
 
 This edge-only exception is separate from the read-only public proxy. FI's
 `workspace/ir-provisioning.js` calls root-relative URLs, not the Vercel HTML host:
@@ -100,17 +100,18 @@ before retrying; a gateway timeout is not proof that FI did not commit.
 
 ### Deployment bindings (non-secret, fail closed by default)
 
-Set **both** GitHub repository Actions variables, after verifying the actual
-FI deployment, to the **same exact** approved origin:
+Set **both** GitHub repository Actions variables to the **same exact** approved
+origin:
 
 - `FI_WORKER_ORIGIN`: `https://portfolio-signals.<verified-account-subdomain>.workers.dev`
 - `FI_WORKER_ALLOWED_ORIGIN`: the independently reviewed identical origin pin
 
 The angle-bracket value is a **shape, not a deployed hostname**. Do not copy it
-literally. FI's recorded account audit says `portfolio-signals` was absent;
-`agi-public.zer0state-noema.workers.dev` is the suite gateway, not the FI API.
-No current FI deployment is established by this PR. Obtain the actual hostname
-from the operator's FI deployment receipt; do not infer deployment from naming.
+literally. The 2026-09-09 deployment receipt below records both pins as
+`https://portfolio-signals.zer0state-noema.workers.dev` and read-only forwarding
+to FI's exact invalid-token response. `agi-public.zer0state-noema.workers.dev`
+is the suite gateway, not the FI API. This transport observation does not prove
+valid-token authorization, hosted migrations, tenant readiness, or operations.
 Only a lowercase HTTPS `portfolio-signals.<account>.workers.dev` origin is accepted:
 no slash suffix, port, credentials, path, query, fragment, wildcard, custom domain,
 Vercel host, or gateway self-target. A custom domain or alternate Worker name
@@ -118,8 +119,8 @@ requires a separately reviewed routing change, not weakening the origin pin.
 These are deployment-controlled trust settings, never request headers or public
 runtime-config inputs. The deployment workflow passes both through quoted env
 variables to Wrangler; missing/empty/mismatched values safely disable the API
-with JSON 503, while static routes continue working. No external bindings are
-set by this PR. For an operator-authorized local deploy, supply the same two
+with JSON 503, while static routes continue working. For an operator-authorized
+local deploy, supply the same two
 `--var "NAME:value"` flags to `wrangler deploy`; plain `cf:deploy` does not supply
 them and must not be used to enable IR routing.
 
@@ -169,15 +170,21 @@ is not required for this existing public, origin-pinned HTTP contract, so the
 single compatibility flag is the smaller supported change. The flag is not a
 replacement for FI/Supabase JWT, profile, tenant, or MFA checks.
 
-#### Required post-review live verification (not performed by this PR)
+#### Production deployment receipt — 2026-09-09
 
-Do not manually deploy or merge this follow-up before parent review. After an
-authorized normal main/CI deployment, record the merged source SHA, successful
-CI/deploy URLs, full active Worker version ID, resolved compatibility flags,
-and equality of the two origin pins to the verified FI origin. A dry-run or a
-local workerd success cannot prove Cloudflare's production same-zone routing:
-`test:worker` reads the real JSONC flags/date and exercises both entry hostnames
-with **all outbound traffic intercepted by fixtures**.
+The canonical machine-readable receipt is
+[`evidence/2026-09-09-ir-gateway-deployment.json`](evidence/2026-09-09-ir-gateway-deployment.json);
+the release index links the reviewed PR and exact CI/deploy runs. It records the
+gateway merge/deployment and version, the later deployment/version active when
+the live checks ran, equal FI
+origin pins, all 20 timestamped read-only denial checks, both timestamped
+14-check public smoke runs, CF-Ray identifiers, and explicit negative authority
+claims. The result verifies deployed edge transport and read-only denial behavior
+only. It does not verify a valid JWT, MFA, tenant isolation, workspace
+initialization, hosted schema state, POST effects, financial operations, or
+`operational: true`.
+
+#### Read-only verification matrix
 
 Re-run the original operator ten-check matrix against **both** exact hosts,
 retaining its request definitions and expected statuses/bodies; require all ten
@@ -198,7 +205,8 @@ Use no real token and no POST for this additional matrix; it grants no database
 write authority. Require JSON content type, `Cache-Control: no-store`, no
 Set-Cookie/Location, and no HTML/1042 body. A generic gateway 401 or 503 is not
 proof that FI was reached: the six forwarded cases must carry FI's exact error.
-Retain status, safe error code, timestamp and request/CF-Ray identifiers, never
+Retain status, safe error code, per-request timestamp and request/CF-Ray
+identifiers, never
 credentials. If FI's reviewed error contract changes, investigate rather than
 weakening the oracle. This proves invalid-token denial/transport only, not valid
 JWT, MFA, tenant isolation, workspace initialization or database readiness.

@@ -43,7 +43,7 @@ FI Worker: `/api/ir/provisioning/org_<id>` and `/api/ir/workspaces/org_<id>`.
 containment; it does not validate JWT claims, call Supabase, persist state or
 implement provisioning. FI and existing Supabase remain the auth/data owners.
 Unknown API routes fail closed; missing routing bindings produce JSON 503,
-never a Vercel/static fallback. See [CLOUDFLARE.md](CLOUDFLARE.md#authenticated-ir-api-routing-held-pending-review-and-operator-configuration)
+never a Vercel/static fallback. See [CLOUDFLARE.md](CLOUDFLARE.md#authenticated-ir-api-routing-transport-deployed-authorizationreadiness-held)
 for exact bindings, limits, same-origin policy and local workerd acceptance.
 This forwarding exception is not implemented by the Vercel rollback config.
 
