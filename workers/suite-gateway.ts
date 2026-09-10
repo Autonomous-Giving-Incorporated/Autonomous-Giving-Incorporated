@@ -11,12 +11,12 @@ export const CONTENT_SECURITY_POLICY =
 
 /**
  * CSP for proxied Portfolio Signals and Impact Relay HTML when the upstream
- * response does not send one. Allows the existing Portfolio Signals
- * supabase-js module on jsDelivr and the platform Supabase project.
+ * response does not send one. Allows Portfolio Signals' supabase-js module
+ * and platform project, plus Impact Relay fonts and Cloudflare analytics.
  * Do not apply this policy to the AGI marketing export.
  */
 export const SUITE_CONTENT_SECURITY_POLICY =
-  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://utdioxwiskzatwoejgiu.supabase.co; connect-src 'self' https://utdioxwiskzatwoejgiu.supabase.co wss://utdioxwiskzatwoejgiu.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://utdioxwiskzatwoejgiu.supabase.co; connect-src 'self' https://cloudflareinsights.com https://utdioxwiskzatwoejgiu.supabase.co wss://utdioxwiskzatwoejgiu.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
 
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
