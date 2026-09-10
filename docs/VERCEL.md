@@ -19,7 +19,7 @@ The app is a **static Next.js export** (`output: "export"` → `out/`). No serve
 
 > Do not set the Vercel framework preset to **Next.js** while using `output: "export"`. That preset expects a server build and fails looking for `routes-manifest.json` under `out/`.
 
-Config in repo: [`vercel.json`](../vercel.json) (suite path rewrites, `/workspace` → `/portfolio-signals/workspace.html` redirects, security headers). The Cloudflare Worker mirrors those routes; keep both until the rollback is retired. The catch-all marketing CSP stays self-only. `/portfolio-signals/:path*` and `/impact-relay/:path*` set the suite CSP so rollback workspace HTML can load `supabase-js` and call the platform Supabase project.
+Config in repo: [`vercel.json`](../vercel.json) (suite path rewrites, `/workspace` → `/portfolio-signals/workspace.html` redirects, security headers). The Cloudflare Worker mirrors those routes; keep both until the rollback is retired. The catch-all marketing CSP stays self-only. `/portfolio-signals/:path*` and `/impact-relay/:path*` set the suite CSP so rollback suite HTML can load `supabase-js`, call the platform Supabase project, load Impact Relay's Google Fonts, and run Cloudflare Web Analytics.
 
 ## Link & deploy (CLI)
 

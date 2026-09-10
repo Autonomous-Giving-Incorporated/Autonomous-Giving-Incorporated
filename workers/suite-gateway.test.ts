@@ -181,9 +181,32 @@ describe("suiteGateway", () => {
       assert.match(SUITE_CONTENT_SECURITY_POLICY, /cdn\.jsdelivr\.net/);
       assert.match(
         SUITE_CONTENT_SECURITY_POLICY,
+        /style-src[^;]*https:\/\/fonts\.googleapis\.com/,
+      );
+      assert.match(
+        SUITE_CONTENT_SECURITY_POLICY,
+        /font-src[^;]*https:\/\/fonts\.gstatic\.com/,
+      );
+      assert.match(
+        SUITE_CONTENT_SECURITY_POLICY,
+        /script-src[^;]*https:\/\/static\.cloudflareinsights\.com/,
+      );
+      assert.match(
+        SUITE_CONTENT_SECURITY_POLICY,
+        /connect-src[^;]*https:\/\/cloudflareinsights\.com(?:[ ;]|$)/,
+      );
+      assert.doesNotMatch(
+        SUITE_CONTENT_SECURITY_POLICY,
+        /connect-src[^;]*https:\/\/fonts\.googleapis\.com/,
+      );
+      assert.match(
+        SUITE_CONTENT_SECURITY_POLICY,
         /utdioxwiskzatwoejgiu\.supabase\.co/,
       );
       assert.notEqual(SUITE_CONTENT_SECURITY_POLICY, CONTENT_SECURITY_POLICY);
+      assert.doesNotMatch(CONTENT_SECURITY_POLICY, /fonts\.googleapis\.com/);
+      assert.doesNotMatch(CONTENT_SECURITY_POLICY, /fonts\.gstatic\.com/);
+      assert.doesNotMatch(CONTENT_SECURITY_POLICY, /cloudflareinsights\.com/);
       assert.doesNotMatch(CONTENT_SECURITY_POLICY, /cdn\.jsdelivr\.net/);
       assert.doesNotMatch(
         CONTENT_SECURITY_POLICY,
