@@ -71,7 +71,7 @@ AGI static files live in `out/`. Portfolio Signals and Impact Relay stay in thei
 
 Trailing-slash and extensionless Portfolio Signals pages (`/portfolio-signals/`, `/portfolio-signals/workspace`) map the same way as `vercel.json`. Nested public files such as `/portfolio-signals/data/public-campaign.json` pass through.
 
-Proxied suite HTML does **not** inherit the Next.js marketing Content-Security-Policy. If the upstream omits a CSP, the Worker applies a suite policy that allows the existing Portfolio Signals `supabase-js` module on `cdn.jsdelivr.net`, `connect-src` to the platform Supabase project, Impact Relay's Google Fonts stylesheet/font origins, and Cloudflare Web Analytics' script/beacon origins. Marketing pages keep the stricter self-only CSP.
+Proxied suite HTML does **not** inherit the Next.js marketing Content-Security-Policy. If the upstream omits a CSP, the Worker applies a suite policy that allows the existing Portfolio Signals `supabase-js` module on `cdn.jsdelivr.net`, `connect-src` to the platform Supabase project, Impact Relay's Google Fonts stylesheet/font origins, and Cloudflare Web Analytics' script/beacon origins. Marketing pages keep the stricter CSP, widened only for the GA4 script host and collect hosts.
 
 This is routing only. It does not add AGI auth, donations, or a database. Suite auth and durable data remain on existing Supabase.
 

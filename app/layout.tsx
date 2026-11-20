@@ -56,7 +56,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <script
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/ga.js`}
+          defer
+        />
+      </body>
     </html>
   );
 }
