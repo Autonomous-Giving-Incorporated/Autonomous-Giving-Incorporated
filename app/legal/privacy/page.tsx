@@ -55,6 +55,12 @@ export default function PrivacyPage() {
           Public aggregate campaign or impact JSON used to render privacy-safe
           pages — not raw member or donor registries.
         </li>
+        <li>
+          Google Analytics 4 on the production host autogive.app. First-party
+          code loads gtag from googletagmanager.com and sends page-view
+          measurements to Google using measurement ID G-5D8EGGCJ8K. The tag
+          does not load on localhost or preview hosts.
+        </li>
       </ul>
       <h3>2.2 Authenticated workspace</h3>
       <ul>

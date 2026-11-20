@@ -5,9 +5,15 @@ import {
   suitePrefixForOrigin,
 } from "./suite-routes.ts";
 
-/** Shared with Vercel and Pages `_headers`. Next hydration needs script/style unsafe-inline. Fonts are self-hosted via next/font. */
+/**
+ * Shared with Vercel and Pages `_headers`. Next hydration needs script/style
+ * unsafe-inline. Fonts are self-hosted via next/font.
+ * GA4: first-party /ga.js injects gtag from www.googletagmanager.com on
+ * autogive.app only. Collect uses fetch/beacon (connect-src). img-src stays
+ * closed; the tag does not need image beacons.
+ */
 export const CONTENT_SECURITY_POLICY =
-  "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
 
 /**
  * CSP for proxied Portfolio Signals and Impact Relay HTML when the upstream
